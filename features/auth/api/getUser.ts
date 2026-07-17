@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { refreshToken } from "./refresh-token";
+import { redirect } from "next/navigation";
 
 export async function getUser() {
   const cookieStore = await cookies();
@@ -23,10 +24,7 @@ export async function getUser() {
       const success = await refreshToken();
 
       if (!success) {
-        return {
-          success: false,
-          error: "Session expired",
-        };
+        redirect("/login");
       }
 
       accessToken = (await cookies()).get("access_token")?.value;

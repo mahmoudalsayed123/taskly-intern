@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,7 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        {/* <SidebarLg />
+
+        <div className="lg:ml-64 min-h-screen flex flex-col">
+          <Topbar />
+
+          <main className="flex-1 p-4 lg:p-8 overflow-y-auto">{children}</main>
+        </div> */}
+        <DashboardLayout>{children}</DashboardLayout>
+      </body>
     </html>
   );
 }

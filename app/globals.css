@@ -1,6 +1,6 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 /* ===== Tailwind Theme ===== */
 @theme {
@@ -10,8 +10,9 @@
 
   /* ===== Surface ===== */
   --color-surface-highest: #d7e2ff;
-  --color-surface-low: #f1f3ff;
-  --color-background: #f9f9ff;
+  --color-surface-low: #F1F3FF;
+  --color-background-container: #f9f9ff;
+  --color-background-check-password: #e8edff;
 
   /* ===== Slate ===== */
   --color-slate-dark: #041b3c;
@@ -19,7 +20,6 @@
   --color-slate-light: #c3c6d6;
   /* ===== Semantic ===== */
   --color-head-table: #e0e8ff;
-  --color-resend-container: #f1f3ff;
   --color-muted-body: #434654;
 
   /* ===== Semantic ===== */
@@ -39,7 +39,7 @@
 }
 
 .section {
-  @apply col-span-6 flex flex-col items-center gap-5 md:ms-[198px] p-6 md:p-8 mt-[64px] bg-[#f9f9ff] h-[calc(100vh-64px)];
+  @apply col-span-6 flex flex-col items-center gap-5 md:ms-[198px] p-6 md:p-8 mt-[64px] bg-background-container h-[calc(100vh-64px)];
 }
 
 .section_card {
@@ -47,7 +47,7 @@
 }
 
 .section_skeleton {
-  @apply col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-7 md:ms-[210px] p-6 md:p-8 mt-[64px] bg-[#f9f9ff];
+  @apply col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-7 md:ms-[210px] p-6 md:p-8 mt-[64px] bg-background-container;
 }
 
 .title-logo {
@@ -59,27 +59,27 @@
 }
 
 .btn-primary {
-  @apply px-6 py-2.5 rounded-md cursor-pointer bg-primary-container text-white;
+  @apply min-h-[56px] rounded-lg cursor-pointer text-white text-body-MD font-semibold;
 }
 
 .btn-secondary {
-  @apply px-6 py-2.5 rounded-md bg-background text-primary font-semibold;
+  @apply px-6 py-2.5 rounded-md bg-background-container text-primary font-semibold;
 }
 
 .btn-action {
-  @apply px-6 py-2.5 rounded-[2px] bg-background text-slate-medium font-semibold;
+  @apply px-6 py-2.5 rounded-[2px] bg-background-container text-slate-medium font-semibold;
 }
 
 .label {
-  @apply absolute top-[-21px] left-1 w-full text-label-SM font-bold uppercase text-slate-medium;
+  @apply w-full block ms-1 text-label-SM font-bold uppercase text-muted-body;
 }
 
 .label-error {
   @apply text-error text-[10px] font-bold uppercase;
 }
 
-.input-mobile {
-  @apply w-full h-[56px] md:h-[48px] md:py-3.5 md:px-4 outline-none border-none px-4.5 py-4 text-[16px] rounded-sm bg-surface-highest text-slate-medium;
+.input {
+  @apply w-full h-fit block mt-1 px-4 py-4.5 md:py-3.5 md:px-4 outline-none border-none text-[16px] rounded-lg md:rounded-md bg-surface-highest text-slate-medium;
 }
 
 /* .input-desktop {
@@ -105,7 +105,7 @@
 .board-scroll::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-@theme inline {
+/* @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -215,16 +215,10 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
+} */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    @apply bg-background-container;
   }
 }

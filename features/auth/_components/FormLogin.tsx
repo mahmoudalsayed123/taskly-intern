@@ -29,7 +29,7 @@ const FormLogin = () => {
     const res = await login(data);
     if (res?.success) {
       reset();
-      router.push("/");
+      router.push("/projects");
     }
   };
   return (

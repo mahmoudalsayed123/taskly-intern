@@ -20,14 +20,14 @@ export async function getUser() {
       },
     });
 
-    if (res.status === 401) {
-      const success = await refreshToken();
+    if (res.status === 401 || res.status === 403) {
+      const refreshed = await refreshToken();
 
-      if (!success) {
+      if (!refreshed) {
         redirect("/login");
       }
 
-      accessToken = (await cookies()).get("access_token")?.value;
+      accessToken = refreshed.access_token;
 
       res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/v1/user`, {
         headers: {
@@ -36,6 +36,12 @@ export async function getUser() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+    }
+    if (!res.ok) {
+      return {
+        success: false,
+        error: "Failed to get user",
+      };
     }
 
     const data = await res.json();

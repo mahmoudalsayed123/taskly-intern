@@ -15,7 +15,6 @@ const Topbar = ({
   useEffect(() => {
     async function fetchUser() {
       const res = await getUser();
-      console.log(res?.data, "res");
 
       if (res?.data) {
         const userInfo = {

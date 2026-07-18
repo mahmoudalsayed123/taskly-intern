@@ -44,7 +44,7 @@ export async function refreshToken() {
       path: "/",
     });
 
-    return true;
+    return result;
   } catch (error) {
     console.error(error);
     return false;

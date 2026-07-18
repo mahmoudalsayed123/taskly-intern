@@ -1,12 +1,7 @@
-import { getUser } from "@/features/auth/api/getUser";
 import { redirect } from "next/navigation";
 
-const MainPage = async () => {
-  const user = await getUser();
-  if (!user) {
-    redirect("/login");
-  }
-  return <div className="rounded-xl bg-blue-500">Main Content of the app</div>;
+const MainPage = () => {
+  redirect("/projects");
 };
 
 export default MainPage;

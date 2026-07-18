@@ -3,7 +3,7 @@
 import { navLinks } from "@/constants/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const NavList = ({ collapse }: { collapse?: boolean }) => {
   const pathName = usePathname();
@@ -11,13 +11,13 @@ const NavList = ({ collapse }: { collapse?: boolean }) => {
     <ul className="flex flex-col gap-1">
       {navLinks.map((item) => (
         <Link
-          href={`${item.name === "projects" ? "/projects" : item.path} `}
+          href={item.path}
           key={item.id}
-          className={`py-2.5 px-3 rounded-sm flex items-center gap-3  ${
+          className={`py-2.5 px-3 rounded-sm flex items-center gap-3 ${
             pathName === item.path
               ? "bg-white shadow-[0px_1px_2px_0px_#0000000D]"
               : ""
-          } `}
+          }`}
         >
           <Image
             src={item.icon}

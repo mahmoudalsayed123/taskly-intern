@@ -7,7 +7,7 @@ const Logo = ({ collapse }: { collapse?: boolean }) => {
     >
       <Image src="/assets/logo.svg" alt="Taskly Logo" width={18} height={20} />
       <span
-        className={`block text-[20px] font-bold text-slate-dark ${collapse ? "hidden" : ""}`}
+        className={`block text-heading-MD font-bold text-slate-dark ${collapse ? "hidden" : ""}`}
       >
         TASKLY
       </span>

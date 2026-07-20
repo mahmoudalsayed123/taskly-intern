@@ -1,53 +1,21 @@
 "use client";
+import ErrorField from "@/components/ui/ErrorField";
+import ShowPassword from "@/components/ui/ShowPassword";
 import { signUp } from "@/features/auth/api/signup";
+import { checkPassword } from "@/lib/checkPassword";
+import { toastFail } from "@/lib/toastFail";
+import { toastSuccess } from "@/lib/toastSuccess";
+import { signUpSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { useRouter } from "next/navigation";
 
 const FormSignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const signUpSchema = z
-    .object({
-      fullName: z
-        .string()
-        .trim()
-        .min(3, "Name must be at least 3 characters")
-        .max(50, "Name must not exceed 50 characters")
-        .regex(
-          /^(?!.*\s{2,})[\p{L}]+(?:\s[\p{L}]+)*$/u,
-          "Name can only contain letters and single spaces",
-        ),
-
-      email: z.string().trim().email("Please enter a valid email address"),
-
-      password: z
-        .string()
-        .min(8, "Password must be at least 8 characters")
-        .max(64, "Password must not exceed 64 characters")
-        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(/[0-9]/, "Password must contain at least one number")
-        .regex(
-          /[!@#$%^&*(),.?":{}|<>]/,
-          "Password must contain at least one special character",
-        )
-        .regex(/^\S+$/, "Password must not contain spaces"),
-
-      confirmPassword: z.string(),
-
-      jobTitle: z
-        .string()
-        .trim()
-        .max(100, "Job title must not exceed 100 characters")
-        .optional(),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    });
-
+  const router = useRouter();
   type SignUpFormValues = z.infer<typeof signUpSchema>;
 
   const {
@@ -63,17 +31,7 @@ const FormSignUp = () => {
 
   const password = watch("password");
 
-  const passwordChecks = {
-    hasMinLength: password?.length >= 8,
-
-    hasUppercase: /[A-Z]/.test(password),
-
-    hasLowercase: /[a-z]/.test(password),
-
-    hasNumber: /[0-9]/.test(password),
-
-    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-  };
+  const passwordChecks = checkPassword(password);
 
   const submitForm = async (data: SignUpFormValues) => {
     const body = {
@@ -85,16 +43,25 @@ const FormSignUp = () => {
       },
     };
     const result = await signUp(body);
-    console.log("result", result);
-    reset();
+
+    if (!result.success) {
+      toastFail(result.message || "Faild to sign-up");
+    }
+
+    if (result.success) {
+      toastSuccess(result.message || "Sign-up successfully");
+      reset();
+      router.replace("/login");
+    }
   };
+
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
       className="flex flex-col gap-6 pb-4 w-full h-full md:mt-0 "
     >
       {/* full name */}
-      <div className="relative w-full min-h-[78.5px]">
+      <div className="relative w-full min-h-20">
         <label htmlFor="full-name" className="label">
           Full Name
         </label>
@@ -105,17 +72,13 @@ const FormSignUp = () => {
           placeholder="Enter your full name"
           {...register("fullName")}
         />
-        {errors.fullName && (
-          <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-            {errors.fullName.message}
-          </p>
-        )}
+        <ErrorField message={errors.fullName?.message} />
         <p className="ps-1 pt-1 text-label-SM font-normal text-slate-light">
           3-50 characters, letters only.
         </p>
       </div>
       {/* email */}
-      <div className="relative w-full min-h-[78.5px]">
+      <div className="relative w-full min-h-20">
         <label htmlFor="email" className="label">
           Email
         </label>
@@ -126,14 +89,10 @@ const FormSignUp = () => {
           placeholder="Enter your email"
           {...register("email")}
         />
-        {errors.email && (
-          <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-            {errors.email.message}
-          </p>
-        )}
+        <ErrorField message={errors.email?.message} />
       </div>
       {/* job title */}
-      <div className="relative w-full min-h-[78.5px]">
+      <div className="relative w-full min-h-20">
         <label htmlFor="job-title" className="label">
           Job Title
         </label>
@@ -144,16 +103,12 @@ const FormSignUp = () => {
           placeholder="Enter your job title"
           {...register("jobTitle")}
         />
-        {errors.jobTitle && (
-          <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-            {errors.jobTitle.message}
-          </p>
-        )}
+        <ErrorField message={errors.jobTitle?.message} />
       </div>
       {/* password and confirm password */}
       <div className="flex flex-col md:flex-row gap-6 ">
         {/* password */}
-        <div className="relative w-full min-h-[78.5px]">
+        <div className="relative w-full min-h-20">
           <label htmlFor="password" className="label">
             Password
           </label>
@@ -165,37 +120,15 @@ const FormSignUp = () => {
               placeholder="Enter your password"
               {...register("password")}
             />
-            <button
-              type="button"
-              className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-            >
-              {showPassword ? (
-                <Image
-                  src="/assets/icons/eye-open.svg"
-                  alt="eye-open"
-                  width={22}
-                  height={15}
-                  onClick={() => setShowPassword(false)}
-                />
-              ) : (
-                <Image
-                  src="/assets/icons/eye-close.svg"
-                  alt="eye-close"
-                  width={22}
-                  height={15}
-                  onClick={() => setShowPassword(true)}
-                />
-              )}
-            </button>
+            <ShowPassword
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
           </div>
-          {errors.password && (
-            <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-              {errors.password.message}
-            </p>
-          )}
+          <ErrorField message={errors.password?.message} />
         </div>
         {/* confirm password */}
-        <div className="relative w-full min-h-[78.5px]">
+        <div className="relative w-full min-h-20">
           <label htmlFor="confirm-password" className="label">
             Confirm Password
           </label>
@@ -206,11 +139,7 @@ const FormSignUp = () => {
             placeholder="Enter your password"
             {...register("confirmPassword")}
           />
-          {errors.confirmPassword && (
-            <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-              {errors.confirmPassword.message}
-            </p>
-          )}
+          <ErrorField message={errors.confirmPassword?.message} />
         </div>
       </div>
       {/* rules of password */}

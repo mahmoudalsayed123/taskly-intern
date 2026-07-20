@@ -6,15 +6,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "../api/login";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toastFail } from "@/lib/toastFail";
+import { toastSuccess } from "@/lib/toastSuccess";
+import { loginSchema } from "@/lib/zodSchema";
+import ShowPassword from "@/components/ui/ShowPassword";
+import ErrorField from "@/components/ui/ErrorField";
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const loginSchema = z.object({
-    email: z.string().trim().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password is required"),
-    rememberMe: z.boolean().optional(),
-  });
+
   type loginFormValues = z.infer<typeof loginSchema>;
   const {
     register,
@@ -28,8 +29,11 @@ const FormLogin = () => {
   const submitForm = async (data: loginFormValues) => {
     const res = await login(data);
     if (res?.success) {
+      toastSuccess("Login successfully");
       reset();
       router.push("/projects");
+    } else {
+      toastFail(res.message || "Failed to login");
     }
   };
   return (
@@ -49,11 +53,7 @@ const FormLogin = () => {
           placeholder="Enter your email"
           {...register("email")}
         />
-        {errors.email && (
-          <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-            {errors.email.message}
-          </p>
-        )}
+        <ErrorField message={errors.email?.message} />
       </div>
       {/* password */}
       <div className="relative w-full min-h-[78.5px]">
@@ -73,34 +73,12 @@ const FormLogin = () => {
             placeholder="Enter your password"
             {...register("password")}
           />
-          <button
-            type="button"
-            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-          >
-            {showPassword ? (
-              <Image
-                src="/assets/icons/eye-open.svg"
-                alt="eye-open"
-                width={22}
-                height={15}
-                onClick={() => setShowPassword(false)}
-              />
-            ) : (
-              <Image
-                src="/assets/icons/eye-close.svg"
-                alt="eye-close"
-                width={22}
-                height={15}
-                onClick={() => setShowPassword(true)}
-              />
-            )}
-          </button>
+          <ShowPassword
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+          />
         </div>
-        {errors.password && (
-          <p className="ps-1 pt-1 text-label-SM font-normal text-error">
-            {errors.password.message}
-          </p>
-        )}
+        <ErrorField message={errors.password?.message} />
       </div>
       {/* Remember me && forget password */}
       <div className="py-2 flex items-center justify-between">

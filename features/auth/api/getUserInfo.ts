@@ -3,40 +3,28 @@
 import { cookies } from "next/headers";
 import { refreshToken } from "./refresh-token";
 import { redirect } from "next/navigation";
+import { fetchUser } from "./fetchUser";
 
-export async function getUser() {
+export async function getUserInfo() {
   const cookieStore = await cookies();
 
   let accessToken = cookieStore.get("access_token")?.value;
 
-  if (!accessToken) return;
+  if (!accessToken) redirect("/login");
 
   try {
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/v1/user`, {
-      headers: {
-        "Content-Type": "application/json",
-        apikey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    let res = await fetchUser(accessToken);
 
     if (res.status === 401 || res.status === 403) {
       const refreshed = await refreshToken();
 
-      if (!refreshed) {
+      if (!refreshed?.success) {
         redirect("/login");
       }
 
-      accessToken = refreshed.access_token;
-
-      res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/v1/user`, {
-        headers: {
-          "Content-Type": "application/json",
-          apikey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      res = await fetchUser(accessToken);
     }
+
     if (!res.ok) {
       return {
         success: false,

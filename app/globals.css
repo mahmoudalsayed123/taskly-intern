@@ -10,7 +10,7 @@
 
   /* ===== Surface ===== */
   --color-surface-highest: #d7e2ff;
-  --color-surface-low: #F1F3FF;
+  --color-surface-low: #f1f3ff;
   --color-background-container: #f9f9ff;
   --color-background-check-password: #e8edff;
 
@@ -33,6 +33,7 @@
   /* ===== Text ===== */
   --text-display-LG: 56px;
   --text-heading-LG: 32px;
+  --text-heading-MD: 20px;
   --text-title-MD: 18px;
   --text-body-MD: 14px;
   --text-label-SM: 11px;
@@ -48,6 +49,14 @@
 
 .section_skeleton {
   @apply col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-7 md:ms-[210px] p-6 md:p-8 mt-[64px] bg-background-container;
+}
+
+.shadow-form {
+  @apply md:shadow-[0px_24px_48px_0px_#041B3C0F]
+}
+
+.shadow-drop {
+  @apply md:shadow-[0px_24px_48px_0px_#041B3C0F]
 }
 
 .title-logo {

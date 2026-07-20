@@ -1,0 +1,47 @@
+import z from "zod";
+
+export const signUpSchema = z
+  .object({
+    fullName: z
+      .string()
+      .trim()
+      .min(3, "Name must be at least 3 characters")
+      .max(50, "Name must not exceed 50 characters")
+      .regex(
+        /^(?!.*\s{2,})[\p{L}]+(?:\s[\p{L}]+)*$/u,
+        "Name can only contain letters and single spaces",
+      ),
+
+    email: z.string().trim().email("Please enter a valid email address"),
+
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(64, "Password must not exceed 64 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character",
+      )
+      .regex(/^\S+$/, "Password must not contain spaces"),
+
+    confirmPassword: z.string(),
+
+    jobTitle: z
+      .string()
+      .trim()
+      .max(100, "Job title must not exceed 100 characters")
+      .optional(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const loginSchema = z.object({
+  email: z.string().trim().email("Please enter a valid email address"),
+  password: z.string().min(8, "Password is required"),
+  rememberMe: z.boolean().optional(),
+});

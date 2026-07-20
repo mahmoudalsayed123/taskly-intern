@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import UserInfo from "../ui/UserInfo";
-import { getUser } from "@/features/auth/api/getUser";
+import { getUserInfo } from "@/features/auth/api/getUserInfo";
 import { useEffect, useState } from "react";
 
 const Topbar = ({
@@ -14,12 +14,12 @@ const Topbar = ({
   const [user, setUser] = useState({});
   useEffect(() => {
     async function fetchUser() {
-      const res = await getUser();
+      const res = await getUserInfo();
 
       if (res?.data) {
         const userInfo = {
-          name: res.data.identities[0].identity_data.name,
-          department: res.data.identities[0].identity_data.department,
+          name: res?.data?.user_metadata?.name,
+          department: res?.data?.user_metadata?.department,
         };
         setUser(userInfo);
       }
@@ -38,7 +38,7 @@ const Topbar = ({
           onClick={() => setOpenMobile(!openMobile)}
           className="lg:hidden"
         />
-        <p className="text-[20px] font-bold text-slate-dark lg:hidden">
+        <p className="text-heading-MD font-bold text-slate-dark lg:hidden">
           TASKLY
         </p>
       </div>

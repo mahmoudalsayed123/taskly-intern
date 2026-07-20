@@ -1,15 +1,22 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { deleteCookies } from "@/lib/deleteCookies";
+import { redirect } from "next/navigation";
 
 export async function refreshToken() {
-  try {
-    const cookieStore = await cookies();
+  const cookieStore = await cookies();
 
+  const deleteCookiesAndGoToLogin = async () => {
+    await deleteCookies();
+    redirect("/login");
+  };
+
+  try {
     const refreshToken = cookieStore.get("refresh_token")?.value;
 
     if (!refreshToken) {
-      return false;
+      redirect("/login");
     }
 
     const response = await fetch(
@@ -18,7 +25,7 @@ export async function refreshToken() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          apikey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
+          apikey: process.env.API_KEY!,
         },
         body: JSON.stringify({
           refresh_token: refreshToken,
@@ -27,26 +34,38 @@ export async function refreshToken() {
     );
 
     if (!response.ok) {
-      return false;
+      deleteCookiesAndGoToLogin();
     }
 
     const result = await response.json();
 
-    cookieStore.set("access_token", result.access_token, {
-      httpOnly: true,
-      sameSite: "lax",
-      path: "/",
-    });
+    if (result.code === 400 || !result.access_token || !result.refresh_token) {
+      deleteCookiesAndGoToLogin();
+    }
 
-    cookieStore.set("refresh_token", result.refresh_token, {
-      httpOnly: true,
-      sameSite: "lax",
-      path: "/",
-    });
+    if (result) {
+      await deleteCookies();
 
-    return result;
-  } catch (error) {
-    console.error(error);
-    return false;
+      cookieStore.set("access_token", result.access_token, {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: result.expires_in,
+      });
+
+      cookieStore.set("refresh_token", result.refresh_token, {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: result.expires_in,
+      });
+    }
+
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error: unknown) {
+    deleteCookiesAndGoToLogin();
   }
 }

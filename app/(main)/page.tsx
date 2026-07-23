@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
+import HomeHandler from "@/components/ui/HomeHandler";
 
-const MainPage = () => {
-  redirect("/projects");
-};
-
-export default MainPage;
+export default function MainPage() {
+  return <HomeHandler />;
+}

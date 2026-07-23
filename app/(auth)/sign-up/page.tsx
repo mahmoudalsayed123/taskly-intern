@@ -13,8 +13,8 @@ const signUp = () => {
         />
       </div>
       {/* form sign up container for desktop's */}
-      <section className="md:w-full md:mt-17.5 md:flex md:items-center md:justify-center md:pb-10">
-        <div className="w-full md:p-12 rounded-lg flex md:flex-col md:items-center gap-2 md:max-w-xl shadow-form md:bg-white">
+      <section className="md:w-full md:mt-17.5 md:flex md:items-center md:justify-center md:pb-10 ">
+        <div className="w-full md:p-12 rounded-lg flex md:flex-col md:items-center gap-2 md:max-w-xl md:shadow-form md:bg-white">
           {/* main heading for desktop */}
           <div className="hidden mb-10 md:flex md:flex-col gap-2 ">
             <MainHeading

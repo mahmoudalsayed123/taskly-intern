@@ -11,6 +11,7 @@ import { toastSuccess } from "@/lib/toastSuccess";
 import { loginSchema } from "@/lib/zodSchema";
 import ShowPassword from "@/components/ui/ShowPassword";
 import ErrorField from "@/components/ui/ErrorField";
+import Link from "next/link";
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -93,9 +94,12 @@ const FormLogin = () => {
             Remember Me
           </p>
         </div>
-        <p className="hidden md:block text-body-MD font-medium text-primary cursor-pointer">
+        <Link
+          href="/forgot-password"
+          className="hidden md:block text-body-MD font-medium text-primary cursor-pointer"
+        >
           Forgot Password?
-        </p>
+        </Link>
       </div>
       {/* Login successfully */}
       <div className="w-full flex justify-center items-center">

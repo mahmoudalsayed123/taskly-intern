@@ -18,14 +18,18 @@
   --color-slate-dark: #041b3c;
   --color-slate-medium: #4f5f7b;
   --color-slate-light: #c3c6d6;
+  --color-border-form: #c3c6d64d;
+  --color-resend-timer: #737685;
   /* ===== Semantic ===== */
   --color-head-table: #e0e8ff;
   --color-muted-body: #434654;
 
   /* ===== Semantic ===== */
-  /* --color-success: #74d3a7;
-  --color-success-text: #005235; */
+  --color-success-border: #0052351a;
+  --color-success-20: #82f9be33;
+  --color-success-message: #005235;
   --color-success: #82f9be;
+  --color-do-not-recive: #00523599;
   --color-error: #ba1a1a;
   --color-warning: #ffb300;
   --color-invalid: #ffdad6;
@@ -33,8 +37,10 @@
   /* ===== Text ===== */
   --text-display-LG: 56px;
   --text-heading-LG: 32px;
-  --text-heading-MD: 20px;
+  --text-heading-MD: 24px;
+  --text-heading-SM: 20px;
   --text-title-MD: 18px;
+  --text-body-LG: 16px;
   --text-body-MD: 14px;
   --text-label-SM: 11px;
 }
@@ -48,15 +54,19 @@
 }
 
 .section_skeleton {
-  @apply col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-7 md:ms-[210px] p-6 md:p-8 mt-[64px] bg-background-container;
+  @apply col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-7 md:ms-52.5 p-6 md:p-8 mt-[64px] bg-background-container;
 }
 
 .shadow-form {
-  @apply md:shadow-[0px_24px_48px_0px_#041B3C0F]
+  @apply md:shadow-[0px_24px_48px_0px_#041B3C0F];
 }
 
 .shadow-drop {
-  @apply md:shadow-[0px_24px_48px_0px_#041B3C0F]
+  @apply md:shadow-[0px_24px_48px_0px_#041B3C0F];
+}
+
+.shadow-btn {
+  @apply shadow-[0px_1px_2px_0px_#0000000D];
 }
 
 .title-logo {
@@ -68,7 +78,7 @@
 }
 
 .btn-primary {
-  @apply min-h-[56px] rounded-lg cursor-pointer text-white text-body-MD font-semibold;
+  @apply h-14 md:h-12 rounded-lg md:rounded-xs cursor-pointer text-white text-body-MD font-semibold;
 }
 
 .btn-secondary {
@@ -88,7 +98,7 @@
 }
 
 .input {
-  @apply w-full h-fit block mt-1 px-4 py-4.5 md:py-3.5 md:px-4 outline-none border-none text-[16px] rounded-lg md:rounded-md bg-surface-highest text-slate-medium;
+  @apply w-full block mt-1 px-4 py-4.5 md:py-3.5 md:px-4 outline-none border-none text-[16px] rounded-lg md:rounded-md bg-surface-highest text-slate-medium;
 }
 
 /* .input-desktop {

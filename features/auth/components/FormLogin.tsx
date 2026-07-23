@@ -29,10 +29,10 @@ const FormLogin = () => {
   });
   const submitForm = async (data: loginFormValues) => {
     const res = await login(data);
-    if (res?.success) {
+    if (res.success) {
       toastSuccess("Login successfully");
       reset();
-      router.push("/projects");
+      router.push("/project");
     } else {
       toastFail(res.message || "Failed to login");
     }

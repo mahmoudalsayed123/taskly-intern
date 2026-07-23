@@ -1,5 +1,5 @@
 import MainHeading from "@/components/layout/MainHeading";
-import FormSignUp from "@/features/auth/_components/FormSignUp";
+import FormSignUp from "@/features/auth/components/FormSignUp";
 import Link from "next/link";
 
 const signUp = () => {
@@ -9,7 +9,6 @@ const signUp = () => {
         <MainHeading
           heading="Create Account"
           title="Join the editorial approach to task management."
-          resetSection={true}
         />
       </div>
       {/* form sign up container for desktop's */}
@@ -21,7 +20,6 @@ const signUp = () => {
               heading="Create Your Workspace"
               title="Join the curated environment for institutional trust
 and task precision."
-              resetSection={true}
             />
           </div>
           <FormSignUp />

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import MainHeading from "@/components/layout/MainHeading";
-import ForgotPasswordForm from "@/features/auth/_components/ForgotPasswordForm";
+import ForgotPasswordForm from "@/features/auth/components/ForgotPasswordForm";
 import Image from "next/image";
 import { forgotPassword } from "@/features/auth/api/forgot-password";
 const ForgotPasword = () => {
@@ -91,7 +91,6 @@ const ForgotPasword = () => {
             heading="Forgot Password?"
             title="No worries, we'll send you reset
 instructions."
-            resetSection={true}
           />
         </div>
         {/* form */}

@@ -1,5 +1,5 @@
 import MainHeading from "@/components/layout/MainHeading";
-import FormLogin from "@/features/auth/_components/FormLogin";
+import FormLogin from "@/features/auth/components/FormLogin";
 import Link from "next/link";
 const login = () => {
   return (
@@ -8,7 +8,6 @@ const login = () => {
         <MainHeading
           heading="Welcome Back"
           title="Please enter your details to access your workspace"
-          resetSection={true}
         />
       </div>
       {/* form sign up container for desktop's */}
@@ -19,7 +18,6 @@ const login = () => {
             <MainHeading
               heading="Welcome Back"
               title="Please enter your details to access your workspace"
-              resetSection={true}
             />
           </div>
           <FormLogin />

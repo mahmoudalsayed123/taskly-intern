@@ -1,11 +1,9 @@
 const MainHeading = ({
   heading,
   title,
-  resetSection,
 }: {
   heading: string;
   title: string;
-  resetSection: boolean;
 }) => {
   return (
     <div className=" flex flex-col gap-1.72">

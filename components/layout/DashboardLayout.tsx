@@ -33,7 +33,9 @@ export default function DashboardLayout({
         />
         <Topbar openMobile={openMobile} setOpenMobile={setOpenMobile} />
 
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto">{children}</main>
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-w-7xl">
+          {children}
+        </main>
       </div>
     </>
   );

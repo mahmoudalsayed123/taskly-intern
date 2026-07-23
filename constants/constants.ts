@@ -1,7 +1,7 @@
 export const navLinks = [
   {
     id: 1,
-    path: "/projects",
+    path: "/project",
     name: "projects",
     icon: "/assets/icons/project.svg",
   },

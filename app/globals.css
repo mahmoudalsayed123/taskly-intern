@@ -5,8 +5,10 @@
 /* ===== Tailwind Theme ===== */
 @theme {
   /* ===== Primary ===== */
+
   --color-primary: #003d9b;
   --color-primary-container: #0052cc;
+  --color-primary-10: #0052cc1a;
 
   /* ===== Surface ===== */
   --color-surface-highest: #d7e2ff;
@@ -98,7 +100,7 @@
 }
 
 .input {
-  @apply w-full block mt-1 px-4 py-4.5 md:py-3.5 md:px-4 outline-none border-none text-[16px] rounded-lg md:rounded-md bg-surface-highest text-slate-medium;
+  @apply w-full block mt-1 px-4 py-4.5 md:py-3.5 md:px-4 outline-none border-none text-body-LG rounded-lg md:rounded-md bg-surface-highest text-slate-medium;
 }
 
 /* .input-desktop {

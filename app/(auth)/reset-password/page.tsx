@@ -1,5 +1,5 @@
 import MainHeading from "@/components/layout/MainHeading";
-import ResetPasswordForm from "@/features/auth/_components/ResetPasswordForm";
+import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
 const ResetPassword = () => {
   return (
     <section className="flex flex-col px-6 pb-18.5 min:h-[calc(100vh-24px)] md:min-h-[calc(100vh-70px)]">
@@ -7,7 +7,6 @@ const ResetPassword = () => {
         <MainHeading
           heading="Create a New Password"
           title="Create a new, strong password to secure your workstation access."
-          resetSection={true}
         />
       </div>
       {/* form sign up container for desktop's */}
@@ -18,7 +17,6 @@ const ResetPassword = () => {
             <MainHeading
               heading="Create a New Password"
               title="Create a new, strong password to secure your workstation access."
-              resetSection={true}
             />
           </div>
           <ResetPasswordForm />

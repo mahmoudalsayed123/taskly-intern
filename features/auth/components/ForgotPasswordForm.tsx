@@ -7,7 +7,7 @@ import { toastFail } from "@/lib/toastFail";
 import { forgotPasswordSchema } from "@/lib/zodSchema";
 import ErrorField from "@/components/ui/ErrorField";
 import { forgotPassword } from "../api/forgot-password";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ForgotPasswordFormProps = {
   setSuccessMessage: (message: string | null) => void;
@@ -25,8 +25,12 @@ const ForgotPasswordForm = ({
   timeLeft,
 }: ForgotPasswordFormProps) => {
   const [loading, setLoading] = useState(false);
-  const data = localStorage.getItem("forgetPassword");
-  const remaindCodeTime = data ? JSON.parse(data).remaindCodeTime : null;
+  const [remaindCodeTime, setRemaindCodeTime] = useState<number | null>(null);
+  useEffect(() => {
+    const data = localStorage.getItem("forgetPassword");
+    setRemaindCodeTime(data ? JSON.parse(data).remaindCodeTime : null);
+  }, []);
+
   type forgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
   const {
     register,

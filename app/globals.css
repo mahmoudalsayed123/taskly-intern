@@ -20,8 +20,9 @@
   --color-slate-dark: #041b3c;
   --color-slate-medium: #4f5f7b;
   --color-slate-light: #c3c6d6;
-  --color-border-form: #c3c6d64d;
   --color-resend-timer: #737685;
+  --color-border-form: #c3c6d64d;
+  --color-border-slate-10: #c3c6d61a;
   /* ===== Semantic ===== */
   --color-head-table: #e0e8ff;
   --color-muted-body: #434654;
@@ -80,7 +81,7 @@
 }
 
 .btn-primary {
-  @apply h-14 md:h-12 rounded-lg md:rounded-xs cursor-pointer text-white text-body-MD font-semibold;
+  @apply h-14 md:h-12 rounded-lg md:rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
 }
 
 .btn-secondary {

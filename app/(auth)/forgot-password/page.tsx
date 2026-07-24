@@ -9,17 +9,17 @@ const ForgotPasword = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [resendCount, setResendCount] = useState(0);
   const [remaindCodeTime, setRemaindCodeTime] = useState<number | null>(null);
-
-  const data = localStorage.getItem("forgetPassword");
+  const [data, setData] = useState<string | null>(null);
   useEffect(() => {
-    if (!data) return;
-
+    const dataFromStorage = localStorage.getItem("forgetPassword");
+    if (!dataFromStorage) return;
+    setData(dataFromStorage);
     setSuccessMessage(
       "If an account exists with this email, we've sent a password reset link.",
     );
 
     try {
-      const { expireAt, resendCount } = JSON.parse(data);
+      const { expireAt, resendCount } = JSON.parse(dataFromStorage);
 
       const remaining = Math.max(0, Math.floor((expireAt - Date.now()) / 1000));
 

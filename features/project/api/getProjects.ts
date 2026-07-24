@@ -1,9 +1,7 @@
 "use server";
-import { createProjectSchema } from "@/lib/zodSchema";
 import { cookies } from "next/headers";
-import { z } from "zod";
 
-export async function createProject(data: z.infer<typeof createProjectSchema>) {
+export async function getProjects() {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("access_token")?.value;
@@ -13,15 +11,14 @@ export async function createProject(data: z.infer<typeof createProjectSchema>) {
     }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/projects`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/rpc/get_projects`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           apikey: process.env.API_KEY!,
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
       },
     );
 
@@ -29,9 +26,10 @@ export async function createProject(data: z.infer<typeof createProjectSchema>) {
       const errorData = await res.json();
       throw new Error(errorData.msg || "Failed to create project");
     }
-
+    const data = await res.json();
     return {
       success: true,
+      data,
     };
   } catch (error: unknown) {
     return {

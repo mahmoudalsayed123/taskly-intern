@@ -6,7 +6,7 @@ const ProjectCard = ({ project }: { project: Projects }) => {
   return (
     <Link
       href={`/project/${project.id}/epics`}
-      className="p-6 lg:h-55 lg:w-76 rounded-lg flex flex-col items-start gap-4 shadow-[0px 1px 2px 0px #0000000D] bg-white mt-10"
+      className="p-6 lg:h-55 lg:w-76 rounded-lg flex flex-col items-start justify-between gap-4 shadow-[0px 1px 2px 0px #0000000D] bg-white "
     >
       <div className="w-full flex items-center justify-between">
         <h2 className="text-title-MD font-semibold text-slate-dark">

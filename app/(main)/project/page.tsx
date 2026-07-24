@@ -1,11 +1,21 @@
 import MainHeading from "@/components/layout/MainHeading";
 import { getProjects } from "@/features/project/api/getProjects";
+import ErrorProjectPage from "@/features/project/components/ErrorProjectPage";
+import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
 import ProjectList from "@/features/project/components/ProjectList";
 import Image from "next/image";
 import Link from "next/link";
 
 const ProjectPage = async () => {
-  const { data } = await getProjects();
+  const { success, data } = await getProjects();
+
+  if (!data) {
+    return <EmptyProjectPage />;
+  }
+
+  if (success === false) {
+    return <ErrorProjectPage />;
+  }
 
   return (
     <section className="p-6 lg:p-0">

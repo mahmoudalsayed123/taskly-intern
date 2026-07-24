@@ -8,6 +8,7 @@ import { forgotPasswordSchema } from "@/lib/zodSchema";
 import ErrorField from "@/components/ui/ErrorField";
 import { forgotPassword } from "../api/forgot-password";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type ForgotPasswordFormProps = {
   setSuccessMessage: (message: string | null) => void;
@@ -117,7 +118,9 @@ const ForgotPasswordForm = ({
           width={12}
           height={12}
         />
-        <p className="text-body-MD font-medium">Back to log in </p>
+        <Link href="/login" className="text-body-MD font-medium">
+          Back to log in
+        </Link>
       </div>
     </form>
   );

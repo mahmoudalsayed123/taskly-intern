@@ -14,9 +14,6 @@ const ForgotPasword = () => {
     const dataFromStorage = localStorage.getItem("forgetPassword");
     if (!dataFromStorage) return;
     setData(dataFromStorage);
-    setSuccessMessage(
-      "If an account exists with this email, we've sent a password reset link.",
-    );
 
     try {
       const { expireAt, resendCount } = JSON.parse(dataFromStorage);
@@ -28,7 +25,7 @@ const ForgotPasword = () => {
     } catch {
       localStorage.removeItem("forgetPassword");
     }
-  }, [data]);
+  }, [data, successMessage]);
 
   const handleResend = async () => {
     const data = localStorage.getItem("forgetPassword");
@@ -104,7 +101,7 @@ instructions."
 
         {/* container resend in large screen */}
         {successMessage && data && (
-          <div className="hidden md:flex flex-col items-center gap-6 pt-10">
+          <div className="hidden md:flex flex-col items-center gap-6 pt-10 ">
             {/* message */}
             {resendCount < 3 && (
               <div className="flex items-start gap-3 p-4 rounded-lg bg-success-20">

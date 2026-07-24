@@ -21,7 +21,7 @@ const ResetPasswordForm = () => {
   const token = searchParams.get("access_token");
   const router = useRouter();
   type resetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
-  
+
   const {
     register,
     handleSubmit,
@@ -42,6 +42,7 @@ const ResetPasswordForm = () => {
     if (res.success) {
       setLoading(false);
       toastSuccess("Your password has been updated successfully.");
+      localStorage.removeItem("forgetPassword");
       reset();
       setTimeout(() => {
         router.push("/login");
@@ -163,7 +164,7 @@ const ResetPasswordForm = () => {
         disabled={loading}
         type="submit"
       >
-        {loading ? <Spinner content={"Update Password"} /> : "Update Password"}
+        Update Password
       </button>
 
       {/* back to login */}

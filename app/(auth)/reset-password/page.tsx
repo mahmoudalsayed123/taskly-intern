@@ -1,5 +1,6 @@
 import MainHeading from "@/components/layout/MainHeading";
 import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
+import { Suspense } from "react";
 const ResetPassword = () => {
   return (
     <section className="flex flex-col px-6 pb-18.5 min:h-[calc(100vh-24px)] md:min-h-[calc(100vh-70px)]">
@@ -19,7 +20,9 @@ const ResetPassword = () => {
               title="Create a new, strong password to secure your workstation access."
             />
           </div>
-          <ResetPasswordForm />
+          <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordForm />
+          </Suspense>
         </div>
       </section>
     </section>

@@ -1,5 +1,5 @@
 import MainHeading from "@/components/layout/MainHeading";
-import NewProjectForm from "@/features/project/components/NewProjectForm";
+import NewProjectForm from "@/features/project/add-project/components/NewProjectForm";
 
 const AddProjectPage = () => {
   return (

@@ -1,38 +1,67 @@
 "use client";
-import MainHeading from "@/components/layout/MainHeading";
 import ErrorField from "@/components/ui/ErrorField";
 import { createProjectSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { createProject } from "../api/createProject";
 import { toastSuccess } from "@/lib/toastSuccess";
 import { toastFail } from "@/lib/toastFail";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { editProject } from "../api/editProject";
+import { useEffect, useState } from "react";
+import { getProject } from "../../api/getProject";
 
-const NewProjectForm = () => {
+const FormEditProject = ({ projectId }: { projectId: string }) => {
+  const [projectData, setProjectData] = useState({ name: "", description: "" });
   const router = useRouter();
-  type createProjectFormValues = z.infer<typeof createProjectSchema>;
+
+  useEffect(() => {
+    const getProjectData = async () => {
+      const res = await getProject(projectId);
+
+      if (res.success) {
+        const projectDetails = {
+          name: res?.data?.[0]?.name,
+          description: res?.data?.[0]?.description,
+        };
+        setProjectData(projectDetails);
+        reset(projectDetails);
+      } else {
+        toastFail(res.message || `Failed to get project: ${res.message}`);
+      }
+    };
+    getProjectData();
+  }, [projectId]);
+
+  type editProjectFormValues = z.infer<typeof createProjectSchema>;
   const {
     register,
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
-  } = useForm<createProjectFormValues>({
+
+    formState: { errors, isDirty },
+  } = useForm<editProjectFormValues>({
     mode: "onChange",
     resolver: zodResolver(createProjectSchema),
   });
   const description = watch("description");
-  const descriptionLength = description?.length || 0;
-  const submitForm = async (data: createProjectFormValues) => {
-    const res = await createProject(data);
+  const descriptionLength =
+    description?.length || projectData?.description?.length || 0;
+
+  const submitForm = async (data: editProjectFormValues) => {
+    if (!isDirty) {
+      toastFail("No changes to save");
+      return;
+    }
+
+    const res = await editProject(projectId, data);
     if (res.success) {
-      toastSuccess("Project created successfully");
-      reset();
+      toastSuccess("Project edited successfully");
+      reset(data);
     } else {
-      toastFail(res.message || `Failed to create project: ${res.message}`);
+      toastFail(res.message || `Failed to edit project: ${res.message}`);
     }
   };
 
@@ -108,7 +137,7 @@ key milestones..."
           )}
         </div>
         {/* creat project and back buttons */}
-        <div className="w-full pt-4 lg:pt-0 flex flex-col gap-4 lg:gap-0 justify-center items-center  lg:flex-row-reverse lg:justify-between">
+        <div className="w-full pt-4 md:px-4 lg:px-0 lg:pt-0 flex flex-col gap-4 lg:gap-0 justify-center items-center  lg:flex-row-reverse lg:justify-between">
           <button
             className="w-full lg:w-40.5! lg:h-11! btn-primary lg:px-8! lg:py-3! lg:rounded-sm! shadow-[0px_1px_2px_0px_#0000000D] font-bold! text-body-MD! "
             style={{
@@ -116,11 +145,11 @@ key milestones..."
             }}
             type="submit"
           >
-            Create Project
+            Save Changes
           </button>
           <button
             onClick={() => router.back()}
-            className="w-full lg:w-24! lg:h-11! lg:pt-3! lg:px-4! font-bold! text-body-MD! text-slate-medium! cursor-pointer"
+            className="w-full lg:w-24! lg:h-11! lg:py-3! lg:px-6! font-bold! text-body-MD! text-slate-medium! cursor-pointer"
           >
             Back
           </button>
@@ -130,4 +159,4 @@ key milestones..."
   );
 };
 
-export default NewProjectForm;
+export default FormEditProject;

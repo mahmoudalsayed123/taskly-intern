@@ -44,7 +44,7 @@ const NavList = ({ collapse }: { collapse?: boolean }) => {
       pathName.includes("/tasks") ? (
         navLinks.map((item) => (
           <Link
-            href={`${item.name === "projects" ? "/project" : `/project/${projectId}/${item.name}`} `}
+            href={`${item.name === "projects" ? "/project" : `/project/${projectId}/${item.path}`} `}
             key={item.id}
             className={`${lastPathSegment === item.name ? "bg-white" : ""} py-2.5 px-3 rounded-sm flex items-center gap-3 cursor-pointer`}
           >

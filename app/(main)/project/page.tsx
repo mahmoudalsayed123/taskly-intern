@@ -8,7 +8,7 @@ const ProjectPage = async () => {
   const { data } = await getProjects();
 
   return (
-    <section className='p-6'>
+    <section className="p-6 lg:p-0">
       <div className="flex items-center justify-between">
         <MainHeading
           heading="Projects"

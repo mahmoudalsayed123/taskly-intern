@@ -1,4 +1,5 @@
 import { Projects } from "@/constants/constants";
+import { SquarePen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,17 +13,14 @@ const ProjectCard = ({ project }: { project: Projects }) => {
         <h2 className="text-title-MD font-semibold text-slate-dark">
           {project.name}
         </h2>
-        <Image
-          src="/assets/icons/dots.svg"
-          alt="arrow-right"
-          width={3}
-          height={12}
-        />
+        <Link href={`/project/${project.id}/edit`} className="cursor-pointer">
+          <SquarePen className="text-slate-dark" size={15} />
+        </Link>
       </div>
       <p className="text-body-MD font-normal text-slate-dark mt-9.5 lg:mt-1 line-clamp-2 lg:line-clamp-3">
         {project.description}
       </p>
-      <div className="w-full flex items-center gap-3 pt-5 lg:pt-6 border-t border-border-slate-10">
+      <div className="w-full lg:hidden flex items-center gap-1.5 pt-5 lg:pt-6 border-t border-border-slate-10">
         <Image
           src="/assets/icons/date.svg"
           alt="avatar"
@@ -30,8 +28,17 @@ const ProjectCard = ({ project }: { project: Projects }) => {
           height={11.67}
           className="lg:hidden"
         />
-        <p className="text-label-SM font-bold text-slate-medium">CREATED AT</p>
         <p className="text-label-SM font-normal text-slate-dark">
+          {new Date(project.created_at).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      </div>
+      <div className="hidden lg:w-full lg:flex items-center justify-between pt-5 lg:pt-6 border-t border-border-slate-10">
+        <p className="text-label-SM font-bold text-slate-medium">Created At</p>
+        <p className="text-label-SM font-normal text-slate-medium">
           {new Date(project.created_at).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",

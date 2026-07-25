@@ -77,7 +77,9 @@ const NavList = ({ collapse }: { collapse?: boolean }) => {
             width={21.5}
             height={16}
           />
-          <span className={` text-body font-medium text-slate-dark`}>
+          <span
+            className={`${collapse ? "hidden" : "text-body-MD font-medium"} capitalize`}
+          >
             Projects
           </span>
         </Link>

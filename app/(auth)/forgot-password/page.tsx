@@ -8,12 +8,16 @@ const ForgotPasword = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [resendCount, setResendCount] = useState(0);
-  const [remaindCodeTime, setRemaindCodeTime] = useState<number | null>(null);
   const [data, setData] = useState<string | null>(null);
+
+  // read localStorage
   useEffect(() => {
     const dataFromStorage = localStorage.getItem("forgetPassword");
     if (!dataFromStorage) return;
     setData(dataFromStorage);
+    setSuccessMessage(
+      "If an account exists with this email, we've sent a password reset link.",
+    );
 
     try {
       const { expireAt, resendCount } = JSON.parse(dataFromStorage);
@@ -25,33 +29,9 @@ const ForgotPasword = () => {
     } catch {
       localStorage.removeItem("forgetPassword");
     }
-  }, [data, successMessage]);
+  }, [data, successMessage, resendCount]);
 
-  const handleResend = async () => {
-    const data = localStorage.getItem("forgetPassword");
-    if (!data) return;
-
-    const { email } = JSON.parse(data);
-
-    const res = await forgotPassword(email);
-    console.log("res forgot password", res);
-    if (res.success) {
-      const expireAt = Date.now() + 10 * 1000;
-
-      localStorage.setItem(
-        "forgetPassword",
-        JSON.stringify({
-          expireAt,
-          resendCount: resendCount + 1,
-          email,
-          remaindCodeTime: resendCount === 3 ? 7 * 24 * 60 * 60 * 1000 : null,
-        }),
-      );
-
-      setTimeLeft(10);
-    }
-  };
-
+  // timer countdown
   useEffect(() => {
     if (timeLeft <= 0) return;
 
@@ -61,6 +41,33 @@ const ForgotPasword = () => {
 
     return () => clearInterval(interval);
   }, [timeLeft]);
+
+  // resend code function
+  const handleResend = async () => {
+    console.log("resendCount from page", resendCount);
+    const data = localStorage.getItem("forgetPassword");
+    if (!data) return;
+
+    const { email } = JSON.parse(data);
+
+    const res = await forgotPassword(email);
+    if (res.success) {
+      const expireAt = Date.now() + 42 * 1000;
+
+      setResendCount((prev) => prev + 1);
+
+      localStorage.setItem(
+        "forgetPassword",
+        JSON.stringify({
+          expireAt,
+          resendCount: resendCount + 1,
+          email,
+        }),
+      );
+
+      setTimeLeft(42);
+    }
+  };
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
   const seconds = String(timeLeft % 60).padStart(2, "0");
@@ -94,9 +101,9 @@ instructions."
         <ForgotPasswordForm
           setSuccessMessage={setSuccessMessage}
           setTimeLeft={setTimeLeft}
-          setResendCount={setResendCount}
           resendCount={resendCount}
           timeLeft={timeLeft}
+          setResendCount={setResendCount}
         />
 
         {/* container resend in large screen */}
@@ -117,7 +124,7 @@ instructions."
               </div>
             )}
 
-            {/* did not recive email + resend timer */}
+            {/* did not recive email + resend timer + action resend button + max resend message */}
             <div className="flex flex-col items-center gap-3 w-full">
               {resendCount < 3 && (
                 <p className="text-label-SM font-bold text-muted-body">
@@ -131,7 +138,7 @@ instructions."
                   alt="clock"
                   width={18}
                   height={21}
-                  className={`${resendCount > 3 && `hidden`}`}
+                  className={`${resendCount <= 3 && `hidden`}`}
                 />
                 <button
                   className="text-body-LG font-semibold text-primary"
@@ -158,31 +165,41 @@ instructions."
       {successMessage && data && (
         <div className="flex md:hidden flex-col gap-3 p-4 rounded-sm bg-success-20">
           {/* message */}
-          <div className="flex items-start gap-3">
-            <Image
-              src="/assets/icons/forgot-pass-correct.svg"
-              alt="correct"
-              width={20}
-              height={20}
-            />
-            <p className="text-label-SM font-medium text-success-message">
-              If an account exists with this email, we've sent a password reset
-              link.
-            </p>
-          </div>
+          {resendCount < 3 && (
+            <div className="flex items-start gap-3">
+              <Image
+                src="/assets/icons/forgot-pass-correct.svg"
+                alt="correct"
+                width={20}
+                height={20}
+              />
+              <p className="text-label-SM font-medium text-success-message">
+                If an account exists with this email, we've sent a password
+                reset link.
+              </p>
+            </div>
+          )}
           {/* resend */}
           <div className="pt-3 flex items-center justify-between border-t border-t-success-border">
-            <p className="text-label-SM font-bold text-do-not-recive">
-              Didn't receive email?
-            </p>
+            {resendCount < 3 && (
+              <p className="text-label-SM font-bold text-do-not-recive">
+                Didn't receive email?
+              </p>
+            )}
             <button
               className="text-label-MD font-semibold text-primary"
               disabled={!canResend}
               onClick={handleResend}
             >
-              {canResend
-                ? `Resend (${3 - resendCount} left)`
-                : `Resend in ${minutes}:${seconds}`}
+              {resendCount > 3 ? (
+                <p className="text-error">
+                  You have exceeded the maximum number of resend attempts
+                </p>
+              ) : canResend ? (
+                `Resend (${resendCount} left)`
+              ) : (
+                `Resend in ${minutes}:${seconds}`
+              )}
             </button>
           </div>
         </div>

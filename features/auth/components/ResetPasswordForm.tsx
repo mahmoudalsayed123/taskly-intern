@@ -13,6 +13,7 @@ import ErrorField from "@/components/ui/ErrorField";
 import { checkPassword } from "@/lib/checkPassword";
 import { resetPassword } from "../api/resetPassword";
 import Spinner from "@/components/ui/Spinner";
+import Loading from "@/components/ui/Loader";
 
 const ResetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -164,7 +165,7 @@ const ResetPasswordForm = () => {
         disabled={loading}
         type="submit"
       >
-        Update Password
+        {loading ? <Loading /> : "Update Password"}
       </button>
 
       {/* back to login */}

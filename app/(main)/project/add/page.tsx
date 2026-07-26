@@ -6,7 +6,12 @@ const AddProjectPage = () => {
     <section className="pt-8 px-6 pb-13 lg:p-0">
       {/* main heading for desktop */}
       <div className=" hidden lg:block lg:h-16 lg:mb-10">
-        <MainHeading heading="Add New Project" title="" />
+        <MainHeading
+          heading="Add New Project"
+          title=""
+          sizeDesktop="no-project"
+          sizeMobile="heading-MD"
+        />
       </div>
       {/* main heading for mobile section */}
       <div className="lg:hidden pb-8 w-full">

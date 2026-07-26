@@ -8,6 +8,8 @@ const ResetPassword = () => {
         <MainHeading
           heading="Create a New Password"
           title="Create a new, strong password to secure your workstation access."
+          sizeDesktop="display-MD"
+          sizeMobile="heading-MD"
         />
       </div>
       {/* form sign up container for desktop's */}
@@ -18,6 +20,8 @@ const ResetPassword = () => {
             <MainHeading
               heading="Create a New Password"
               title="Create a new, strong password to secure your workstation access."
+              sizeDesktop="display-MD"
+              sizeMobile="heading-MD"
             />
           </div>
           <Suspense fallback={<div>Loading...</div>}>

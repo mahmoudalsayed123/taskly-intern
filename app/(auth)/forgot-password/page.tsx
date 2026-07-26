@@ -95,6 +95,8 @@ const ForgotPasword = () => {
             heading="Forgot Password?"
             title="No worries, we'll send you reset
 instructions."
+            sizeDesktop="heading-LG"
+            sizeMobile="heading-MD"
           />
         </div>
         {/* form */}

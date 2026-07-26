@@ -8,6 +8,8 @@ const login = () => {
         <MainHeading
           heading="Welcome Back"
           title="Please enter your details to access your workspace"
+          sizeDesktop="display-MD"
+          sizeMobile="heading-MD"
         />
       </div>
       {/* form sign up container for desktop's */}
@@ -18,6 +20,8 @@ const login = () => {
             <MainHeading
               heading="Welcome Back"
               title="Please enter your details to access your workspace"
+              sizeDesktop="display-MD"
+              sizeMobile="heading-MD"
             />
           </div>
           <FormLogin />

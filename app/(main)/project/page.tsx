@@ -19,11 +19,13 @@ const ProjectPage = async () => {
   }
 
   return (
-    <section className="lg:relative p-6 pb-20 lg:pb-0 lg:p-0">
+    <section className="lg:relative p-6 pb-20 lg:p-0">
       <div className="flex items-center justify-between">
         <MainHeading
           heading="Projects"
           title="Manage and curate your projects"
+          sizeDesktop="display-MD"
+          sizeMobile="heading-MD"
         />
         <Link href="/project/add" className="hidden md:block">
           <button

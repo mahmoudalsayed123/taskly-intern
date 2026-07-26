@@ -9,6 +9,8 @@ const signUp = () => {
         <MainHeading
           heading="Create Account"
           title="Join the editorial approach to task management."
+          sizeDesktop="display-MD"
+          sizeMobile="display-SM"
         />
       </div>
       {/* form sign up container for desktop's */}
@@ -20,6 +22,8 @@ const signUp = () => {
               heading="Create Your Workspace"
               title="Join the curated environment for institutional trust
 and task precision."
+              sizeDesktop="display-MD"
+              sizeMobile="display-SM"
             />
           </div>
           <FormSignUp />

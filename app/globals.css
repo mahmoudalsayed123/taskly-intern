@@ -38,8 +38,10 @@
   --color-invalid: #ffdad6;
 
   /* ===== Text ===== */
-  --text-display-LG: 56px;
   --text-no-project: 36px;
+  --text-display-LG: 56px;
+  --text-display-MD: 30px;
+  --text-display-SM: 28px;
   --text-heading-LG: 32px;
   --text-heading-MD: 24px;
   --text-heading-SM: 20px;
@@ -81,8 +83,12 @@
   @apply font-bold text-slate-dark;
 }
 
-.btn-primary {
-  @apply h-14 md:h-12 rounded-lg md:rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
+.btn-primary-desktop {
+  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-lg md:rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
+}
+
+.btn-primary-mobile {
+  @apply w-10 h-10 rounded-lg md:rounded-xs bg-linear-to-r from-primary to-primary-container flex items-center justify-center gap-2 cursor-pointer text-white text-body-MD font-bold;
 }
 
 .btn-secondary {

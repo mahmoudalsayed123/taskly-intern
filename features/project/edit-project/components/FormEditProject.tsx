@@ -139,7 +139,7 @@ key milestones..."
         {/* creat project and back buttons */}
         <div className="w-full pt-4 md:px-4 lg:px-0 lg:pt-0 flex flex-col gap-4 lg:gap-0 justify-center items-center  lg:flex-row-reverse lg:justify-between">
           <button
-            className="w-full lg:w-40.5! lg:h-11! btn-primary lg:px-8! lg:py-3! lg:rounded-sm! shadow-[0px_1px_2px_0px_#0000000D] font-bold! text-body-MD! "
+            className="btn-primary-desktop w-full! lg:w-fit"
             style={{
               background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
             }}

@@ -25,6 +25,7 @@
   --color-border-slate-10: #c3c6d61a;
   /* ===== Semantic ===== */
   --color-head-table: #e0e8ff;
+  --color-head-table-30: #e0e8ff4d;
   --color-muted-body: #434654;
 
   /* ===== Semantic ===== */
@@ -92,7 +93,7 @@
 }
 
 .btn-secondary {
-  @apply px-6 py-2.5 rounded-md bg-background-container text-primary font-semibold;
+  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-lg md:rounded-xs cursor-pointer text-body-MD font-semibold text-slate-medium bg-white;
 }
 
 .btn-action {
@@ -133,6 +134,16 @@
 
 .board-scroll::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
 }
 /* @theme inline {
   --font-heading: var(--font-sans);

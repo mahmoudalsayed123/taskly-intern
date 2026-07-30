@@ -15,10 +15,6 @@ export async function refreshToken() {
   try {
     const refreshToken = cookieStore.get("refresh_token")?.value;
 
-    if (!refreshToken) {
-      redirect("/login");
-    }
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/auth/v1/token?grant_type=refresh_token`,
       {

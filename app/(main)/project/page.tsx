@@ -7,8 +7,29 @@ import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/ui/Pagination";
 
-const ProjectPage = async () => {
-  const { success, data } = await getProjects();
+const ProjectPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const { page } = await searchParams;
+
+  const currentPage = Number(page ?? "1");
+
+  const limit = 10;
+
+  const offset = (currentPage - 1) * limit;
+
+  const { success, data, totalCount } = await getProjects(limit, offset);
+
+  const totalProjects = Number(totalCount?.split("/")[1]);
+
+  const projectsShowing = totalCount
+    ?.split("/")[0]
+    ?.split("-")
+    ?.reduce((cur, acc) => Number(acc) - Number(cur), 0);
+
+  const totalPages = Math.ceil(totalProjects / limit);
 
   if (!data) {
     return <EmptyProjectPage />;
@@ -71,7 +92,13 @@ const ProjectPage = async () => {
       </Link>
 
       {/* pagination */}
-      <Pagination />
+      <Pagination
+        currentPage={currentPage}
+        offset={offset}
+        totalPages={totalPages}
+        totalProjects={totalProjects}
+        projectsShowing={projectsShowing || 0}
+      />
     </section>
   );
 };

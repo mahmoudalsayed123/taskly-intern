@@ -37,3 +37,14 @@ export type Projects = {
   description: string;
   created_at: string;
 };
+
+export interface Member {
+  user_id: string;
+  role: string;
+  email: string;
+  metadata: {
+    name: string;
+    email: string;
+    department: string;
+  };
+}

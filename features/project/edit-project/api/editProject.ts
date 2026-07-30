@@ -1,6 +1,8 @@
 "use server";
+import { refreshToken } from "@/features/auth/api/refresh-token";
 import { createProjectSchema } from "@/lib/zodSchema";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export async function editProject(
@@ -12,7 +14,7 @@ export async function editProject(
     const token = cookieStore.get("access_token")?.value;
 
     if (!token) {
-      throw new Error("Unauthorized! Token not found");
+      await refreshToken();
     }
 
     const res = await fetch(

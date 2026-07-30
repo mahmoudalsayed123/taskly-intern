@@ -104,7 +104,7 @@ const FormLogin = () => {
       {/* Login successfully */}
       <div className="w-full flex justify-center items-center">
         <button
-          className="w-full btn-primary shadow-[0px_1px_2px_0px_#0000000D] "
+          className="w-full btn-primary-desktop shadow-[0px_1px_2px_0px_#0000000D] "
           style={{
             background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
           }}

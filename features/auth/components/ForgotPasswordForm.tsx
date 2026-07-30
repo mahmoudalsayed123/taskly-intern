@@ -106,7 +106,7 @@ const ForgotPasswordForm = ({
       {/* send email */}
       <button
         disabled={loading || timeLeft !== 0}
-        className="w-full btn-primary mb-4! shadow-btn text-body-MD font-semibold flex items-center justify-center disabled:opacity-50"
+        className="w-full btn-primary-desktop  mb-4! shadow-btn text-body-MD font-semibold flex items-center justify-center disabled:opacity-50"
         style={{
           background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
         }}

@@ -11,7 +11,7 @@ const Epicspage = async ({
 }) => {
   const { projectId } = await params;
 
-  const { success, data } = await getProjectEpics(projectId);
+  const { data } = await getProjectEpics(projectId);
 
   return (
     <section>

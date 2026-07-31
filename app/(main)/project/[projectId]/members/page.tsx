@@ -13,7 +13,7 @@ const MembersPage = async ({
   const { projectId } = await params;
   const { data: projectMember } = await getProjectMember(projectId);
   return (
-    <section className="py-8 px-4 flex flex-col gap-3">
+    <section className="flex flex-col gap-3">
       {/* main heading and breadcrumb + invite member button */}
       <div className="flex items-end justify-center lg:justify-between">
         {/* main heading + breadcrumb */}

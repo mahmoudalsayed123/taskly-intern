@@ -5,7 +5,7 @@ const AddProjectPage = () => {
   return (
     <section className="pt-8 px-6 pb-13 lg:p-0">
       {/* main heading for desktop */}
-      <div className=" hidden lg:block lg:h-16 lg:mb-10">
+      <div className=" hidden lg:block lg:h-16 lg:mb-10 lg:text-no-project">
         <MainHeading
           heading="Add New Project"
           title=""

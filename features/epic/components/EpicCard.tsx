@@ -5,7 +5,7 @@ import Image from "next/image";
 const EpicCard = ({ epic }: { epic: Epic }) => {
   const initials = getInitials(epic.assignee.name);
   return (
-    <div className="col-span-1 p-5 lg:p-4 rounded-lg flex flex-col bg-white lg:border-s-4 lg:border-border-epic shadow-btn">
+    <div className="col-span-1 p-5 gap-3 lg:p-4 rounded-lg flex flex-col bg-white lg:border-s-4 lg:border-border-epic shadow-btn">
       <div
         className="flex items-center justify-between lg:pb-4
 "

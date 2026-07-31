@@ -6,8 +6,8 @@ const MainHeading = ({
 }: {
   heading: string;
   title: string;
-  sizeDesktop?: string;
-  sizeMobile?: string;
+  sizeDesktop: string;
+  sizeMobile: string;
 }) => {
   return (
     <div className=" flex flex-col gap-1.72">

@@ -27,6 +27,7 @@
   --color-head-table: #e0e8ff;
   --color-head-table-30: #e0e8ff4d;
   --color-muted-body: #434654;
+  --color-muted-body-30: #434654cc;
 
   /* ===== Semantic ===== */
   --color-success-border: #0052351a;
@@ -34,6 +35,8 @@
   --color-success-message: #005235;
   --color-success: #82f9be;
   --color-do-not-recive: #00523599;
+  --color-border-epic: #004e32;
+  --color-assignee-container: #65dca4;
   --color-error: #ba1a1a;
   --color-warning: #ffb300;
   --color-invalid: #ffdad6;
@@ -85,7 +88,7 @@
 }
 
 .btn-primary-desktop {
-  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-lg md:rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
+  @apply py-3 px-6 lg:flex lg:items-center lg:justify-center lg:gap-2 lg:rounded-xs lg:cursor-pointer lg:text-white lg:text-body-MD lg:font-semibold lg:bg-primary;
 }
 
 .btn-primary-mobile {

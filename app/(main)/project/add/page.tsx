@@ -18,6 +18,8 @@ const AddProjectPage = () => {
         <MainHeading
           heading="Initialize New Project"
           title="Define the scope and foundational details of your project."
+          sizeDesktop="no-project"
+          sizeMobile="heading-MD"
         />
       </div>
 

@@ -15,6 +15,8 @@ const EditProjectPage = async ({
         <MainHeading
           heading="Edit Project"
           title="Define the scope and foundational details of your project."
+          sizeDesktop="no-project"
+          sizeMobile="heading-MD"
         />
       </div>
       {/* main heading for mobile section */}

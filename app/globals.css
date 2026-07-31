@@ -88,15 +88,18 @@
 }
 
 .btn-primary-desktop {
-  @apply py-3 px-6 lg:flex lg:items-center lg:justify-center lg:gap-2 lg:rounded-xs lg:cursor-pointer lg:text-white lg:text-body-MD lg:font-semibold lg:bg-primary;
+  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
 }
 
 .btn-primary-mobile {
-  @apply w-10 h-10 rounded-lg md:rounded-xs bg-linear-to-r from-primary to-primary-container flex items-center justify-center gap-2 cursor-pointer text-white text-body-MD font-bold;
+  @apply w-full py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
 }
 
-.btn-secondary {
-  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-lg md:rounded-xs cursor-pointer text-body-MD font-semibold text-slate-medium bg-white;
+.btn-secondary-desktop {
+  @apply py-3 px-6 lg:w-fit flex items-center justify-center gap-2 rounded-xs cursor-pointer text-body-MD font-semibold bg-white;
+}
+.btn-secondary-mobile {
+  @apply w-full py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-body-MD font-semibold bg-white text-slate-medium;
 }
 
 .btn-action {

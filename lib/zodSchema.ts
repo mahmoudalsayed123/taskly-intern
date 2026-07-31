@@ -85,12 +85,8 @@ export const createProjectSchema = z.object({
     .optional(),
 });
 
-
 export const createEpicSchema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(3, "Title must be at least 3 characters"),
+  title: z.string().trim().min(3, "Title must be at least 3 characters"),
 
   description: z.string().optional(),
 
@@ -102,17 +98,20 @@ export const createEpicSchema = z.object({
   deadline: z
     .string()
     .optional()
-    .refine((value) => {
-      if (!value) return true;
+    .refine(
+      (value) => {
+        if (!value) return true;
 
-      const selectedDate = new Date(value);
+        const selectedDate = new Date(value);
 
-      const today = new Date();
+        const today = new Date();
 
-      today.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
 
-      return selectedDate >= today;
-    }, {
-      message: "Deadline must be today or in the future",
-    }),
+        return selectedDate >= today;
+      },
+      {
+        message: "Deadline must be today or a day after today",
+      },
+    ),
 });

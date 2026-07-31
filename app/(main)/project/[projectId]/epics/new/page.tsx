@@ -8,7 +8,7 @@ const NewEpicPage = async ({
 }) => {
   const { projectId } = await params;
   return (
-    <section className="pt-8 px-6 pb-13 lg:p-0">
+    <section className="pt-8 px-6 pb-13 lg:p-2">
       {/* main heading for desktop */}
       <div className="mb-6 w-85.5 md:w-lg lg:mb-10">
         <MainHeading
@@ -22,7 +22,7 @@ const NewEpicPage = async ({
 
       {/* form */}
       <section className="lg:w-full lg:flex lg:items-center lg:justify-center lg:p-8">
-        <div className="lg:bg-white lg:rounded-lg lg:w-212 lg:max-w-212 shadow-form">
+        <div className="lg:bg-white lg:rounded-lg lg:w-213 lg:max-w-213 shadow-form">
           <FormNewEpic projectId={projectId} />
         </div>
       </section>

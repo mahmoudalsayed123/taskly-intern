@@ -28,7 +28,7 @@ export async function createEpic(data: z.infer<typeof createEpicSchema>) {
 
     if (!res.ok) {
       const errorData = await res.json();
-      throw new Error(errorData.msg || "Failed to create epic");
+      throw new Error(errorData.msg || "Failed to create new epic");
     }
     return {
       success: true,

@@ -62,13 +62,13 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
     >
       <div className="md:pt-8 md:px-8 md:pb-10 flex flex-col gap-8">
         {/* name */}
-        <div className="relative w-full min-h-[78.5px] ">
+        <div className="relative w-full min-h-[78.5px] flex flex-col ">
           <label htmlFor="title" className="label">
             <span>TITLE</span>{" "}
             {errors.title && <span className="text-error">*</span>}
           </label>
           <input
-            className="input h-13!"
+            className="input h-13! "
             type="text"
             id="title"
             placeholder="e.g. Structural Schematic Phase"
@@ -131,7 +131,6 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
                 className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
               />
             </div>
-            {/* <ErrorField message={errors.assignee?.message} /> */}
           </div>
           {/* select date */}
           <div className="w-full min-h-[78.5px]">
@@ -156,21 +155,21 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
                 className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
               />
             </div>
-            {/* <ErrorField message={errors.date?.message} /> */}
+            <ErrorField message={errors.deadline?.message} />
           </div>
         </div>
         {/* creat project and back buttons */}
         <div className="flex items-center justify-end">
-          <div className="flex flex-col gap-4 lg:flex-row-reverse lg:items-center lg:pt-8 lg:border-t lg:border-border-slate-10">
+          <div className="w-full lg:w-fit flex flex-col gap-4 lg:flex-row-reverse lg:items-center lg:justify-end lg:pt-8 lg:border-t lg:border-border-slate-10">
             <button
-              className="btn-primary-desktop w-full! lg:w-fit!"
+              className="btn-primary-mobile lg:btn-primary-desktop"
               type="submit"
             >
               Create Epic
             </button>
             <button
               onClick={() => router.back()}
-              className="btn-primary-desktop w-full! lg:w-fit! bg-white! text-slate-medium! font-semibold! lg:py-3! lg:px-8!"
+              className="btn-secondary-mobile lg:btn-secondary-desktop"
             >
               Cancel
             </button>

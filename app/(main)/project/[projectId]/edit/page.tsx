@@ -1,4 +1,6 @@
 import MainHeading from "@/components/layout/MainHeading";
+import BreadCrumb from "@/components/ui/BreadCrumb";
+import { getProject } from "@/features/project/api/getProject";
 import FormEditProject from "@/features/project/edit-project/components/FormEditProject";
 
 const EditProjectPage = async ({
@@ -8,10 +10,22 @@ const EditProjectPage = async ({
 }) => {
   const { projectId } = await params;
 
+  const { data: project } = await getProject(projectId);
   return (
     <section className="pt-8 px-6 pb-13 lg:p-0">
       {/* main heading for desktop */}
-      <div className=" hidden lg:block lg:h-16 lg:mb-10">
+      <div className=" hidden lg:flex lg:flex-col gap-4 lg:h-16 lg:mb-10">
+        <BreadCrumb
+          items={[
+            { label: "Project", href: "/project" },
+            {
+              label: project?.[0]?.name,
+              href: `/project/${projectId}`,
+              noRedirect: true,
+            },
+            { label: "Edit", href: `/project/${projectId}/edit` },
+          ]}
+        />
         <MainHeading
           heading="Edit Project"
           title="Define the scope and foundational details of your project."

@@ -1,7 +1,9 @@
 import MainHeading from "@/components/layout/MainHeading";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
 import ListMember from "@/features/member/components/ListMember";
 import MembersTable from "@/features/member/components/MembersTable";
+import { getProject } from "@/features/project/api/getProject";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,12 +14,25 @@ const MembersPage = async ({
 }) => {
   const { projectId } = await params;
   const { data: projectMember } = await getProjectMember(projectId);
+
+  const { data: project } = await getProject(projectId);
   return (
     <section className="flex flex-col gap-3">
       {/* main heading and breadcrumb + invite member button */}
       <div className="flex items-end justify-center lg:justify-between">
         {/* main heading + breadcrumb */}
-        <div className="">
+        <div className="lg:flex lg:flex-col gap-4">
+          <BreadCrumb
+            items={[
+              { label: "Project", href: "/project" },
+              {
+                label: project?.[0]?.name,
+                href: `/project/${projectId}`,
+                noRedirect: true,
+              },
+              { label: "Members", href: `/project/${projectId}/members` },
+            ]}
+          />
           {/* main heading */}
           <div>
             <MainHeading

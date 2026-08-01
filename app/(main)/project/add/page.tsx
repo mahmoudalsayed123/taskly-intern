@@ -1,11 +1,19 @@
 import MainHeading from "@/components/layout/MainHeading";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 import NewProjectForm from "@/features/project/add-project/components/NewProjectForm";
+import { getProject } from "@/features/project/api/getProject";
 
-const AddProjectPage = () => {
+const AddProjectPage = async () => {
   return (
     <section className="pt-8 px-6 pb-13 lg:p-0">
       {/* main heading for desktop */}
       <div className=" hidden lg:block lg:h-16 lg:mb-10 lg:text-no-project">
+        <BreadCrumb
+          items={[
+            { label: "Project", href: "/project" },
+            { label: "Add New Project", href: "/project/add" },
+          ]}
+        />
         <MainHeading
           heading="Add New Project"
           title=""

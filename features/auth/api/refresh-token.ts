@@ -30,38 +30,35 @@ export async function refreshToken() {
     );
 
     if (!response.ok) {
-      deleteCookiesAndGoToLogin();
+      await deleteCookiesAndGoToLogin();
     }
 
     const result = await response.json();
 
     if (result.code === 400 || !result.access_token || !result.refresh_token) {
-      deleteCookiesAndGoToLogin();
+      await deleteCookiesAndGoToLogin();
     }
 
-    if (result) {
-      await deleteCookies();
+    await deleteCookies();
 
-      cookieStore.set("access_token", result.access_token, {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        maxAge: result.expires_in,
-      });
+    cookieStore.set("access_token", result.access_token, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+      maxAge: result.expires_in,
+    });
 
-      cookieStore.set("refresh_token", result.refresh_token, {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        maxAge: result.expires_in,
-      });
-    }
+    cookieStore.set("refresh_token", result.refresh_token, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+    });
 
     return {
       success: true,
-      data: result,
+      accessToken: result.access_token,
     };
   } catch (error: unknown) {
-    deleteCookiesAndGoToLogin();
+    return await deleteCookiesAndGoToLogin();
   }
 }

@@ -34,19 +34,25 @@ const EpicCard = ({ epic }: { epic: Epic }) => {
       {/* assignee + date (mobile) */}
       <div className="flex items-center justify-between pt-1.5 lg:pb-6">
         {/* assignee */}
-        <div className="flex items-center gap-3">
-          <div className="py-1.5 w-7 h-7 rounded-xl bg-primary-container lg:bg-assignee-container flex items-center justify-center text-label-SM font-bold text-white">
-            {initials}
+        {epic.assignee.name ? (
+          <div className="flex items-center gap-3">
+            <div className="py-1.5 w-7 h-7 rounded-xl bg-primary-container lg:bg-assignee-container flex items-center justify-center text-label-SM font-bold text-white">
+              {initials}
+            </div>
+            <div className="flex flex-col">
+              <p className="text-label-SM lg:text-body-MD font-medium text-slate-dark">
+                {epic.assignee.name}
+              </p>
+              <p className="text-label-SM font-normal text-resend-timer">
+                Assignee
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <p className="text-label-SM lg:text-body-MD font-medium text-slate-dark">
-              {epic.assignee.name}
-            </p>
-            <p className="text-label-SM font-normal text-resend-timer">
-              Assignee
-            </p>
-          </div>
-        </div>
+        ) : (
+          <p className="text-label-SM font-semibold text-resend-timer">
+            Unassigned
+          </p>
+        )}
 
         {/* date (mobile) */}
         <div className="flex flex-col lg:hidden">

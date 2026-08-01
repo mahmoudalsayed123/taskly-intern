@@ -139,17 +139,14 @@ key milestones..."
         {/* creat project and back buttons */}
         <div className="pt-4 md:px-4 lg:px-0 lg:pt-0 flex flex-col gap-4 lg:gap-0 justify-center items-center  lg:flex-row-reverse lg:justify-between">
           <button
-            className="btn-primary-desktop "
-            style={{
-              background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-            }}
+            className="btn-primary-mobile w-full! lg:w-fit! lg:btn-primary-desktop"
             type="submit"
           >
             Save Changes
           </button>
           <button
             onClick={() => router.back()}
-            className="w-full lg:w-24! lg:h-11! lg:py-3! lg:px-6! font-bold! text-body-MD! text-slate-medium! cursor-pointer"
+            className="btn-secondary-mobile w-full! lg:w-fit! lg:btn-secondary-desktop"
           >
             Back
           </button>

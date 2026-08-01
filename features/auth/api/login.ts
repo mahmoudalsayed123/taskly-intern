@@ -38,7 +38,7 @@ export async function login(data: any) {
       // secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: result.expires_in,
+
     });
 
     return {

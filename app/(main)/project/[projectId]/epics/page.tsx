@@ -1,4 +1,5 @@
 import MainHeading from "@/components/layout/MainHeading";
+import BtnAdd from "@/components/ui/BtnAdd";
 import { getProjectEpics } from "@/features/epic/api/getProjectEpics";
 import EpicList from "@/features/epic/components/EpicList";
 import Image from "next/image";
@@ -14,9 +15,9 @@ const Epicspage = async ({
   const { data } = await getProjectEpics(projectId);
 
   return (
-    <section>
+    <section className="pt-4 px-6 pb-32 lg:p-0">
       {/* main headig and breadcrumb + search + create epic button  */}
-      <div className="lg:flex lg:items-center lg:justify-between pt-4 px-6 pb-32 lg:p-0">
+      <div className="lg:flex lg:items-center lg:justify-between">
         {/* main heading */}
         <div className="hidden lg:block text-display-MD lg:flex-1">
           <MainHeading
@@ -61,6 +62,8 @@ const Epicspage = async ({
 
       {/* epics list  */}
       <EpicList epics={data} />
+
+      <BtnAdd path={`/project/${projectId}/epics/new`} />
     </section>
   );
 };

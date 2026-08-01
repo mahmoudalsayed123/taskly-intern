@@ -9,6 +9,7 @@
   --color-primary: #003d9b;
   --color-primary-container: #0052cc;
   --color-primary-10: #0052cc1a;
+  --color-primary-20: #003d9b33;
 
   /* ===== Surface ===== */
   --color-surface-highest: #d7e2ff;
@@ -88,7 +89,15 @@
 }
 
 .btn-primary-desktop {
-  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
+  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold;
+  background: linear-gradient(
+    99.3deg,
+    var(--color-primary) 0%,
+    var(--color-primary-container) 100%
+  );
+  box-shadow:
+    0px 4px 6px -4px var(--color-primary-20),
+    0px 10px 15px -3px var(--color-primary-20);
 }
 
 .btn-primary-mobile {

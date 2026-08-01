@@ -2,7 +2,11 @@
 import { refreshToken } from "@/features/auth/api/refresh-token";
 import { cookies } from "next/headers";
 
-export async function getProjectEpics(projectId: string) {
+export async function getProjectEpics(
+  projectId: string,
+  limit?: number,
+  offset?: number,
+) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("access_token")?.value;

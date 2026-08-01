@@ -6,6 +6,7 @@ import ProjectList from "@/features/project/components/ProjectList";
 import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/ui/Pagination";
+import BtnAdd from "@/components/ui/BtnAdd";
 
 const ProjectPage = async ({
   searchParams,
@@ -71,25 +72,7 @@ const ProjectPage = async ({
       <ProjectList projects={data} />
 
       {/* link add project mobile screen */}
-      <Link
-        href="/project/add"
-        className="block lg:hidden fixed bottom-6 right-6"
-      >
-        <button
-          className="h-14 w-14 flex items-center justify-center gap-2 shadow-[0px 4px 6px -4px #0000001A] shadow-[0px 10px 15px -3px #0000001A] rounded-xl cursor-pointer
- "
-          style={{
-            background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-          }}
-        >
-          <Image
-            src="/assets/icons/plus.svg"
-            alt="add"
-            width={10.5}
-            height={10.5}
-          />
-        </button>
-      </Link>
+      <BtnAdd path="/project/add" />
 
       {/* pagination */}
       <Pagination

@@ -158,7 +158,7 @@ const ResetPasswordForm = () => {
       </div>
       {/* reset password successfully */}
       <button
-        className="w-full btn-primary-desktop h-12! rounded-xs! shadow-btn text-body-MD font-semibold "
+        className=" btn-primary-mobile w-full! lg:w-fit! lg:btn-primary-desktop"
         style={{
           background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
         }}

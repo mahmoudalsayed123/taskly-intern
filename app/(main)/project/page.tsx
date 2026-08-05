@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/ui/Pagination";
 import BtnAdd from "@/components/ui/BtnAdd";
+import InfiniteProjectList from "@/features/project/components/infiniteProjectList";
 
 const ProjectPage = async ({
   searchParams,
@@ -31,7 +32,6 @@ const ProjectPage = async ({
     ?.reduce((cur, acc) => Number(acc) - Number(cur), 0);
 
   const totalPages = Math.ceil(totalProjects / limit);
-
   if (!data) {
     return <EmptyProjectPage />;
   }
@@ -69,15 +69,22 @@ const ProjectPage = async ({
           </button>
         </Link>
       </div>
-      <ProjectList projects={data} />
-
+      <div className="hidden lg:block">
+        <ProjectList projects={data} />
+      </div>
+      {/* infinite project list for mobile */}
+      <div className="lg:hidden">
+        <InfiniteProjectList
+          initialProjects={data}
+          totalProjects={totalProjects}
+        />
+      </div>
       {/* link add project mobile screen */}
       <BtnAdd path="/project/add" />
 
       {/* pagination */}
       <Pagination
         currentPage={currentPage}
-        offset={offset}
         totalPages={totalPages}
         totalProjects={totalProjects}
         projectsShowing={projectsShowing || 0}

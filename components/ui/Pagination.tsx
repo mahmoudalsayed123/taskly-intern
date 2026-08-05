@@ -1,20 +1,21 @@
 "use client";
+import { getPagination } from "@/lib/pagination";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Pagination = ({
   currentPage,
-  offset,
   totalPages,
   totalProjects,
   projectsShowing,
 }: {
   currentPage: number;
-  offset: number;
   totalPages: number;
   totalProjects: number;
   projectsShowing: number;
 }) => {
+  const pages = getPagination(currentPage, totalPages);
+
   const router = useRouter();
   return (
     <div className="hidden md:flex items-center justify-between w-full mt-12">
@@ -38,21 +39,28 @@ const Pagination = ({
             height={7}
           />
         </button>
-        {Array.from({ length: totalPages }).map((_, pageNum) => (
-          <button
-            key={pageNum}
-            className={`flex items-center justify-center w-8 h-8 text-label-SM font-bold  ${
-              pageNum + 1 === currentPage
-                ? "bg-primary text-white rounded-xs"
-                : "border border-slate-light bg-white text-slate-dark rounded-xs"
-            } cursor-pointer`}
-            onClick={() => {
-              router.push(`/project?page=${pageNum + 1}`);
-            }}
-          >
-            {pageNum + 1}
-          </button>
-        ))}
+        {pages.map((page, index) =>
+          page === "..." ? (
+            <div
+              key={index}
+              className="flex items-center justify-center w-8 h-8 text-label-SM font-bold border border-slate-light bg-white text-slate-dark rounded-xs"
+            >
+              ...
+            </div>
+          ) : (
+            <button
+              key={page}
+              className={`flex items-center justify-center w-8 h-8 text-label-SM font-bold ${
+                page === currentPage
+                  ? "bg-primary text-white rounded-xs"
+                  : "border border-slate-light bg-white text-slate-dark rounded-xs "
+              }`}
+              onClick={() => router.push(`/project?page=${page}`)}
+            >
+              {page}
+            </button>
+          ),
+        )}
         {/* next page button */}
         <button
           className={`w-8 h-8 flex items-center justify-center bg-white border border-slate-light cursor-pointer disabled:cursor-not-allowed rounded-xs `}

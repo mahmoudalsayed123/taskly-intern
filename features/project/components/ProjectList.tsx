@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const ProjectList = ({ projects }: { projects?: Projects[] }) => {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+    <section className="bg-red-400 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between gap-6 mt-10">
       {projects?.map((project) => (
         <Suspense key={project.id} fallback={<LoadingProjectCard />}>
           <ProjectCard project={project} />

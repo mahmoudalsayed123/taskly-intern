@@ -44,19 +44,19 @@ const Epicspage = async ({
         </div>
 
         <div className="lg:flex lg:gap-8 lg:items-center ">
-          <div className="relative ">
+          <div className="relative">
             <input
               type="text"
               name="search"
               placeholder="Search for epics..."
-              className="input w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7!"
+              className="input w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7! placeholder:text-body-MD placeholder:font-normal placeholder:text-resend-timer"
             />
             <Image
               src="/assets/icons/search.svg"
               alt="search"
               width={10.5}
               height={10.5}
-              className="absolute top-1/2 -translate-y-1/2 left-3"
+              className="absolute top-1/2 left-3 -translate-y-1/2 "
             />
           </div>
           <Link href={`/project/${projectId}/epics/new`}>

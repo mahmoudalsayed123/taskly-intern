@@ -4,6 +4,7 @@ import { useState } from "react";
 import SidebarLg from "./SidebarLg";
 import Topbar from "./Topbar";
 import SidebarMobile from "./SidebarMobile";
+import NavigationMenuMobile from "./NavigationMenuMobile";
 
 export default function DashboardLayout({
   children,
@@ -25,7 +26,7 @@ export default function DashboardLayout({
       >
         <div
           onClick={() => setOpenMobile(false)}
-          className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 lg:hidden ${
+          className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 lg:hidden  ${
             openMobile
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -33,9 +34,15 @@ export default function DashboardLayout({
         />
         <Topbar openMobile={openMobile} setOpenMobile={setOpenMobile} />
 
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-w-7xl">
+        <main
+          className={`flex-1 p-4 pb-10 lg:p-8 overflow-y-auto  ${collapse ? "w-full lg:p-10" : "max-w-7xl"}`}
+        >
           {children}
         </main>
+      </div>
+
+      <div className=" lg:hidden">
+        <NavigationMenuMobile />
       </div>
     </>
   );

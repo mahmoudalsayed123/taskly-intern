@@ -50,6 +50,7 @@ export interface Member {
 }
 export interface Epic {
   id: string;
+  project_id: string;
   title: string;
   description: string;
   created_at: string;

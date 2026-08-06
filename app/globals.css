@@ -14,12 +14,18 @@
   /* ===== Surface ===== */
   --color-surface-highest: #d7e2ff;
   --color-surface-low: #f1f3ff;
+  --color-surface-low-50: #f1f3ff80;
   --color-background-container: #f9f9ff;
   --color-background-check-password: #e8edff;
 
   /* ===== Slate ===== */
   --color-slate-dark: #041b3c;
+  --color-userName-epic-modal: #001848;
+  --color-overlay: #041b3c66;
   --color-slate-dark-70: #041b3cb2;
+  --color-slate-50: #c3c6d680;
+  --color-slate-30: #c3c6d64d;
+  --color-slate-15: #c3c6d626;
   --color-slate-medium: #4f5f7b;
   --color-slate-light: #c3c6d6;
   --color-resend-timer: #737685;

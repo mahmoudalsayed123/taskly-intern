@@ -41,9 +41,9 @@ export default function DashboardLayout({
         </main>
       </div>
 
-      <div className=" lg:hidden">
+      {/* <div className=" lg:hidden">
         <NavigationMenuMobile />
-      </div>
+      </div> */}
     </>
   );
 }

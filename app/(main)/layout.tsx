@@ -20,14 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
-      <body>
-        {/* <SidebarLg />
-
-        <div className="lg:ml-64 min-h-screen flex flex-col">
-          <Topbar />
-
-          <main className="flex-1 p-4 lg:p-8 overflow-y-auto">{children}</main>
-        </div> */}
+      <body className="relative">
         <DashboardLayout>{children}</DashboardLayout>
       </body>
     </html>

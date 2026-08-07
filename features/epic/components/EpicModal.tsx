@@ -7,6 +7,8 @@ import { getEpicDetails } from "../api/getEpicDetails";
 import { getInitials } from "@/lib/getInitials";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
 import { formateDeadline } from "@/lib/helper";
+import { updateEpic } from "../api/updateEpic";
+import { constants } from "buffer";
 
 const EpicModal = ({
   projectId,
@@ -20,10 +22,15 @@ const EpicModal = ({
   setOpenModal: (value: boolean) => void;
 }) => {
   const [epic, setEpic] = useState<Epic | null>(null);
+  const [selectedAssignee, setSelectedAssignee] = useState<any>(null);
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     [],
   );
-  const initials = epic ? getInitials(epic.assignee.name) : "";
+  const [updateTitle, setUpdateTitle] = useState(false);
+  const [updateDescription, setUpdateDescription] = useState(false);
+  const [dataUpdated, setDataUpdated] = useState<{ title?: string; description?: string, assignee_id?: string }>({});
+
+  const initials = epic ? getInitials(epic.created_by.name) : "";
 
   useEffect(() => {
     async function getEpic() {
@@ -36,7 +43,7 @@ const EpicModal = ({
       if (memberResponse.success) {
         setOptions([
           {
-            value: "",
+            value: null,
             label: "Unassigned",
             initials: "",
           },
@@ -51,15 +58,37 @@ const EpicModal = ({
     getEpic();
   }, [projectId, epicId]);
 
-  const selectedAssignee =
-    options.find((option) => option.value === epic?.assignee?.sub) ??
-    options[0];
+  useEffect(() => {
+    async function epicUpdated() {
+      const res = await updateEpic(epicId, dataUpdated);
+      if (res.success) {
+        setEpic((prev) => ({ ...prev!, ...dataUpdated }));
+        setUpdateTitle(false);
+        setUpdateDescription(false);
+        const selected =
+          options.find((option) => option.value === dataUpdated.assignee_id) ??
+          options[0];
+        setSelectedAssignee(selected);
+      }
+    }
+    epicUpdated();
+  }, [dataUpdated]);
+
+  useEffect(() => {
+    if (epic && options.length) {
+      const selected =
+        options.find((option) => option.value === epic?.assignee?.sub) ??
+        options[0];
+      setSelectedAssignee(selected);
+    }
+  }, [options]);
+
   return (
     <div
       className={`w-full h-fit max-w-md max-h-198.75 lg:w-2xl lg:max-w-2xl lg:max-h-230.25 bg-white rounded-lg shadow-[0px_25px_50px_-12px_#00000040] z-200  ${openModal ? "block" : "hidden"} `}
     >
       {/* main heading */}
-      <div className="p-6 pb-4 lg:p-8  rounded-lg flex flex-col gap-3 bg-linear-to-b from-white to-surface-low lg:border-b lg:border-slate-15 lg:bg-white">
+      <div className="p-6 pb-4 lg:p-8  rounded-lg flex flex-col gap-3  lg:border-b lg:border-slate-15 lg:bg-white">
         {/* epic id, copy link, close */}
         <div className="w-full  flex items-center justify-between">
           {/* epic id */}
@@ -91,9 +120,30 @@ const EpicModal = ({
           </div>
         </div>
         {/* epic title  */}
-        <h3 className="w-full text-body-MD font-semibold text-slate-dark p-2 border border-slate-50 rounded-lg">
-          {epic?.title}
-        </h3>
+        {updateTitle ? (
+          <input
+            type="text"
+            defaultValue={epic?.title}
+            onBlur={(e) => {
+              if (!e.target.value) {
+                setUpdateTitle(false);
+                return;
+              }
+              setUpdateTitle(false);
+              setDataUpdated({ title: e.target.value });
+            }}
+            className="w-full outline-none text-body-MD p-2 border border-slate-50 rounded-lg font-semibold text-primary-container"
+          />
+        ) : (
+          <h3
+            className="w-full text-body-MD font-semibold text-slate-dark p-2 border border-slate-50 rounded-lg"
+            onClick={() => {
+              setUpdateTitle(true);
+            }}
+          >
+            {epic?.title}
+          </h3>
+        )}
       </div>
 
       {/* main content */}
@@ -103,14 +153,31 @@ const EpicModal = ({
           <p className="lg:hidden text-label-SM font-bold text-slate-medium">
             DESCRIPTION
           </p>
-          <div className="w-full h-27.5 rounded-lg p-2 border border-slate-50">
-            {epic?.description ? (
-              <p className="text-label-SM lg:text-body-MD font-normal text-slate-dark">
-                {epic?.description}
-              </p>
+          <div
+            className={`cursor-pointer w-full h-27.5 rounded-lg  border border-slate-50 ${updateDescription ? "p-0" : "p-2"}`}
+          >
+            {updateDescription ? (
+              <textarea
+                defaultValue={epic?.description}
+                autoFocus
+                onBlur={(e) => {
+                  if (!e.target.value) {
+                    setUpdateDescription(false);
+                    return;
+                  }
+                  setUpdateDescription(false);
+                  setDataUpdated({ description: e.target.value });
+                }}
+                className={`resize-none cursor-pointer outline-none w-full h-full rounded-lg p-2 border border-slate-50 text-body-MD font-normal  ${updateDescription ? "text-slate-medium" : "text-slate-dark"}`}
+              />
             ) : (
-              <p className="text-body-MD font-normal text-slate-medium">
-                No description provided
+              <p
+                onClick={() => setUpdateDescription(true)}
+                className="w-full h-full text-label-SM lg:text-body-MD font-normal text-slate-dark"
+              >
+                {epic?.description
+                  ? epic?.description
+                  : "No description provided"}
               </p>
             )}
           </div>
@@ -140,9 +207,20 @@ const EpicModal = ({
             <Select
               options={options}
               value={selectedAssignee}
+              onChange={(e) => {
+                if (e?.value === null) {
+                  setDataUpdated({
+                    assignee_id: null,
+                  });
+                  return;
+                }
+                setDataUpdated({
+                  assignee_id: e?.value,
+                });
+              }}
               placeholder="Unassigned"
               formatOptionLabel={(option) =>
-                option.value === "" ? (
+                option?.value === null ? (
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-head-table flex items-center justify-center">
                       <Image
@@ -163,7 +241,7 @@ const EpicModal = ({
                       {initials}
                     </div>
                     <span className="text-label-SM lg:text-body-MD font-medium text-slate-dark">
-                      {option.label}
+                      {option?.label}
                     </span>
                   </div>
                 )

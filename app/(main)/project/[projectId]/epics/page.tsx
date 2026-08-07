@@ -6,17 +6,43 @@ import EpicList from "@/features/epic/components/EpicList";
 import Image from "next/image";
 import Link from "next/link";
 import { getProject } from "@/features/project/api/getProject";
+import Pagination from "@/components/ui/Pagination";
+import InfiniteEpicList from "@/features/epic/components/infiniteEpicList";
 
 const Epicspage = async ({
   params,
+  searchParams,
 }: {
   params: Promise<{ projectId: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) => {
   const { projectId } = await params;
 
-  const { data } = await getProjectEpics(projectId);
+  const { page } = await searchParams;
+
+  const currentPage = Number(page ?? "1");
+
+  const limit = 10;
+
+  const offset = (currentPage - 1) * limit;
+
+  const { success, data, totalCount } = await getProjectEpics(
+    projectId,
+    limit,
+    offset,
+  );
+
+  const totalEpics = Number(totalCount?.split("/")[1]);
+
+  const epicsShowing = totalCount
+    ?.split("/")[0]
+    ?.split("-")
+    ?.reduce((cur, acc) => Number(acc) - Number(cur), 0);
+
+  const totalPages = Math.ceil(totalEpics / limit);
 
   const { data: project } = await getProject(projectId);
+  
 
   return (
     <section className="pt-4 px-6 pb-32 lg:p-0">
@@ -76,9 +102,24 @@ const Epicspage = async ({
       </div>
 
       {/* epics list  */}
-      <EpicList epics={data} />
+      <div className="hidden lg:block">
+        <EpicList epics={data} />
+      </div>
+      <div className="lg:hidden">
+        <InfiniteEpicList initialEpics={data} totalEpics={totalEpics} />
+      </div>
 
       <BtnAdd path={`/project/${projectId}/epics/new`} />
+
+      {/* pagination */}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalProjects={totalEpics}
+          projectsShowing={epicsShowing || 0}
+        />
+      )}
     </section>
   );
 };

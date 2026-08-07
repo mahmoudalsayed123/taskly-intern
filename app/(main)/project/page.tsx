@@ -83,12 +83,14 @@ const ProjectPage = async ({
       <BtnAdd path="/project/add" />
 
       {/* pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        totalProjects={totalProjects}
-        projectsShowing={projectsShowing || 0}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalProjects={totalProjects}
+          projectsShowing={projectsShowing || 0}
+        />
+      )}
     </section>
   );
 };

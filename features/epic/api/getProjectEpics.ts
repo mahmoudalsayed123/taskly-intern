@@ -1,4 +1,5 @@
 "use server";
+import { authorizedFetch } from "@/features/auth/api/authorizedFetch";
 import { refreshToken } from "@/features/auth/api/refresh-token";
 import { cookies } from "next/headers";
 
@@ -15,14 +16,12 @@ export async function getProjectEpics(
       await refreshToken();
     }
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}`,
+    const res = await authorizedFetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}&limit=${limit}&offset=${offset}`,
       {
         method: "GET",
         headers: {
-          apikey: process.env.API_KEY!,
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          Prefer: "count=exact",
         },
       },
     );
@@ -33,10 +32,12 @@ export async function getProjectEpics(
     }
 
     const data = await res.json();
+    const totalCount = res.headers.get("Content-Range");
 
     return {
       success: true,
-      data: data,
+      data,
+      totalCount,
     };
   } catch (error) {
     return {

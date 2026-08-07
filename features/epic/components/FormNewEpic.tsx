@@ -12,6 +12,7 @@ import { createEpic } from "../api/createEpic";
 import { useEffect, useState } from "react";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
 import { Member } from "@/constants/constants";
+import { formatDateForApi } from "@/lib/helper";
 
 const FormNewEpic = ({ projectId }: { projectId: string }) => {
   const [assignee, setAssignee] = useState([]);
@@ -39,13 +40,18 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
   });
 
   const submitForm = async (data: createEpicFormValues) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const formatedDate = formatDateForApi(today);
     const newEpic = {
       title: data?.title,
       description: data?.description,
-      assignee_id: data?.assignee_id,
+      assignee_id: data?.assignee_id || "",
       project_id: projectId,
-      deadline: data?.deadline,
+      deadline: data?.deadline || formatedDate,
     };
+
+    console.log(newEpic);
     const res = await createEpic(newEpic);
     if (res.success) {
       toastSuccess("Epic created successfully");

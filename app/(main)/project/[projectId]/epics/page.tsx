@@ -46,7 +46,7 @@ const Epicspage = async ({
 
   const { data: project } = await getProject(projectId);
 
-  if (data) {
+  if (!data) {
     return <EmptyEpicPage />;
   }
 

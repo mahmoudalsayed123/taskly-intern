@@ -1,43 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const EmptyProjectPage = () => {
+const EmptyEpicPage = () => {
   return (
     <section className="p-6 lg:p-0 flex items-center justify-center ">
-      <div className="flex flex-col items-center justify-center gap-6 w-full lg:w-200 h-[calc(100vh-130px)]">
+      <div className="flex flex-col items-center justify-center gap-6 w-full lg:max-w-2xl h-[calc(100vh-130px)]">
         <div className="w-full flex items-center justify-center">
           <Image
-            src="/assets/icons/no-project.svg"
-            alt="no project"
-            width={288}
-            height={288}
+            src="/assets/icons/image-no-epic.svg"
+            alt="no epic"
+            width={224}
+            height={224}
           />
         </div>
         <h2 className="text-no-project font-semibold text-slate-dark text-center">
-          No Projects
+          No epics in this project yet.
         </h2>
         <p className="w-full lg:max-w-md text-center text-body-MD text-muted-body">
-          Your do not have any project yet. start by defining your first
-          architectural workspace to tracking tasks and epics.
+          Break down your large project into manageable epics to track progress
+          better and maintain architectural clarity.
         </p>
         <div className="w-full flex items-center justify-center">
           <Link href="/project/add" className="hidden md:block">
             <button className="btn-primary-desktop lg:flex! items-center! justify-center! hidden!">
               <Image
-                src="/assets/icons/plus.svg"
+                src="/assets/icons/flash.svg"
                 alt="add"
-                width={10.5}
-                height={10.5}
+                width={16}
+                height={20}
               />
               <p className="text-body-MD font-medium text-white ">
-                Create Project
+                Create First Epic
               </p>
             </button>
           </Link>
+        </div>
+        <div>
+          <div></div>
         </div>
       </div>
     </section>
   );
 };
 
-export default EmptyProjectPage;
+export default EmptyEpicPage;

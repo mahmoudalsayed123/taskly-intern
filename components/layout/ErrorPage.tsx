@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const ErrorProjectPage = () => {
+const ErrorPage = () => {
   const router = useRouter();
   return (
     <section className="p-6 lg:p-0 flex items-center justify-center ">
@@ -36,11 +36,13 @@ const ErrorProjectPage = () => {
             width={10.5}
             height={10.5}
           />
-          <p className="text-body-MD font-medium text-white ">Retry Again</p>
+          <p className="text-body-MD font-medium text-white ">
+            Retry Connection
+          </p>
         </button>
       </div>
     </section>
   );
 };
 
-export default ErrorProjectPage;
+export default ErrorPage;

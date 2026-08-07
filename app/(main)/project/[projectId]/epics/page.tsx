@@ -8,6 +8,9 @@ import Link from "next/link";
 import { getProject } from "@/features/project/api/getProject";
 import Pagination from "@/components/ui/Pagination";
 import InfiniteEpicList from "@/features/epic/components/infiniteEpicList";
+import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
+import ErrorPage from "@/components/layout/ErrorPage";
+import EmptyEpicPage from "@/features/epic/components/EmptyEpicsPage";
 
 const Epicspage = async ({
   params,
@@ -42,7 +45,14 @@ const Epicspage = async ({
   const totalPages = Math.ceil(totalEpics / limit);
 
   const { data: project } = await getProject(projectId);
-  
+
+  if (data) {
+    return <EmptyEpicPage />;
+  }
+
+  if (success === false) {
+    return <ErrorPage />;
+  }
 
   return (
     <section className="pt-4 px-6 pb-32 lg:p-0">

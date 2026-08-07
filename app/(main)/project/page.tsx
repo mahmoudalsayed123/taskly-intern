@@ -1,6 +1,5 @@
 import MainHeading from "@/components/layout/MainHeading";
 import { getProjects } from "@/features/project/api/getProjects";
-import ErrorProjectPage from "@/features/project/components/ErrorProjectPage";
 import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
 import ProjectList from "@/features/project/components/ProjectList";
 import Image from "next/image";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import Pagination from "@/components/ui/Pagination";
 import BtnAdd from "@/components/ui/BtnAdd";
 import InfiniteProjectList from "@/features/project/components/infiniteProjectList";
+import ErrorPage from "@/components/layout/ErrorPage";
 
 const ProjectPage = async ({
   searchParams,
@@ -37,7 +37,7 @@ const ProjectPage = async ({
   }
 
   if (success === false) {
-    return <ErrorProjectPage />;
+    return <ErrorPage />;
   }
 
   return (

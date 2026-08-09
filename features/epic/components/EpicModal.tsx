@@ -1,14 +1,18 @@
 "use client";
 import { Epic, Member } from "@/constants/constants";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import { getEpicDetails } from "../api/getEpicDetails";
 import { getInitials } from "@/lib/getInitials";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
 import { formateDeadline } from "@/lib/helper";
 import { updateEpic } from "../api/updateEpic";
-import { constants } from "buffer";
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createEpicSchema, updateEpicSchema } from "@/lib/zodSchema";
+import ErrorField from "@/components/ui/ErrorField";
 
 const EpicModal = ({
   projectId,
@@ -21,6 +25,7 @@ const EpicModal = ({
   openModal: boolean;
   setOpenModal: (value: boolean) => void;
 }) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [epic, setEpic] = useState<Epic | null>(null);
   const [selectedAssignee, setSelectedAssignee] = useState<any>(null);
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
@@ -28,9 +33,24 @@ const EpicModal = ({
   );
   const [updateTitle, setUpdateTitle] = useState(false);
   const [updateDescription, setUpdateDescription] = useState(false);
-  const [dataUpdated, setDataUpdated] = useState<{ title?: string; description?: string, assignee_id?: string }>({});
+  const [dataUpdated, setDataUpdated] = useState<{
+    title?: string;
+    description?: string;
+    assignee_id?: string;
+    deadline?: string;
+  }>({});
+  const [updateDeadline, setUpdateDeadline] = useState(false);
 
   const initials = epic ? getInitials(epic.created_by.name) : "";
+
+  type updateEpicFormValues = z.infer<typeof updateEpicSchema>;
+  const {
+    register,
+    formState: { errors },
+  } = useForm<updateEpicFormValues>({
+    mode: "onChange",
+    resolver: zodResolver(updateEpicSchema),
+  });
 
   useEffect(() => {
     async function getEpic() {
@@ -57,14 +77,16 @@ const EpicModal = ({
     }
     getEpic();
   }, [projectId, epicId]);
-
+  console.log(errors);
   useEffect(() => {
     async function epicUpdated() {
+      console.log(dataUpdated);
       const res = await updateEpic(epicId, dataUpdated);
       if (res.success) {
         setEpic((prev) => ({ ...prev!, ...dataUpdated }));
         setUpdateTitle(false);
         setUpdateDescription(false);
+        setUpdateDeadline(false);
         const selected =
           options.find((option) => option.value === dataUpdated.assignee_id) ??
           options[0];
@@ -85,7 +107,7 @@ const EpicModal = ({
 
   return (
     <div
-      className={`w-full h-fit max-w-md max-h-198.75 lg:w-2xl lg:max-w-2xl lg:max-h-230.25 bg-white rounded-lg shadow-[0px_25px_50px_-12px_#00000040] z-200  ${openModal ? "block" : "hidden"} `}
+      className={` w-full h-fit max-w-md max-h-198.75 lg:w-2xl lg:max-w-2xl lg:max-h-230.25  bg-white rounded-lg shadow-[0px_25px_50px_-12px_#00000040] z-200  ${openModal ? "block" : "hidden"} `}
     >
       {/* main heading */}
       <div className="p-6 pb-4 lg:p-8  rounded-lg flex flex-col gap-3  lg:border-b lg:border-slate-15 lg:bg-white">
@@ -121,19 +143,23 @@ const EpicModal = ({
         </div>
         {/* epic title  */}
         {updateTitle ? (
-          <input
-            type="text"
-            defaultValue={epic?.title}
-            onBlur={(e) => {
-              if (!e.target.value) {
+          <>
+            <input
+              type="text"
+              defaultValue={epic?.title}
+              {...register("title")}
+              onBlur={(e) => {
+                if (!e.target.value) {
+                  setUpdateTitle(false);
+                  return;
+                }
                 setUpdateTitle(false);
-                return;
-              }
-              setUpdateTitle(false);
-              setDataUpdated({ title: e.target.value });
-            }}
-            className="w-full outline-none text-body-MD p-2 border border-slate-50 rounded-lg font-semibold text-primary-container"
-          />
+                setDataUpdated({ title: e.target.value });
+              }}
+              className="w-full outline-none text-body-MD p-2 border border-slate-50 rounded-lg font-semibold text-primary-container"
+            />
+            <ErrorField message={errors.title?.message} />
+          </>
         ) : (
           <h3
             className="w-full text-body-MD font-semibold text-slate-dark p-2 border border-slate-50 rounded-lg"
@@ -157,19 +183,22 @@ const EpicModal = ({
             className={`cursor-pointer w-full h-27.5 rounded-lg  border border-slate-50 ${updateDescription ? "p-0" : "p-2"}`}
           >
             {updateDescription ? (
-              <textarea
-                defaultValue={epic?.description}
-                autoFocus
-                onBlur={(e) => {
-                  if (!e.target.value) {
+              <>
+                <textarea
+                  defaultValue={epic?.description}
+                  {...register("description")}
+                  onBlur={(e) => {
+                    if (!e.target.value) {
+                      setUpdateDescription(false);
+                      return;
+                    }
                     setUpdateDescription(false);
-                    return;
-                  }
-                  setUpdateDescription(false);
-                  setDataUpdated({ description: e.target.value });
-                }}
-                className={`resize-none cursor-pointer outline-none w-full h-full rounded-lg p-2 border border-slate-50 text-body-MD font-normal  ${updateDescription ? "text-slate-medium" : "text-slate-dark"}`}
-              />
+                    setDataUpdated({ description: e.target.value });
+                  }}
+                  className={`resize-none cursor-pointer outline-none w-full h-full rounded-lg p-2 border border-slate-50 text-body-MD font-normal  ${updateDescription ? "text-slate-medium" : "text-slate-dark"}`}
+                />
+                <ErrorField message={errors.description?.message} />
+              </>
             ) : (
               <p
                 onClick={() => setUpdateDescription(true)}
@@ -207,6 +236,7 @@ const EpicModal = ({
             <Select
               options={options}
               value={selectedAssignee}
+              {...register("assignee_id")}
               onChange={(e) => {
                 if (e?.value === null) {
                   setDataUpdated({
@@ -309,10 +339,19 @@ const EpicModal = ({
                 }),
               }}
             />
+            <ErrorField message={errors.assignee_id?.message} />
           </div>
 
           {/* deadline */}
-          <div className="w-full flex flex-col gap-2 col-span-1 pt-2 lg:pt-0">
+          <div
+            onClick={() => {
+              setUpdateDeadline(true);
+              if (inputRef.current) {
+                inputRef.current.showPicker?.();
+              }
+            }}
+            className="w-full flex flex-col gap-2 col-span-1 pt-2 lg:pt-0"
+          >
             <p className="text-label-SM font-bold text-slate-medium">
               DEADLINE
             </p>
@@ -325,19 +364,48 @@ const EpicModal = ({
                   height={15}
                   className="cursor-pointer"
                 />
-                <p className="text-label-SM lg:text-body-MD text-slate-dark font-medium">
-                  {formateDeadline(epic?.deadline || "")}
-                </p>
-                {/* <input
-                    // onClick={(e) => {
-                    //   e.currentTarget.showPicker?.();
-                    // }}
-                    id="deadline"
-                    type="date"
-                    value={formateDeadline(epic?.deadline || "")}
-                    className="text-label-SM text-muted-body font-medium"
-                    // {...register("deadline")}
-                  /> */}
+                {updateDeadline ? (
+                  <>
+                    <input
+                      {...register("deadline")}
+                      ref={inputRef}
+                      onChange={(e) => {
+                        if (!e.target.value) {
+                          setUpdateDeadline(false);
+                          return;
+                        }
+                        setUpdateDeadline(false);
+                        setDataUpdated({ deadline: e.target.value });
+                      }}
+                      onBlur={(e) => {
+                        console.log("blurring", e.target.value);
+                        if (!e.target.value) {
+                          setUpdateDeadline(false);
+                          return;
+                        }
+                        setUpdateDeadline(false);
+                        setDataUpdated({ deadline: e.target.value });
+                      }}
+                      id="deadline"
+                      type="date"
+                      value={formateDeadline(epic?.deadline || "")}
+                      className="text-label-SM text-muted-body font-medium outline-none"
+                    />
+                    <ErrorField message={errors.deadline?.message} />
+                  </>
+                ) : (
+                  <p
+                    onClick={() => {
+                      setUpdateDeadline(true);
+                      if (inputRef.current) {
+                        inputRef.current.showPicker?.();
+                      }
+                    }}
+                    className="text-label-SM lg:text-body-MD text-slate-dark font-medium"
+                  >
+                    {formateDeadline(epic?.deadline || "")}
+                  </p>
+                )}
               </div>
               <Image
                 src="/assets/icons/arrow-bottom.svg"

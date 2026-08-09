@@ -1,8 +1,13 @@
 "use server";
 import { Epic } from "@/constants/constants";
 import { authorizedFetch } from "@/features/auth/api/authorizedFetch";
+import { updateEpicSchema } from "@/lib/zodSchema";
+import { z } from "zod";
 
-export async function updateEpic(epicId: string, data: Partial<Epic>) {
+export async function updateEpic(
+  epicId: string,
+  data: z.infer<typeof updateEpicSchema>,
+) {
   try {
     const res = await authorizedFetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/epics?id=eq.${epicId}`,

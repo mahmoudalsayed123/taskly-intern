@@ -51,7 +51,6 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
       deadline: data?.deadline || formatedDate,
     };
 
-    console.log(newEpic);
     const res = await createEpic(newEpic);
     if (res.success) {
       toastSuccess("Epic created successfully");

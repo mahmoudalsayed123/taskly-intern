@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="relative">
+      <body className="">
         <DashboardLayout>{children}</DashboardLayout>
       </body>
     </html>

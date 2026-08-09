@@ -110,7 +110,7 @@ const EpicCard = ({ epic }: { epic: Epic }) => {
         <>
           <div
             onClick={() => setOpenModal(false)}
-            className="fixed top-0 left-0 w-full h-full bg-overlay/40 backdrop-blur-md z-100"
+            className="fixed top-0 left-0 w-full h-screen bg-overlay/40 backdrop-blur-md z-100 overscroll-y-none"
           ></div>
           <div className="w-full p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md max-h-198.75 lg:w-2xl lg:max-w-2xl lg:max-h-230.25 z-200 lg:my-20">
             <EpicModal

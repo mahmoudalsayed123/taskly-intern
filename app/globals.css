@@ -99,7 +99,7 @@
 }
 
 .btn-primary-desktop {
-  @apply py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold;
+  @apply lg:py-3 lg:px-6 lg:flex lg:items-center lg:justify-center cursor-pointer lg:text-white lg:text-body-MD lg:font-semibold lg:bg-primary lg:rounded-xs;
   background: linear-gradient(
     99.3deg,
     var(--color-primary) 0%,
@@ -115,7 +115,7 @@
 }
 
 .btn-secondary-desktop {
-  @apply py-3 px-6 lg:w-fit flex items-center justify-center gap-2 rounded-xs cursor-pointer text-body-MD font-semibold bg-white;
+  @apply lg:py-3 lg:px-6 lg:w-fit lg:gap-2 lg:rounded-xs lg:flex lg:items-center lg:justify-center cursor-pointer lg:text-body-MD lg:font-semibold lg:bg-white;
 }
 .btn-secondary-mobile {
   @apply w-full py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-body-MD font-semibold bg-white text-slate-medium;

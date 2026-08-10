@@ -11,8 +11,9 @@ import { updateEpic } from "../api/updateEpic";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createEpicSchema, updateEpicSchema } from "@/lib/zodSchema";
+import { updateEpicSchema } from "@/lib/zodSchema";
 import ErrorField from "@/components/ui/ErrorField";
+import Link from "next/link";
 
 const EpicModal = ({
   projectId,
@@ -77,10 +78,9 @@ const EpicModal = ({
     }
     getEpic();
   }, [projectId, epicId]);
-  console.log(errors);
+  
   useEffect(() => {
     async function epicUpdated() {
-      console.log(dataUpdated);
       const res = await updateEpic(epicId, dataUpdated);
       if (res.success) {
         setEpic((prev) => ({ ...prev!, ...dataUpdated }));
@@ -477,7 +477,10 @@ const EpicModal = ({
               </p>
             </div>
             {/* button container */}
-            <div className="w-full flex items-center justify-center">
+            <Link
+              href={`/project/${projectId}/tasks/new?epic_id=${epic?.id}`}
+              className="w-full flex items-center justify-center"
+            >
               <button
                 className="w-fit flex items-center gap-2 py-2 lg:py-2.5 px-4 lg:px-6 rounded-xs shadow-shadow-btn text-white cursor-pointer"
                 style={{
@@ -496,7 +499,7 @@ const EpicModal = ({
                   Add task
                 </span>
               </button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

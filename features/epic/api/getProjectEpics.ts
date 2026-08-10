@@ -16,15 +16,25 @@ export async function getProjectEpics(
       await refreshToken();
     }
 
-    const res = await authorizedFetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}&limit=${limit}&offset=${offset}`,
-      {
-        method: "GET",
-        headers: {
-          Prefer: "count=exact",
+    let res;
+    if (limit && offset) {
+      res = await authorizedFetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}&limit=${limit}&offset=${offset}`,
+        {
+          method: "GET",
+          headers: {
+            Prefer: "count=exact",
+          },
         },
-      },
-    );
+      );
+    } else {
+      res = await authorizedFetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}`,
+        {
+          method: "GET",
+        },
+      );
+    }
 
     if (!res.ok) {
       const errorData = await res.json();

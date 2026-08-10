@@ -16,9 +16,12 @@ const ProjectCard = ({ project }: { project: Projects }) => {
         <h2 className="text-title-MD font-semibold text-slate-dark">
           {project.name}
         </h2>
-        <Link href={`/project/${project.id}/edit`} className="cursor-pointer">
+        <button
+          onClick={() => router.push(`/project/${project.id}/edit`)}
+          className="cursor-pointer"
+        >
           <SquarePen className="text-slate-dark" size={15} />
-        </Link>
+        </button>
       </div>
       <p className="w-64 text-body-MD font-normal text-slate-dark mt-9.5 lg:mt-1 line-clamp-2 lg:line-clamp-3 truncate">
         {project.description}

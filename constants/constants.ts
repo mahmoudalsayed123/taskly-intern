@@ -96,6 +96,7 @@ export const taskStatus: TaskStatus[] = [
   TaskStatus.REOPENED,
   TaskStatus.READY_FOR_PRODUCTION,
   TaskStatus.DONE,
+];
 export interface EpicTasks {
   id: string;
   title: string;

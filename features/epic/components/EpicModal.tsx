@@ -82,7 +82,6 @@ const EpicModal = ({
     }
     getEpic();
   }, [projectId, epicId]);
-  
 
   useEffect(() => {
     async function epicTasks() {
@@ -538,7 +537,7 @@ const EpicModal = ({
               <p className="text-label-SM font-bold text-muted-body-60 uppercase">
                 ADD NEW TASK
               </p>
-            </div>
+            </Link>
             {/* button container */}
             <Link
               href={`/project/${projectId}/tasks/new?epic_id=${epic?.id}`}
@@ -562,7 +561,6 @@ const EpicModal = ({
                   Add task
                 </span>
               </button>
-            </Link>
             </Link>
 
             {/* task card container desktop */}

@@ -2,8 +2,12 @@
 import { useEffect, useState } from "react";
 import MainHeading from "@/components/layout/MainHeading";
 import ForgotPasswordForm from "@/features/auth/components/ForgotPasswordForm";
-import Image from "next/image";
 import { forgotPassword } from "@/features/auth/api/forgot-password";
+
+import ForgotPasswordLock from "@/assets/icons/forgetPass_lock.svg"
+import ForgotPasswordCorrect from "@/assets/icons/forgot-pass-correct.svg"
+import Clock from "@/assets/icons/clock.svg"
+
 const ForgotPasword = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
@@ -81,12 +85,7 @@ const ForgotPasword = () => {
         {/* icon */}
         <div className="w-12 mb-6 mx-auto md:hidden block">
           <div className="w-12 h-12 rounded-xl bg-surface-highest flex items-center justify-center">
-            <Image
-              src="/assets/icons/forgetPass_lock.svg"
-              alt="forgot-password"
-              width={20}
-              height={20}
-            />
+             <ForgotPasswordLock className="w-5 h-5" />
           </div>
         </div>
         <div className="text-center md:text-left">
@@ -114,12 +113,7 @@ instructions."
             {/* message */}
             {resendCount < 3 && (
               <div className="flex items-start gap-3 p-4 rounded-lg bg-success-20">
-                <Image
-                  src="/assets/icons/forgot-pass-correct.svg"
-                  alt="correct"
-                  width={20}
-                  height={20}
-                />
+                 <ForgotPasswordCorrect className="w-5 h-5" />
                 <p className="text-label-SM font-medium text-success-message">
                   {successMessage}
                 </p>
@@ -135,13 +129,7 @@ instructions."
                 </p>
               )}
               <div className="flex items-center justify-center gap-2 p-2 bg-surface-low w-full h-12 rounded-sm">
-                <Image
-                  src="/assets/icons/clock.svg"
-                  alt="clock"
-                  width={18}
-                  height={21}
-                  className={`${resendCount <= 3 && `hidden`}`}
-                />
+                <ForgotPasswordLock className={ `w-4.5 h-25 ${resendCount <= 3 && `hidden`}`} />
                 <button
                   className="text-body-LG font-semibold text-primary"
                   disabled={!canResend}
@@ -169,12 +157,6 @@ instructions."
           {/* message */}
           {resendCount < 3 && (
             <div className="flex items-start gap-3">
-              <Image
-                src="/assets/icons/forgot-pass-correct.svg"
-                alt="correct"
-                width={20}
-                height={20}
-              />
               <p className="text-label-SM font-medium text-success-message">
                 If an account exists with this email, we've sent a password
                 reset link.

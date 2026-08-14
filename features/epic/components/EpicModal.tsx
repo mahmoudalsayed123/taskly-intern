@@ -1,5 +1,5 @@
 "use client";
-import { Epic, Member } from "@/constants/constants";
+import { Epic, EpicTasks, Member } from "@/constants/constants";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
@@ -11,8 +11,12 @@ import { updateEpic } from "../api/updateEpic";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createEpicSchema, updateEpicSchema } from "@/lib/zodSchema";
+import { updateEpicSchema } from "@/lib/zodSchema";
 import ErrorField from "@/components/ui/ErrorField";
+import { getEpicTasks } from "../api/getEpicTasks";
+import EpicTasksListMobile from "./EpicTasksListMobile";
+import Link from "next/link";
+import EpicTasksListDesktop from "./EpicTasksListDesktop";
 
 const EpicModal = ({
   projectId,
@@ -27,6 +31,7 @@ const EpicModal = ({
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [epic, setEpic] = useState<Epic | null>(null);
+  const [tasks, setTasks] = useState<EpicTasks[]>([]);
   const [selectedAssignee, setSelectedAssignee] = useState<any>(null);
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     [],
@@ -77,7 +82,18 @@ const EpicModal = ({
     }
     getEpic();
   }, [projectId, epicId]);
-  console.log(errors);
+
+  useEffect(() => {
+    async function epicTasks() {
+      const tasksResponse = await getEpicTasks(epicId);
+      if (tasksResponse.success) {
+        console.log(tasksResponse?.data);
+        setTasks(tasksResponse?.data);
+      }
+    }
+    epicTasks();
+  }, [epicId]);
+
   useEffect(() => {
     async function epicUpdated() {
       console.log(dataUpdated);
@@ -107,7 +123,7 @@ const EpicModal = ({
 
   return (
     <div
-      className={` w-full h-fit max-w-md max-h-198.75 lg:w-2xl lg:max-w-2xl lg:max-h-230.25  bg-white rounded-lg shadow-[0px_25px_50px_-12px_#00000040] z-200  ${openModal ? "block" : "hidden"} `}
+      className={` w-full  max-w-md max-h-198.75 lg:w-2xl lg:max-w-2xl lg:min-h-230.25  bg-white rounded-lg shadow-[0px_25px_50px_-12px_#00000040] z-200  ${openModal ? "block" : "hidden"} `}
     >
       {/* main heading */}
       <div className="p-6 pb-4 lg:p-8  rounded-lg flex flex-col gap-3  lg:border-b lg:border-slate-15 lg:bg-white">
@@ -121,24 +137,24 @@ const EpicModal = ({
           <div className="flex items-center gap-3">
             {/* copy link */}
             <div className="flex items-center gap-1 p-1.5">
-              <Image
+              {/* <Image
                 src={"/assets/icons/copy-link.svg"}
                 alt="link"
                 width={15}
                 height={7.5}
-              />
+              /> */}
               <p className="text-label-SM font-medium text-muted-body">Copy</p>
             </div>
 
             {/* close */}
-            <Image
+            {/* <Image
               src={"/assets/icons/close.svg"}
               alt="close"
               width={14}
               height={14}
               className="cursor-pointer"
               onClick={() => setOpenModal(false)}
-            />
+            /> */}
           </div>
         </div>
         {/* epic title  */}
@@ -253,12 +269,12 @@ const EpicModal = ({
                 option?.value === null ? (
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-head-table flex items-center justify-center">
-                      <Image
+                      {/* <Image
                         src="/assets/icons/noUser.svg"
                         alt="Unassigned"
                         width={11.56}
                         height={11.56}
-                      />
+                      /> */}
                     </div>
 
                     <span className="text-label-SM lg:text-body-MD font-medium text-slate-medium">
@@ -357,13 +373,13 @@ const EpicModal = ({
             </p>
             <div className="w-37.75 h-10 flex items-center justify-between border border-slate-50 rounded-lg p-2 ">
               <div className="flex items-center gap-2">
-                <Image
+                {/* <Image
                   src="/assets/icons/date-primary.svg"
                   alt="date"
                   width={13.5}
                   height={15}
                   className="cursor-pointer"
-                />
+                /> */}
                 {updateDeadline ? (
                   <>
                     <input
@@ -407,12 +423,12 @@ const EpicModal = ({
                   </p>
                 )}
               </div>
-              <Image
+              {/* <Image
                 src="/assets/icons/arrow-bottom.svg"
                 alt="calendar"
                 width={20}
                 height={20}
-              />
+              /> */}
             </div>
           </div>
 
@@ -422,21 +438,22 @@ const EpicModal = ({
               Created AT
             </p>
             <div className="flex items-center gap-2">
-              <Image
+              {/* <Image
                 src="/assets/icons/date-primary.svg"
                 alt="date"
                 width={13.5}
                 height={15}
-              />
+              /> */}
               <p className="text-label-SM lg:text-body-MD font-medium text-slate-dark">
                 {formateDeadline(epic?.created_at || "")}
               </p>
             </div>
           </div>
         </div>
-        {/* created by, assignee, deadline, created at in large screen */}
-        {/* container no tasks */}
+
+        {/* container tasks */}
         <div className="flex flex-col gap-4 lg:gap-6">
+          {/* container no tasks */}
           <div className="flex items-center justify-between">
             <p className="text-label-SM font-bold text-slate-medium lg:text-title-MD">
               Tasks
@@ -446,57 +463,85 @@ const EpicModal = ({
                 <span>0</span> TASKS
               </p>
               <div className="lg:flex hidden py-1.5 px-3 items-center gap-1 rounded-xs cursor-pointer ">
-                <Image
+                {/* <Image
                   src="/assets/icons/plus-primary.svg"
                   alt="add"
                   width={10.5}
                   height={10.5}
-                />
+                /> */}
                 <p className="text-body-MD font-bold text-primary-container">
                   ADD TASK
                 </p>
               </div>
             </div>
           </div>
-          <div className="w-full flex flex-col p-8 lg:p-12 border-dashed border-2 border-slate-30 bg-surface-low-50 rounded-lg">
-            {/* icon container */}
-            <div className="w-full h-15 flex items-center justify-center mb-4 lg:mb-0">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-head-table">
-                <Image
-                  src="/assets/icons/list.svg"
-                  alt="list"
-                  width={18}
-                  height={16}
-                />
+
+          {/* epic task container */}
+          {tasks.length === 0 && (
+            <div className="w-full flex flex-col p-8 lg:p-12 border-dashed border-2 border-slate-30 bg-surface-low-50 rounded-lg">
+              {/* icon container */}
+              <div className="w-full h-15 flex items-center justify-center mb-4 lg:mb-0">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-head-table">
+                  {/* <Image
+                    src="/assets/icons/list.svg"
+                    alt="list"
+                    width={18}
+                    height={16}
+                  /> */}
+                </div>
+              </div>
+              {/* text container */}
+              <div className="w-full mb-4 flex items-center  justify-center">
+                <p className="w-50 lg:w-full text-center text-body-MD font-normal text-slate-medium lg:text-body-LG lg:text-slate-dark lg:line-clamp-1">
+                  No tasks have been added to this epic yet
+                </p>
+              </div>
+              {/* button container */}
+              <div className="w-full flex items-center justify-center">
+                <button
+                  className="w-fit flex items-center gap-2 py-2 lg:py-2.5 px-4 lg:px-6 rounded-xs shadow-shadow-btn text-white cursor-pointer"
+                  style={{
+                    background:
+                      "linear-gradient(99.3deg, var(--color-primary) 0%, var(--color-primary-container) 100%)",
+                  }}
+                >
+                  {/* <Image
+                    src="/assets/icons/plus.svg"
+                    alt="add"
+                    width={10.5}
+                    height={10.5}
+                    className="w-[10.5px] h-[10.5px] lg:w-3.5 lg:h-3.5"
+                  /> */}
+                  <span className="text-label-SM lg:text-body-LG font-bold">
+                    Add task
+                  </span>
+                </button>
               </div>
             </div>
-            {/* text container */}
-            <div className="w-full mb-4 flex items-center  justify-center">
-              <p className="w-50 lg:w-full text-center text-body-MD font-normal text-slate-medium lg:text-body-LG lg:text-slate-dark lg:line-clamp-1">
-                No tasks have been added to this epic yet
+          )}
+
+          <div className="w-full flex flex-col lg:border lg:border-slate-15 rounded-lg ">
+            {/* task card container mobile */}
+            {tasks && <EpicTasksListMobile tasks={tasks} />}
+
+            {/* button add task in mobile screen only */}
+            <Link
+              href={`/project/${projectId}/tasks?epic_id=${epicId}`}
+              className="mt-3 flex items-center justify-center gap-2 lg:hidden py-4 rounded-lg border-2 border-dashed border-slate-30"
+            >
+              {/* <Image
+                src="/assets/icons/plus-with-circle.svg"
+                alt="add"
+                width={15}
+                height={15}
+              /> */}
+              <p className="text-label-SM font-bold text-muted-body-60 uppercase">
+                ADD NEW TASK
               </p>
-            </div>
-            {/* button container */}
-            <div className="w-full flex items-center justify-center">
-              <button
-                className="w-fit flex items-center gap-2 py-2 lg:py-2.5 px-4 lg:px-6 rounded-xs shadow-shadow-btn text-white cursor-pointer"
-                style={{
-                  background:
-                    "linear-gradient(99.3deg, var(--color-primary) 0%, var(--color-primary-container) 100%)",
-                }}
-              >
-                <Image
-                  src="/assets/icons/plus.svg"
-                  alt="add"
-                  width={10.5}
-                  height={10.5}
-                  className="w-[10.5px] h-[10.5px] lg:w-3.5 lg:h-3.5"
-                />
-                <span className="text-label-SM lg:text-body-LG font-bold">
-                  Add task
-                </span>
-              </button>
-            </div>
+            </Link>
+
+            {/* task card container desktop */}
+            {tasks && <EpicTasksListDesktop tasks={tasks} />}
           </div>
         </div>
       </div>

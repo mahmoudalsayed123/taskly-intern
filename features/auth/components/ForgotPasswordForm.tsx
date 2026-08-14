@@ -116,12 +116,12 @@ const ForgotPasswordForm = ({
       </button>
 
       <div className="pt-6 flex items-center gap-2 text-primary mx-auto">
-        <Image
+        {/* <Image
           src="/assets/icons/arrow-left.svg"
           alt="arrow-left"
           width={12}
           height={12}
-        />
+        /> */}
         <Link href="/login" className="text-body-MD font-medium">
           Back to log in
         </Link>

@@ -27,12 +27,12 @@ const BreadCrumb = ({ items }: BreadcrumbProps) => {
           </span>
           {index !== items.length - 1 && (
             <span className="text-label-SM font-bold text-muted-body-60">
-              <Image
+              {/* <Image
                 src="/assets/icons/arrow-right-bread-crumb.svg"
                 alt="chevron-right"
                 width={3.7}
                 height={6}
-              />
+              /> */}
             </span>
           )}
         </Link>

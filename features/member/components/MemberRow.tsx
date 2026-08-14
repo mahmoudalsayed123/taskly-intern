@@ -29,12 +29,12 @@ const MemberRow = ({ member }: { member: Member }) => {
         </span>
       </td>
       <td className=" flex items-center justify-end flex-1 w-full h-22.25">
-        <Image
+        {/* <Image
           src="/assets/icons/dots.svg"
           alt="invite"
           width={4}
           height={16}
-        />
+        /> */}
       </td>
     </tr>
   );

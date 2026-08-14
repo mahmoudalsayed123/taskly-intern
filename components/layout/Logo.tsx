@@ -5,7 +5,7 @@ const Logo = ({ collapse }: { collapse?: boolean }) => {
     <div
       className={`flex items-center gap-2 ${collapse ? "justify-center" : ""}`}
     >
-      <Image src="/assets/logo.svg" alt="Taskly Logo" width={18} height={20} />
+      {/* <Image src="/assets/logo.svg" alt="Taskly Logo" width={18} height={20} /> */}
       <span
         className={`block text-heading-MD font-bold text-slate-dark ${collapse ? "hidden" : ""}`}
       >

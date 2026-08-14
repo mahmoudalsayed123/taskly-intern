@@ -18,7 +18,7 @@ const NavigationMenuMobile = () => {
             key={item.id}
             className={`flex flex-col items-center gap-0.5 cursor-pointer`}
           >
-            <Image src={item.icon} alt={item.name} width={18} height={18} />
+            {/* <Image src={item.icon} alt={item.name} width={18} height={18} /> */}
             <span className="text-body-MD font-medium capitalize">
               {item.name === "projects"
                 ? "Projects"
@@ -33,12 +33,12 @@ const NavigationMenuMobile = () => {
           href="/project"
           className="flex flex-col items-center gap-0.5 cursor-pointer"
         >
-          <Image
+          {/* <Image
             src="/assets/icons/project.svg"
             alt="project"
             width={18}
             height={18}
-          />
+          /> */}
           <span
             className={`text-label-SM capitalize ${pathName === "/project" ? "text-primary-container font-semibold" : "text-slate-dark-70 font-normal"}`}
           >

@@ -32,12 +32,12 @@ const Pagination = ({
           }}
         >
           {" "}
-          <Image
+          {/* <Image
             src="/assets/icons/pag-left.svg"
             alt="right"
             width={5}
             height={7}
-          />
+          /> */}
         </button>
         {pages.map((page, index) =>
           page === "..." ? (
@@ -69,12 +69,12 @@ const Pagination = ({
             router.push(`/project?page=${currentPage + 1}`);
           }}
         >
-          <Image
+          {/* <Image
             src="/assets/icons/pag-right.svg"
             alt="right"
             width={5}
             height={7}
-          />
+          /> */}
         </button>
       </div>
     </div>

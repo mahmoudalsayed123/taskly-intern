@@ -44,12 +44,12 @@ const MembersPage = async ({
           </div>
         </div>
         <button className="hidden! lg:flex! btn-primary-desktop">
-          <Image
+          {/* <Image
             src="/assets/icons/user.svg"
             alt="invite"
             width={18.33}
             height={13.33}
-          />
+          /> */}
           <p>Invite Member</p>
         </button>
       </div>
@@ -73,12 +73,12 @@ const MembersPage = async ({
             background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
           }}
         >
-          <Image
+          {/* <Image
             src="/assets/icons/user.svg"
             alt="invite"
             width={18.33}
             height={13.33}
-          />
+          /> */}
         </button>
       </Link>
     </section>

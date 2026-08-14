@@ -24,13 +24,13 @@ const ProjectCard = ({ project }: { project: Projects }) => {
         {project.description}
       </p>
       <div className="w-full lg:hidden flex items-center gap-1.5 pt-5 lg:pt-6 border-t border-border-slate-10">
-        <Image
+        {/* <Image
           src="/assets/icons/date.svg"
           alt="avatar"
           width={10.5}
           height={11.67}
           className="lg:hidden"
-        />
+        /> */}
         <p className="text-label-SM font-normal text-slate-dark">
           {new Date(project.created_at).toLocaleDateString("en-US", {
             year: "numeric",

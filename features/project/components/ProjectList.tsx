@@ -19,12 +19,12 @@ const ProjectList = ({ projects }: { projects?: Projects[] }) => {
       >
         <div className="flex flex-col items-center justify-center gap-2">
           <div className="w-12 h-12 bg-background-container rounded-xl flex items-center justify-center">
-            <Image
+            {/* <Image
               src="/assets/icons/plus-dark.svg"
               alt="add"
               width={20}
               height={20}
-            />
+            /> */}
           </div>
           <p className="text-body-MD font-bold text-slate-medium">
             ADD PROJECT

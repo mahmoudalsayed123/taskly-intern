@@ -24,7 +24,7 @@ const MemberCard = ({ member }: { member: Member }) => {
         <p className="py-0.5 px-2 rounded-xs bg-surface-highest text-label-SM font-bold text-muted-body">
           {member.role}
         </p>
-        <Image src="/assets/icons/dots.svg" width={3} height={12} alt="dots" />
+        {/* <Image src="/assets/icons/dots.svg" width={3} height={12} alt="dots" /> */}
       </div>
     </div>
   );

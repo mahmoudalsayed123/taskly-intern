@@ -1,17 +1,13 @@
-import Image from "next/image";
+
 import Link from "next/link";
+import NoProject from "@/assets/icons/no-project.svg";
 
 const EmptyProjectPage = () => {
   return (
     <section className="p-6 lg:p-0 flex items-center justify-center ">
       <div className="flex flex-col items-center justify-center gap-6 w-full lg:w-200 h-[calc(100vh-130px)]">
         <div className="w-full flex items-center justify-center">
-          <Image
-            src="/assets/icons/no-project.svg"
-            alt="no project"
-            width={288}
-            height={288}
-          />
+          <NoProject className="w-72 h-72" />
         </div>
         <h2 className="text-no-project font-semibold text-slate-dark text-center">
           No Projects
@@ -23,12 +19,12 @@ const EmptyProjectPage = () => {
         <div className="w-full flex items-center justify-center">
           <Link href="/project/add" className="hidden md:block">
             <button className="btn-primary-desktop lg:flex! items-center! justify-center! hidden!">
-              <Image
+              {/* <Image
                 src="/assets/icons/plus.svg"
                 alt="add"
                 width={10.5}
                 height={10.5}
-              />
+              /> */}
               <p className="text-body-MD font-medium text-white ">
                 Create Project
               </p>

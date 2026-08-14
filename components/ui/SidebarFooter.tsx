@@ -28,12 +28,12 @@ const SidebarFooter = ({
         onClick={() => setCollapse?.(!collapse)}
         className="py-2.5 px-3 w-full hidden lg:flex items-center gap-3 cursor-pointer"
       >
-        <Image
+        {/* <Image
           src="/assets/icons/collapse.svg"
           alt="Collapse"
           width={11.77}
           height={20}
-        />
+        /> */}
         <p
           className={` ${collapse ? "hidden" : "text-body-MD text-slate-dark font-medium"}`}
         >
@@ -44,12 +44,12 @@ const SidebarFooter = ({
         onClick={handleLogout}
         className="py-2.5 px-3 w-full flex items-center gap-3 cursor-pointer"
       >
-        <Image
+        {/* <Image
           src="/assets/icons/logout.svg"
           alt="Logout"
           width={18}
           height={18}
-        />
+        /> */}
         <p
           className={` ${collapse ? "hidden" : "text-body-MD text-error font-medium"}`}
         >

@@ -98,12 +98,12 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
           </div>
           {errors.description && (
             <div className="flex items-center gap-1 mt-2">
-              <Image
+              {/* <Image
                 src="/assets/icons/exclamation-mark-error.svg"
                 alt="error"
                 width={13}
                 height={13}
-              />
+              /> */}
               <ErrorField message={errors.description?.message} />
             </div>
           )}
@@ -128,13 +128,13 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
                   </option>
                 ))}
               </select>
-              <Image
+              {/* <Image
                 src="/assets/icons/arrow-bottom.svg"
                 alt="arrow"
                 width={24}
                 height={24}
                 className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-              />
+              /> */}
             </div>
           </div>
           {/* select date */}
@@ -152,13 +152,13 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
                 id="deadline"
                 {...register("deadline")}
               />
-              <Image
+              {/* <Image
                 src="/assets/icons/date.svg"
                 alt="date"
                 width={10.5}
                 height={11.67}
                 className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-              />
+              /> */}
             </div>
             <ErrorField message={errors.deadline?.message} />
           </div>

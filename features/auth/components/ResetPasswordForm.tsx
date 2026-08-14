@@ -109,7 +109,7 @@ const ResetPasswordForm = () => {
       {/* rules of password */}
       <div className="p-4 rounded-lg flex flex-col gap-2 bg-background-check-password w-full">
         <div className="flex items-center gap-2 w-full">
-          <Image
+          {/* <Image
             src={
               passwordChecks.hasMinLength
                 ? "/assets/icons/check-true.svg"
@@ -118,13 +118,13 @@ const ResetPasswordForm = () => {
             alt="check"
             width={11.67}
             height={11.67}
-          />
+          /> */}
           <p className="text-label-SM text-muted-body font-normal">
             At least 8 characters
           </p>
         </div>
         <div className="flex items-center gap-2 w-full">
-          <Image
+          {/* <Image
             src={
               passwordChecks.hasUppercase &&
               passwordChecks.hasLowercase &&
@@ -135,13 +135,13 @@ const ResetPasswordForm = () => {
             alt="check"
             width={11.67}
             height={11.67}
-          />
+          /> */}
           <p className="text-label-SM text-muted-body font-normal">
             One uppercase, lowercase, and digit
           </p>
         </div>
         <div className="flex items-center gap-2 w-full">
-          <Image
+          {/* <Image
             src={
               passwordChecks.hasSpecialChar
                 ? "/assets/icons/check-true.svg"
@@ -150,7 +150,7 @@ const ResetPasswordForm = () => {
             alt="check"
             width={11.67}
             height={11.67}
-          />
+          /> */}
           <p className="text-label-SM text-muted-body font-normal">
             One special character
           </p>

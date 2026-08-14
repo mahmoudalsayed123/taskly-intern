@@ -150,3 +150,35 @@ export const updateEpicSchema = z.object({
       },
     ),
 });
+
+export const createTaskSchema = z.object({
+  title: z.string().trim().min(3, "Title must be at least 3 characters"),
+
+  description: z.string().optional(),
+
+  assignee_id: z.string().optional(),
+
+  epic_id: z.string().optional(),
+
+  status: z.string().optional(),
+
+  due_date: z
+    .string()
+    .optional()
+    .refine(
+      (value) => {
+        if (!value) return true;
+
+        const selectedDate = new Date(value);
+
+        const today = new Date();
+
+        today.setHours(0, 0, 0, 0);
+
+        return selectedDate >= today;
+      },
+      {
+        message: "Deadline must be today or a day after today",
+      },
+    ),
+});

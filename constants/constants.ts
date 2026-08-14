@@ -1,3 +1,4 @@
+import { TaskStatus } from "@/types/types";
 import ProjectIcon from "@/assets/icons/project.svg";
 import EpicIcon from "@/assets/icons/epic.svg";
 import TaskIcon from "@/assets/icons/task.svg";
@@ -76,6 +77,25 @@ export interface Epic {
   };
 }
 
+export interface Task {
+  project_id: string;
+  epic_id?: string | null;
+  title: string;
+  description?: string | null;
+  assignee_id?: string | null;
+  due_date?: string;
+  status?: TaskStatus;
+}
+
+export const taskStatus: TaskStatus[] = [
+  TaskStatus.TO_DO,
+  TaskStatus.IN_PROGRESS,
+  TaskStatus.BLOCKED,
+  TaskStatus.IN_REVIEW,
+  TaskStatus.READY_FOR_QA,
+  TaskStatus.REOPENED,
+  TaskStatus.READY_FOR_PRODUCTION,
+  TaskStatus.DONE,
 export interface EpicTasks {
   id: string;
   title: string;

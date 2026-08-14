@@ -87,22 +87,22 @@ const Epicspage = async ({
               placeholder="Search for epics..."
               className="input w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7! placeholder:text-body-MD placeholder:font-normal placeholder:text-resend-timer"
             />
-            <Image
+            {/* <Image
               src="/assets/icons/search.svg"
               alt="search"
               width={10.5}
               height={10.5}
               className="absolute top-1/2 left-3 -translate-y-1/2 "
-            />
+            /> */}
           </div>
           <Link href={`/project/${projectId}/epics/new`}>
             <button className="btn-primary-desktop lg:flex! items-center! justify-center! hidden!">
-              <Image
+              {/* <Image
                 src="/assets/icons/plus.svg"
                 alt="create epic"
                 width={10.5}
                 height={10.5}
-              />
+              /> */}
               <span className="text-body-MD font-bold text-white">
                 New Epic
               </span>

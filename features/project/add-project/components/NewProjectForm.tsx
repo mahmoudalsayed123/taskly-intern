@@ -44,12 +44,12 @@ const NewProjectForm = () => {
       {/* main heading in form container - desktop */}
       <div className="hidden lg:flex items-center gap-4  lg:pt-8 lg:px-8 lg:pb-10 border-b border-b-surface-low">
         <div className="w-11.5 h-11 p-3 flex items-center justify-center rounded-sm bg-primary-10">
-          <Image
+          {/* <Image
             src="/assets/icons/init-project.svg"
             alt="back"
             width={22}
             height={22}
-          />
+          /> */}
         </div>
         <div className=" flex flex-col">
           <h1 className="lg:text-heading-MD font-semibold text-slate-dark">
@@ -97,12 +97,12 @@ key milestones..."
           </div>
           {errors.description && (
             <div className="flex items-center gap-1 mt-2">
-              <Image
+              {/* <Image
                 src="/assets/icons/exclamation-mark-error.svg"
                 alt="error"
                 width={13}
                 height={13}
-              />
+              /> */}
               <ErrorField message={errors.description?.message} />
             </div>
           )}

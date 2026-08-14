@@ -40,12 +40,12 @@ const UserInfo = ({ user }: { user: { name: string; department: string } }) => {
           onClick={handleLogout}
           className="absolute top-13 w-35 h-12 right-1/2 flex items-center justify-center gap-3 px-4 py-2 bg-white shadow-drop rounded-lg cursor-pointer"
         >
-          <Image
+          {/* <Image
             src="/assets/icons/logout.svg"
             alt="Logout"
             width={18}
             height={18}
-          />
+          /> */}
           <p className="text-body-MD text-error font-medium">Logout</p>
         </button>
       )}

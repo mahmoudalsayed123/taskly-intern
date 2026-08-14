@@ -11,9 +11,9 @@ const ShowPassword = ({ showPassword, setShowPassword }: ShowPasswordProps) => {
       type="button"
       className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
     >
-      {showPassword ? (
+      {/* {showPassword ? (
         <Image
-          src="/assets/icons/eye-open.svg"
+          src={"/assets/icons/eye-open.svg"}
           alt="eye-open"
           width={22}
           height={15}
@@ -27,7 +27,7 @@ const ShowPassword = ({ showPassword, setShowPassword }: ShowPasswordProps) => {
           height={15}
           onClick={() => setShowPassword(true)}
         />
-      )}
+      )} */}
     </button>
   );
 };

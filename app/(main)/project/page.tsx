@@ -2,12 +2,13 @@ import MainHeading from "@/components/layout/MainHeading";
 import { getProjects } from "@/features/project/api/getProjects";
 import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
 import ProjectList from "@/features/project/components/ProjectList";
-import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/ui/Pagination";
 import BtnAdd from "@/components/ui/BtnAdd";
 import InfiniteProjectList from "@/features/project/components/infiniteProjectList";
 import ErrorPage from "@/components/layout/ErrorPage";
+
+import Plus from "@/assets/icons/plus.svg";
 
 const ProjectPage = async ({
   searchParams,
@@ -51,18 +52,15 @@ const ProjectPage = async ({
         />
         <Link href="/project/add" className="hidden md:block">
           <button
-            className="h-12 flex items-center justify-center gap-2 px-6 py-3 shadow-[0px 1px 2px 0px #0000000D] rounded-xs cursor-pointer
+            className="h-12 flex items-center justify-center gap-4 px-6 py-3 shadow-[0px 1px 2px 0px #0000000D] rounded-xs cursor-pointer
  "
             style={{
               background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
             }}
           >
-            <Image
-              src="/assets/icons/plus.svg"
-              alt="add"
-              width={10.5}
-              height={10.5}
-            />
+            <div className="flex items-center justify-center w-[10.5px] h-[10.5px] bg-red-400">
+              <Plus className="w-full h-full" />
+            </div>
             <p className="text-body-MD font-medium text-white ">
               Create Project
             </p>

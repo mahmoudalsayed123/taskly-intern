@@ -112,12 +112,12 @@ const FormLogin = () => {
         >
           <p className="hidden md:block text-body-MD font-semibold">Login</p>
           <div className="flex md:hidden w-full items-center justify-center gap-2">
-            <Image
+            {/* <Image
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
               width={10}
               height={10}
-            />
+            /> */}
             <p className="text-body-MD font-semibold">Sign in</p>
           </div>
         </button>

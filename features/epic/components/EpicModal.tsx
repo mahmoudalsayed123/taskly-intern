@@ -97,7 +97,7 @@ const EpicModal = ({
     async function epicTasks() {
       const tasksResponse = await getEpicTasks(epicId);
       if (tasksResponse.success) {
-        setTasks([]);
+        setTasks(tasksResponse.data);
       }
     }
     epicTasks();
@@ -376,12 +376,15 @@ const EpicModal = ({
               <p className="lg:hidden text-label-SM font-bold text-muted-body">
                 <span>{tasks.length}</span> TASKS
               </p>
-              <div className="lg:flex hidden py-1.5 px-3 items-center gap-1 rounded-xs cursor-pointer ">
+              <Link
+                href={`/project/${projectId}/tasks/new?epic_id=${epicId}`}
+                className="lg:flex hidden py-1.5 px-3 items-center gap-1 rounded-xs cursor-pointer "
+              >
                 <PlusPrimary className="text-primary" />
                 <p className="text-body-MD font-bold text-primary-container">
                   ADD TASK
                 </p>
-              </div>
+              </Link>
             </div>
           </div>
 
@@ -402,12 +405,15 @@ const EpicModal = ({
               </div>
               {/* button container */}
               <div className=" w-full flex items-center justify-center">
-                <button className="btn-primary-desktop lg:gap-2">
+                <Link
+                  href={`/project/${projectId}/tasks/new?epic_id=${epicId}`}
+                  className="btn-primary-desktop lg:gap-2"
+                >
                   <Plus />
                   <span className="text-label-SM lg:text-body-LG font-bold">
                     Add task
                   </span>
-                </button>
+                </Link>
               </div>
             </div>
           )}
@@ -418,38 +424,14 @@ const EpicModal = ({
 
             {/* button add task in mobile screen only */}
             <Link
-              href={`/project/${projectId}/tasks?epic_id=${epicId}`}
-              className="bg-red-400 lg:hidden mt-3 flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-slate-30"
+              href={`/project/${projectId}/tasks/new?epic_id=${epicId}`}
+              className=" lg:hidden mt-3 flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-slate-30"
             >
               <PlusWithCircle />
               <p className="text-label-SM font-bold text-muted-body-60 uppercase">
                 ADD NEW TASK
               </p>
             </Link>
-            {/* button container */}
-            {/* <Link
-              href={`/project/${projectId}/tasks/new?epic_id=${epic?.id}`}
-              className="w-full flex items-center justify-center"
-            >
-              <button
-                className="w-fit flex items-center gap-2 py-2 lg:py-2.5 px-4 lg:px-6 rounded-xs shadow-shadow-btn text-white cursor-pointer"
-                style={{
-                  background:
-                    "linear-gradient(99.3deg, var(--color-primary) 0%, var(--color-primary-container) 100%)",
-                }}
-              >
-                <Image
-                  src="/assets/icons/plus.svg"
-                  alt="add"
-                  width={10.5}
-                  height={10.5}
-                  className="w-[10.5px] h-[10.5px] lg:w-3.5 lg:h-3.5"
-                />
-                <span className="text-label-SM lg:text-body-LG font-bold">
-                  Add task sss
-                </span>
-              </button>
-            </Link> */}
 
             {/* task card container desktop */}
             {tasks && <EpicTasksListDesktop tasks={tasks} />}

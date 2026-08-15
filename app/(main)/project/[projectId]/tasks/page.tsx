@@ -1,9 +1,8 @@
 import MainHeading from "@/components/layout/MainHeading";
 import BreadCrumb from "@/components/ui/BreadCrumb";
-import Image from "next/image";
 import { getProject } from "@/features/project/api/getProject";
-import SelectTaskView from "@/features/epic/components/SelectTaskView";
-import TasksBoardView from "@/features/epic/components/TasksBoardView";
+import SelectTaskView from "@/features/tasks/components/SelectTaskView";
+import TasksBoardView from "@/features/tasks/components/TasksBoardView";
 
 const TasksPage = async ({
   params,
@@ -15,8 +14,6 @@ const TasksPage = async ({
   const { projectId } = await params;
   const { data: project } = await getProject(projectId);
   const { view = "board" } = await searchParams;
-
-
 
   return (
     <section className="pt-4 px-6 pb-32 lg:p-0">

@@ -51,18 +51,10 @@ const ProjectPage = async ({
           sizeMobile="heading-MD"
         />
         <Link href="/project/add" className="hidden md:block">
-          <button
-            className="h-12 flex items-center justify-center gap-4 px-6 py-3 shadow-[0px 1px 2px 0px #0000000D] rounded-xs cursor-pointer
- "
-            style={{
-              background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-            }}
-          >
-            <div className="flex items-center justify-center w-[10.5px] h-[10.5px] bg-red-400">
-              <Plus className="w-full h-full" />
-            </div>
+          <button className="btn-primary-desktop lg:gap-2! lg:text-body-LG! lg:font-medium!">
+            <Plus className="text-label-XS " />
             <p className="text-body-MD font-medium text-white ">
-              Create Project
+              Create New Project
             </p>
           </button>
         </Link>

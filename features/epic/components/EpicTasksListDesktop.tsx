@@ -1,7 +1,9 @@
 import { EpicTasks } from "@/constants/constants";
 import { formateDeadline } from "@/lib/helper";
 import { getInitials } from "@/lib/getInitials";
-import Image from "next/image";
+
+import NoUser from "@/assets/icons/noUser.svg";
+import Date from "@/assets/icons/date.svg";
 
 const EpicTasksListDesktop = ({ tasks }: { tasks: EpicTasks[] }) => {
   return (
@@ -29,12 +31,7 @@ const EpicTasksListDesktop = ({ tasks }: { tasks: EpicTasks[] }) => {
                   </>
                 ) : (
                   <>
-                    {/* <Image
-                      src="/assets/icons/noUser.svg"
-                      width={15}
-                      height={15}
-                      alt="no user"
-                    /> */}
+                    <NoUser />
                     <p className="text-label-SM font-medium text-muted-body">
                       Unassigned
                     </p>
@@ -43,12 +40,7 @@ const EpicTasksListDesktop = ({ tasks }: { tasks: EpicTasks[] }) => {
               </div>
             </div>
             <div className="flex items-center gap-1.5">
-              {/* <Image
-                src="/assets/icons/date.svg"
-                alt="date"
-                width={10.5}
-                height={11.67}
-              /> */}
+              <Date />
               <p className="text-label-SM font-bold text-muted-body-70">
                 {formateDeadline(due_date)}
               </p>

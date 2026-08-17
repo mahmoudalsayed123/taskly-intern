@@ -122,6 +122,14 @@
 
 .btn-primary-mobile {
   @apply w-full py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
+  background: linear-gradient(
+    99.3deg,
+    var(--color-primary) 0%,
+    var(--color-primary-container) 100%
+  );
+  box-shadow:
+    0px 4px 6px -4px var(--color-primary-20),
+    0px 10px 15px -3px var(--color-primary-20);
 }
 
 .btn-secondary-desktop {

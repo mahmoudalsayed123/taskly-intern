@@ -12,6 +12,9 @@ import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
 import ErrorPage from "@/components/layout/ErrorPage";
 import EmptyEpicPage from "@/features/epic/components/EmptyEpicsPage";
 
+import SearchIcon from "@/assets/icons/search.svg";
+import PlusIcon from "@/assets/icons/plus.svg";
+
 const Epicspage = async ({
   params,
   searchParams,
@@ -87,22 +90,11 @@ const Epicspage = async ({
               placeholder="Search for epics..."
               className="input w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7! placeholder:text-body-MD placeholder:font-normal placeholder:text-resend-timer"
             />
-            {/* <Image
-              src="/assets/icons/search.svg"
-              alt="search"
-              width={10.5}
-              height={10.5}
-              className="absolute top-1/2 left-3 -translate-y-1/2 "
-            /> */}
+            <SearchIcon className="cursor-pointer absolute top-1/2 right-3 -translate-y-1/2" />
           </div>
           <Link href={`/project/${projectId}/epics/new`}>
-            <button className="btn-primary-desktop lg:flex! items-center! justify-center! hidden!">
-              {/* <Image
-                src="/assets/icons/plus.svg"
-                alt="create epic"
-                width={10.5}
-                height={10.5}
-              /> */}
+            <button className="btn-primary-desktop lg:gap-2!">
+              <PlusIcon />
               <span className="text-body-MD font-bold text-white">
                 New Epic
               </span>

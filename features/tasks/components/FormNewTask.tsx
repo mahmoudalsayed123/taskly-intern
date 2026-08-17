@@ -81,7 +81,7 @@ const FormNewTask = ({
       const selectedEpic = epicOptions.find(
         (option) => option.value === epicId,
       );
-      setSelectedEpic(selectedEpic);
+      setSelectedEpic(selectedEpic || epicId);
     }
   }, [members, epics]);
 

@@ -1,8 +1,10 @@
+import { ComponentType } from "react";
 import { StylesConfig } from "react-select";
 
 type OptionType = {
   value: string;
   label: string;
+  icon?: ComponentType;
 };
 
 export const selectStyles: StylesConfig<OptionType, false> = {
@@ -86,64 +88,64 @@ export const selectStyles: StylesConfig<OptionType, false> = {
 };
 
 export const assigneeSelectStylesEpicModal: StylesConfig<OptionType, false> = {
-                indicatorSeparator: () => ({
-                  display: "none",
-                }),
-                placeholder: (base) => ({
-                  ...base,
-                  fontSize: "11px",
-                  fontWeight: 500,
-                  color: "#667085",
-                }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  placeholder: (base) => ({
+    ...base,
+    fontSize: "11px",
+    fontWeight: 500,
+    color: "#667085",
+  }),
 
-                singleValue: (base) => ({
-                  ...base,
-                  fontSize: "11px",
-                  fontWeight: 500,
-                  color: "#667085",
-                }),
-                menu: (base) => ({
-                  ...base,
-                  borderRadius: "8px",
-                  border: "1px solid #E2E8F0",
-                  overflow: "hidden",
-                  boxShadow: "0px 8px 24px rgba(15, 23, 42, 0.08)",
-                }),
+  singleValue: (base) => ({
+    ...base,
+    fontSize: "11px",
+    fontWeight: 500,
+    color: "#667085",
+  }),
+  menu: (base) => ({
+    ...base,
+    borderRadius: "8px",
+    border: "1px solid #E2E8F0",
+    overflow: "hidden",
+    boxShadow: "0px 8px 24px rgba(15, 23, 42, 0.08)",
+  }),
 
-                menuList: (base) => ({
-                  ...base,
-                  padding: "8px",
-                }),
+  menuList: (base) => ({
+    ...base,
+    padding: "8px",
+  }),
 
-                option: (base, state) => ({
-                  ...base,
-                  display: "flex",
-                  alignItems: "center",
-                  marginTop: "8px",
-                  marginBottom: "8px",
-                  padding: "8px",
-                  borderRadius: "8px",
-                  fontSize: "11px",
-                  fontWeight: 500,
-                  cursor: "pointer",
+  option: (base, state) => ({
+    ...base,
+    display: "flex",
+    alignItems: "center",
+    marginTop: "8px",
+    marginBottom: "8px",
+    padding: "8px",
+    borderRadius: "8px",
+    fontSize: "11px",
+    fontWeight: 500,
+    cursor: "pointer",
 
-                  backgroundColor: state.isSelected
-                    ? "#f1f3ff"
-                    : state.isFocused
-                      ? "#F8FAFC"
-                      : "#FFFFFF",
+    backgroundColor: state.isSelected
+      ? "#f1f3ff"
+      : state.isFocused
+        ? "#F8FAFC"
+        : "#FFFFFF",
 
-                  color: state.isSelected ? "#FFFFFF" : "#475467",
+    color: state.isSelected ? "#FFFFFF" : "#475467",
 
-                  ":active": {
-                    backgroundColor: "#E6F0FF",
-                  },
-                }),
+    ":active": {
+      backgroundColor: "#E6F0FF",
+    },
+  }),
 
-                noOptionsMessage: (base) => ({
-                  ...base,
-                  color: "#98A2B3",
-                  fontSize: "14px",
-                  padding: "12px",
-                }),
-              }
+  noOptionsMessage: (base) => ({
+    ...base,
+    color: "#98A2B3",
+    fontSize: "14px",
+    padding: "12px",
+  }),
+};

@@ -3,6 +3,10 @@ import BreadCrumb from "@/components/ui/BreadCrumb";
 import { getProject } from "@/features/project/api/getProject";
 import SelectTaskView from "@/features/tasks/components/SelectTaskView";
 import TasksBoardView from "@/features/tasks/components/TasksBoardView";
+import Link from "next/link";
+
+import SearchIcon from "@/assets/icons/search.svg";
+import PlusIcon from "@/assets/icons/plus.svg";
 
 const TasksPage = async ({
   params,
@@ -48,29 +52,18 @@ const TasksPage = async ({
               placeholder="Search for epics..."
               className="input lg:w-64! lg:mt-0! py-2.5! pe-4! ps-10! rounded-md!"
             />
-            {/* <Image
-              src="/assets/icons/search.svg"
-              alt="search"
-              width={13.5}
-              height={13.5}
-              className="h-full absolute top-1/2 left-3 -translate-y-1/2"
-            /> */}
+            <SearchIcon className="text-slate-medium absolute top-1/2 left-3 -translate-y-1/2" />
           </div>
           <SelectTaskView view={view} projectId={projectId} />
           {/* button to create task */}
-          {/* <Link href={`/project/${projectId}/tasks/new`}>
-            <button className="btn-primary-desktop lg:flex! items-center! justify-center! hidden!">
-              <Image
-                src="/assets/icons/plus.svg"
-                alt="create task"
-                width={10.5}
-                height={10.5}
-              />
+          <Link href={`/project/${projectId}/tasks/new`}>
+            <button className="btn-primary-desktop lg:gap-2">
+              <PlusIcon />
               <span className="text-body-MD font-bold text-white">
                 New Task
               </span>
             </button>
-          </Link> */}
+          </Link>
         </div>
       </div>
 

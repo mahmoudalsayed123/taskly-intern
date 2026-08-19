@@ -13,6 +13,7 @@ export async function authorizedFetch(url: string, options: RequestInit = {}) {
     await refreshToken();
 
     accessToken = cookieStore.get("access_token")?.value;
+    console.log("access token", accessToken);
 
     if (!accessToken) {
       redirect("/login");

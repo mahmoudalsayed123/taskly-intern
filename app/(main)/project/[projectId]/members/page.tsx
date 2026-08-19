@@ -15,6 +15,7 @@ const MembersPage = async ({
 }) => {
   const { projectId } = await params;
   const { data: projectMember } = await getProjectMember(projectId);
+  console.log("project member", projectMember);
 
   const { data: project } = await getProject(projectId);
   return (

@@ -88,9 +88,9 @@ const Epicspage = async ({
               type="text"
               name="search"
               placeholder="Search for epics..."
-              className="input w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7! placeholder:text-body-MD placeholder:font-normal placeholder:text-resend-timer"
+              className="input lg:m-0! w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7! placeholder:text-body-MD placeholder:font-normal placeholder:text-resend-timer"
             />
-            <SearchIcon className="cursor-pointer absolute top-1/2 right-3 -translate-y-1/2" />
+            <SearchIcon className="text-slate-medium cursor-pointer absolute top-1/2 left-3 -translate-y-1/2" />
           </div>
           <Link href={`/project/${projectId}/epics/new`}>
             <button className="btn-primary-desktop lg:gap-2!">

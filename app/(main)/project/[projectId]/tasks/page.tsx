@@ -4,6 +4,9 @@ import { getProject } from "@/features/project/api/getProject";
 import SelectTaskView from "@/features/tasks/components/SelectTaskView";
 import TasksBoardView from "@/features/tasks/components/TasksBoardView";
 
+import SearchIcon from "@/assets/icons/search.svg";
+import TasksListTable from "@/features/tasks/components/TasksListTable";
+
 const TasksPage = async ({
   params,
   searchParams,
@@ -46,17 +49,13 @@ const TasksPage = async ({
               type="text"
               name="search"
               placeholder="Search for epics..."
-              className="input lg:w-64! lg:mt-0! py-2.5! pe-4! ps-10! rounded-md!"
+              className="input lg:w-64! lg:mt-0! py-2.5! pe-4! ps-10! rounded-md! placeholder:text-body-MD!"
             />
-            {/* <Image
-              src="/assets/icons/search.svg"
-              alt="search"
-              width={13.5}
-              height={13.5}
-              className="h-full absolute top-1/2 left-3 -translate-y-1/2"
-            /> */}
+            <SearchIcon className="text-slate-medium cursor-pointer absolute top-1/2 left-3 -translate-y-1/2" />
           </div>
-          <SelectTaskView view={view} projectId={projectId} />
+          <div className="w-full">
+            <SelectTaskView view={view} projectId={projectId} />
+          </div>
           {/* button to create task */}
           {/* <Link href={`/project/${projectId}/tasks/new`}>
             <button className="btn-primary-desktop lg:flex! items-center! justify-center! hidden!">
@@ -74,7 +73,11 @@ const TasksPage = async ({
         </div>
       </div>
 
-      {view === "board" ? <TasksBoardView projectId={projectId} /> : ""}
+      {view === "board" ? (
+        <TasksBoardView projectId={projectId} />
+      ) : (
+        <TasksListTable projectId={projectId} />
+      )}
     </section>
   );
 };

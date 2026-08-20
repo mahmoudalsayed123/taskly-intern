@@ -4,7 +4,6 @@ import EpicIcon from "@/assets/icons/epic.svg";
 import TaskIcon from "@/assets/icons/task.svg";
 import MemberIcon from "@/assets/icons/members.svg";
 import DetailsIcon from "@/assets/icons/details.svg";
-
 export const navLinks = [
   {
     id: 1,
@@ -106,29 +105,31 @@ export interface EpicTasks {
   due_date: string;
 }
 
-export interface TaskByStatus {
+export interface Tasks {
   id: string;
+  task_id?: string;
   title: string;
   assignee: {
     name: string;
   };
   due_date: string;
+  status?: TaskStatus;
 }
 
 export const viewOptions = [
   {
     value: "board",
     label: "Board View",
-    icon: "/assets/icons/board.svg",
-    width: "13.5",
-    height: "13.5",
+    icon: "@/assets/icons/board.svg",
+    width: 13.5,
+    height: 13.5,
   },
   {
     value: "list",
     label: "List View",
-    icon: "/assets/icons/list.svg",
-    width: "10.5",
-    height: "5.83",
+    icon: "@/assets/icons/list.svg",
+    width: 10.5,
+    height: 5.83,
   },
 ];
 

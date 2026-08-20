@@ -105,7 +105,7 @@ const Epicspage = async ({
 
       {/* epics list  */}
       <div className="hidden lg:block">
-        <EpicList epics={data} />
+        <EpicList projectId={projectId} epics={data} />
       </div>
       <div className="lg:hidden">
         <InfiniteEpicList initialEpics={data} totalEpics={totalEpics} />
@@ -122,6 +122,9 @@ const Epicspage = async ({
           projectsShowing={epicsShowing || 0}
         />
       )}
+
+
+      
     </section>
   );
 };

@@ -12,13 +12,18 @@ import Dots from "@/assets/icons/dots.svg";
 import User from "@/assets/icons/user-dark.svg";
 import Date from "@/assets/icons/date.svg";
 
-const EpicCard = ({ epic }: { epic: Epic }) => {
-  const [openModal, setOpenModal] = useState(false);
+const EpicCard = ({
+  epic,
+  openEpicModal,
+}: {
+  epic: Epic;
+  openEpicModal: (epic: Epic) => void;
+}) => {
   const initials = getInitials(epic.assignee.name);
   return (
     <>
       <div
-        onClick={() => setOpenModal((e) => !e)}
+        onClick={() => openEpicModal(epic)}
         className="col-span-1 p-5 gap-3 lg:p-4 rounded-lg flex flex-col bg-white lg:border-s-4 lg:border-border-epic shadow-btn cursor-pointer"
       >
         <div
@@ -89,25 +94,6 @@ const EpicCard = ({ epic }: { epic: Epic }) => {
           </div>
         </div>
       </div>
-      {openModal && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center">
-          {/* Overlay */}
-          <div
-            className="absolute inset-0 bg-overlay/40 backdrop-blur-md"
-            onClick={() => setOpenModal(false)}
-          />
-
-          {/* Modal */}
-          <div className="w-full p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md lg:w-2xl lg:max-w-2xl z-200">
-            <EpicModal
-              projectId={epic.project_id}
-              epicId={epic.id}
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 };

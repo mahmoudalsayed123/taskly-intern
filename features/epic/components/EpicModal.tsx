@@ -31,13 +31,11 @@ import ArrowBottom from "@/assets/icons/arrow-bottom.svg";
 const EpicModal = ({
   projectId,
   epicId,
-  openModal,
-  setOpenModal,
+  closeModal,
 }: {
   projectId: string;
   epicId: string;
-  openModal: boolean;
-  setOpenModal: (value: boolean) => void;
+  closeModal: () => void;
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [epic, setEpic] = useState<Epic | null>(null);
@@ -148,7 +146,7 @@ const EpicModal = ({
             </div>
 
             {/* close */}
-            <div className="cursor-pointer" onClick={() => setOpenModal(false)}>
+            <div className="cursor-pointer" onClick={closeModal}>
               <Close />
             </div>
           </div>

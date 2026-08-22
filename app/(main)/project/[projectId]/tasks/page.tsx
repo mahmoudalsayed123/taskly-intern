@@ -6,7 +6,9 @@ import TasksBoardView from "@/features/tasks/components/TasksBoardView";
 import Link from "next/link";
 
 import SearchIcon from "@/assets/icons/search.svg";
+import TasksListTable from "@/features/tasks/components/TasksListTable";
 import PlusIcon from "@/assets/icons/plus.svg";
+import TaskListMobile from "@/features/tasks/components/TaskListMobile";
 
 const TasksPage = async ({
   params,
@@ -44,30 +46,39 @@ const TasksPage = async ({
           />
         </div>
 
-        <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 lg:items-center">
+        <div className="flex flex-col lg:flex-row gap-5 lg:gap-8 lg:items-center">
           <div className="relative">
             <input
               type="text"
               name="search"
-              placeholder="Search for epics..."
-              className="input lg:w-64! lg:mt-0! py-2.5! pe-4! ps-10! rounded-md!"
+              placeholder="Search for tasks..."
+              className="input lg:w-64! mt-0! py-2.5! pe-4! ps-10! rounded-md! placeholder:text-body-MD!"
             />
             <SearchIcon className="text-slate-medium absolute top-1/2 left-3 -translate-y-1/2" />
+            <SearchIcon className="text-slate-medium cursor-pointer absolute top-1/2 left-3 -translate-y-1/2" />
           </div>
-          <SelectTaskView view={view} projectId={projectId} />
+          <div className="w-full hidden lg:block">
+            <SelectTaskView view={view} projectId={projectId} />
+          </div>
           {/* button to create task */}
           <Link href={`/project/${projectId}/tasks/new`}>
-            <button className="btn-primary-desktop lg:gap-2">
+            <button className="btn-primary-mobile lg:hidden">
               <PlusIcon />
               <span className="text-body-MD font-bold text-white">
-                New Task
+                Create Task
               </span>
             </button>
           </Link>
         </div>
       </div>
 
-      {view === "board" ? <TasksBoardView projectId={projectId} /> : ""}
+      {view === "board" ? (
+        <TasksBoardView projectId={projectId} />
+      ) : (
+        <TasksListTable projectId={projectId} />
+      )}
+
+      <TaskListMobile projectId={projectId} />
     </section>
   );
 };

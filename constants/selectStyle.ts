@@ -149,3 +149,82 @@ export const assigneeSelectStylesEpicModal: StylesConfig<OptionType, false> = {
     padding: "12px",
   }),
 };
+
+export const taskViewSelectStyles: StylesConfig<OptionType, false> = {
+  control: (state) => ({
+    width: "fit-content",
+    height: "fit-content",
+    paddingLeft: "16px",
+    paddingRight: "16px",
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    border: "1px solid #EAECF0",
+    borderRadius: "4px",
+    boxShadow: state.isFocused
+      ? "0px 4px 12px rgba(0,0,0,0.08)"
+      : "0px 1px 2px rgba(0,0,0,0.08)",
+
+    cursor: "pointer",
+
+    ":hover": {
+      border: "1px solid #EAECF0",
+    },
+  }),
+
+  // valueContainer: (base) => ({
+  //   ...base,
+  //   padding: "0 24px",
+  // }),
+
+  singleValue: (base) => ({
+    ...base,
+    display: "flex",
+    alignItems: "center",
+    color: "#041b3c",
+    fontSize: "14px",
+    fontWeight: 500,
+  }),
+
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+
+  // dropdownIndicator: (base) => ({
+  //   ...base,
+  //   paddingRight: "24px",
+  // }),
+
+  menu: (base) => ({
+    ...base,
+    borderRadius: "12px",
+    overflow: "hidden",
+    border: "1px solid #EAECF0",
+    boxShadow: "0px 12px 24px rgba(0,0,0,0.12)",
+  }),
+
+  // menuList: (base) => ({
+  //   ...base,
+  //   padding: "8px",
+  // }),
+
+  option: (base, state) => ({
+    ...base,
+    display: "flex",
+    alignItems: "center",
+    // padding: "14px 20px",
+    borderRadius: "8px",
+    cursor: "pointer",
+
+    backgroundColor: state.isSelected
+      ? "#F2F4F7"
+      : state.isFocused
+        ? "#F9FAFB"
+        : "#FFFFFF",
+
+    color: "#101828",
+
+    fontSize: "14px",
+    fontWeight: 500,
+  }),
+};

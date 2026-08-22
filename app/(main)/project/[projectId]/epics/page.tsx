@@ -3,34 +3,32 @@ import BreadCrumb from "@/components/ui/BreadCrumb";
 import BtnAdd from "@/components/ui/BtnAdd";
 import { getProjectEpics } from "@/features/epic/api/getProjectEpics";
 import EpicList from "@/features/epic/components/EpicList";
-import Image from "next/image";
 import Link from "next/link";
 import { getProject } from "@/features/project/api/getProject";
 import Pagination from "@/components/ui/Pagination";
 import InfiniteEpicList from "@/features/epic/components/infiniteEpicList";
-import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
 import ErrorPage from "@/components/layout/ErrorPage";
 import EmptyEpicPage from "@/features/epic/components/EmptyEpicsPage";
 
-import SearchIcon from "@/assets/icons/search.svg";
 import PlusIcon from "@/assets/icons/plus.svg";
+import SearchEpic from "@/features/epic/components/SearchEpic";
 
 const Epicspage = async ({
   params,
   searchParams,
 }: {
   params: Promise<{ projectId: string }>;
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; title?: string }>;
 }) => {
   const { projectId } = await params;
 
-  const { page } = await searchParams;
+  const { page, title } = await searchParams;
 
-  const currentPage = Number(page ?? "1");
+  const currentPage = title ? 1 : Number(page ?? "1");
 
   const limit = 10;
 
-  const offset = (currentPage - 1) * limit;
+  const offset = title ? 0 : (currentPage - 1) * limit;
 
   const { success, data, totalCount } = await getProjectEpics(
     projectId,
@@ -83,16 +81,11 @@ const Epicspage = async ({
         </div>
 
         <div className="lg:flex lg:gap-8 lg:items-center ">
-          <div className="relative">
-            <input
-              type="text"
-              name="search"
-              placeholder="Search for epics..."
-              className="input w-full! lg:w-75.75! h-12! rounded-xs! py-1.5! px-3! ps-7! placeholder:text-body-MD placeholder:font-normal placeholder:text-resend-timer"
-            />
-            <SearchIcon className="cursor-pointer absolute top-1/2 right-3 -translate-y-1/2" />
-          </div>
-          <Link href={`/project/${projectId}/epics/new`}>
+          <SearchEpic projectId={projectId} />
+          <Link
+            className="hidden lg:block"
+            href={`/project/${projectId}/epics/new`}
+          >
             <button className="btn-primary-desktop lg:gap-2!">
               <PlusIcon />
               <span className="text-body-MD font-bold text-white">
@@ -105,10 +98,14 @@ const Epicspage = async ({
 
       {/* epics list  */}
       <div className="hidden lg:block">
-        <EpicList epics={data} />
+        <EpicList projectId={projectId} epics={data} />
       </div>
       <div className="lg:hidden">
-        <InfiniteEpicList initialEpics={data} totalEpics={totalEpics} />
+        <InfiniteEpicList
+          initialEpics={data}
+          totalEpics={totalEpics}
+          projectId={projectId}
+        />
       </div>
 
       <BtnAdd path={`/project/${projectId}/epics/new`} />

@@ -1,5 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import PlusIcon from "@/assets/icons/plus.svg";
 
 const BtnAdd = ({ path }: { path: string }) => {
   return (
@@ -11,12 +12,7 @@ const BtnAdd = ({ path }: { path: string }) => {
           background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
         }}
       >
-        {/* <Image
-          src="/assets/icons/plus.svg"
-          alt="add"
-          width={10.5}
-          height={10.5}
-        /> */}
+        <PlusIcon />
       </button>
     </Link>
   );

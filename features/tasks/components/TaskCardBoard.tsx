@@ -1,9 +1,12 @@
-import { TaskByStatus } from "@/constants/constants";
+import { Tasks } from "@/constants/constants";
 import { getInitials } from "@/lib/getInitials";
 import { formateDeadline } from "@/lib/helper";
 import Image from "next/image";
 
-const TaskCardBoard = ({ task }: { task: TaskByStatus }) => {
+const TaskCardBoard = ({ task, openTaskModal }: {
+  task: Tasks;
+  openTaskModal: (task: Tasks) => void;
+}) => {
   const initials = task?.assignee?.name
     ? getInitials(task?.assignee?.name)
     : "Unassigneed";
@@ -14,7 +17,8 @@ const TaskCardBoard = ({ task }: { task: TaskByStatus }) => {
 
   return (
     <div
-      className="w-full flex flex-col gap-4 p-4 rounded-lg bg-white border border-slate-10 shadow-[0px 2px 8px 0px #00000005]
+      onClick={() => openTaskModal(task)}
+      className="w-full flex flex-col gap-4 p-4 rounded-lg bg-white border border-slate-10 shadow-[0px 2px 8px 0px #00000005] cursor-pointer
 "
     >
       <h5 className="text-body-MD font-medium text-slate-dark">{task.title}</h5>

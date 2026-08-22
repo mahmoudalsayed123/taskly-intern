@@ -7,9 +7,14 @@ import EpicList from "./EpicList";
 type Props = {
   initialEpics: Epic[];
   totalEpics: number;
+  projectId: string;
 };
 
-export default function InfiniteEpicList({ initialEpics, totalEpics }: Props) {
+export default function InfiniteEpicList({
+  initialEpics,
+  totalEpics,
+  projectId,
+}: Props) {
   const [epics, setEpics] = useState(initialEpics);
   const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
@@ -58,7 +63,7 @@ export default function InfiniteEpicList({ initialEpics, totalEpics }: Props) {
 
   return (
     <>
-      <EpicList epics={epics} />
+      <EpicList projectId={projectId} epics={epics} />
 
       {loading && (
         <div className="flex items-center justify-center py-8">

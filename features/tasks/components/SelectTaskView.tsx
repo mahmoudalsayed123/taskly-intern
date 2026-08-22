@@ -1,11 +1,10 @@
 "use client";
 import { viewOptions } from "@/constants/constants";
+import { taskViewSelectStyles } from "@/constants/selectStyle";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent } from "react";
 import Select from "react-select";
-
-import ArrowBottomIcon from "@/assets/icons/arrow-bottom.svg";
-import { assigneeSelectStylesEpicModal } from "@/constants/selectStyle";
 
 const SelectTaskView = ({
   view,
@@ -17,32 +16,30 @@ const SelectTaskView = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedView = searchParams.get("view") || "board";
-
-  const handleViewChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newView = e.target.value;
-    router.push(`/project/${projectId}/tasks?view=${newView}`);
-  };
   return (
     <Select
       options={viewOptions}
-      value={viewOptions.find((option) => option.value === view)}
-      onChange={(selectedOption) => {
-        const newView = selectedOption?.value || "board";
+      value={viewOptions.find((option) => option.value === selectedView)}
+      placeholder="Board View"
+      onChange={(option) => {
+        const newView = option?.value;
         router.push(`/project/${projectId}/tasks?view=${newView}`);
       }}
       formatOptionLabel={(option) => {
-        const Icon = option.icon;
-
         return (
-          <div className="flex items-center gap-2">
-            {Icon && <Icon />}
-            <span className="text-body-MD font-normal text-resend-timer">
-              {option.label}
-            </span>
+          <div className="flex items-center gap-4">
+            {/* <Image
+              src={option.icon || "/assets/icons/board.svg"}
+              alt="icon"
+              width={option.width}
+              height={option.height}
+            /> */}
+
+            <span>{option.label}</span>
           </div>
         );
       }}
-      styles={assigneeSelectStylesEpicModal}
+      styles={taskViewSelectStyles}
     />
   );
 };

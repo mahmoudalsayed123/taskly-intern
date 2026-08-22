@@ -62,7 +62,7 @@ const TasksPage = async ({
           {/* button to create task */}
           {view === "list" && (
             <Link
-              className="fixed bottom-20 right-10"
+              className="fixed bottom-20 right-11"
               href={`/project/${projectId}/tasks/new`}
             >
               <button className="btn-primary-mobile lg:hidden">

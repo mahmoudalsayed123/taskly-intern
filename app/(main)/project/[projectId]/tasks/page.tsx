@@ -54,6 +54,7 @@ const TasksPage = async ({
               placeholder="Search for tasks..."
               className="input lg:w-64! mt-0! py-2.5! pe-4! ps-10! rounded-md! placeholder:text-body-MD!"
             />
+            <SearchIcon className="text-slate-medium absolute top-1/2 left-3 -translate-y-1/2" />
             <SearchIcon className="text-slate-medium cursor-pointer absolute top-1/2 left-3 -translate-y-1/2" />
           </div>
           <div className="w-full hidden lg:block">

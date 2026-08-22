@@ -1,11 +1,10 @@
+import { ComponentType } from "react";
 import { StylesConfig } from "react-select";
 
 type OptionType = {
   value: string;
   label: string;
-  icon?: string;
-  width?: number;
-  height?: number;
+  icon?: ComponentType;
 };
 
 export const selectStyles: StylesConfig<OptionType, false> = {

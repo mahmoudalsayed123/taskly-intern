@@ -80,6 +80,25 @@
   @apply col-span-6 flex flex-col items-center gap-5 md:ms-[198px] p-6 md:p-8 mt-[64px] bg-background-container h-[calc(100vh-64px)];
 }
 
+.section_invite_page {
+  background:
+    linear-gradient(0deg, #f9f9ff, #f9f9ff),
+    radial-gradient(
+      141.42% 141.42% at 100% 100%,
+      #f1f3ff 0%,
+      rgba(241, 243, 255, 0) 50%
+    ),
+    radial-gradient(
+      141.42% 141.42% at 0% 0%,
+      #d7e2ff 0%,
+      rgba(215, 226, 255, 0) 50%
+    );
+}
+
+.linear_gradiant_invite {
+  border-top: 4px solid linear-gradient(90deg, #003d9b 0%, #0052cc 100%);
+}
+
 .section_card {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 w-full;
 }
@@ -122,6 +141,14 @@
 
 .btn-primary-mobile {
   @apply w-full py-3 px-6 flex items-center justify-center gap-2 rounded-xs cursor-pointer text-white text-body-MD font-semibold bg-primary;
+  background: linear-gradient(
+    99.3deg,
+    var(--color-primary) 0%,
+    var(--color-primary-container) 100%
+  );
+  box-shadow:
+    0px 4px 6px -4px var(--color-primary-20),
+    0px 10px 15px -3px var(--color-primary-20);
 }
 
 .btn-secondary-desktop {

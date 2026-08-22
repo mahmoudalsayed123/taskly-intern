@@ -182,3 +182,7 @@ export const createTaskSchema = z.object({
       },
     ),
 });
+
+export const inviteMemberSchema = z.object({
+  p_email: z.string().trim().email("Please enter a valid email address"),
+});

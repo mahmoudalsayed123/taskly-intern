@@ -109,11 +109,16 @@ export interface Tasks {
   id: string;
   task_id?: string;
   title: string;
+  description?: string;
   assignee: {
+    name: string;
+  };
+  created_by: {
     name: string;
   };
   due_date: string;
   status?: TaskStatus;
+  created_at: string;
 }
 
 export const viewOptions = [

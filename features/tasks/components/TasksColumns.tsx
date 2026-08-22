@@ -1,25 +1,39 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
 import TasksListBoard from "./TasksListBoard";
 import { getTasksByStatus } from "../api/getTasksByStatus";
+import { Tasks } from "@/constants/constants";
+import { useEffect, useState } from "react";
+
+import PlusWithCircleIcon from "@/assets/icons/plus-with-circle.svg";
+import PlusSecondaryIcon from "@/assets/icons/plus-slate.svg";
+
 type Status = {
   label: string;
   value: string;
   color: string;
   numTasksColor: string;
 };
-const TasksColumns = async ({
+const TasksColumns = ({
   status,
   projectId,
+  openTaskModal,
 }: {
   status: Status;
   projectId: string;
+  openTaskModal: (task: Tasks) => void;
 }) => {
-  const statusValue = status.value.replace("_", " ");
-  const { data: tasks, success } = await getTasksByStatus(
-    projectId,
-    status.label,
-  );
+  const [tasks, setTasks] = useState<Tasks[]>([]);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const { data, success } = await getTasksByStatus(projectId, status.label);
+      if (success && data) {
+        setTasks(data);
+      }
+    };
+    fetchTasks();
+  }, [projectId, status.label]);
+
   return (
     <div className="w-72 flex flex-col gap-4 shrink-0">
       {/* status title, plus add task */}
@@ -37,31 +51,20 @@ const TasksColumns = async ({
           </p>
         </div>
         <button>
-          {/* <Image
-            src="/assets/icons/plus-slate.svg"
-            alt="add task"
-            width={10.5}
-            height={10.5}
-          /> */}
+          <PlusSecondaryIcon />
         </button>
       </div>
       <Link
-        // href={`/project/${projectId}/tasks?epic_id=${epicId}`}
-        href={"/"}
+        href={`/project/${projectId}/tasks?status=${status.value}`}
         className="flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-slate-30"
       >
-        {/* <Image
-          src="/assets/icons/plus-with-circle.svg"
-          alt="add"
-          width={15}
-          height={15}
-        /> */}
+        <PlusWithCircleIcon />
         <p className="text-label-SM font-bold text-muted-body-60 uppercase">
           ADD NEW TASK
         </p>
       </Link>
       {/* tasks list */}
-      <TasksListBoard tasks={tasks} />
+      <TasksListBoard tasks={tasks} openTaskModal={openTaskModal} />
     </div>
   );
 };

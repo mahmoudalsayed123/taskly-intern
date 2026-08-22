@@ -3,12 +3,10 @@ import BreadCrumb from "@/components/ui/BreadCrumb";
 import BtnAdd from "@/components/ui/BtnAdd";
 import { getProjectEpics } from "@/features/epic/api/getProjectEpics";
 import EpicList from "@/features/epic/components/EpicList";
-import Image from "next/image";
 import Link from "next/link";
 import { getProject } from "@/features/project/api/getProject";
 import Pagination from "@/components/ui/Pagination";
 import InfiniteEpicList from "@/features/epic/components/infiniteEpicList";
-import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
 import ErrorPage from "@/components/layout/ErrorPage";
 import EmptyEpicPage from "@/features/epic/components/EmptyEpicsPage";
 
@@ -122,9 +120,6 @@ const Epicspage = async ({
           projectsShowing={epicsShowing || 0}
         />
       )}
-
-
-      
     </section>
   );
 };

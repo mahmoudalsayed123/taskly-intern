@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +12,9 @@ import ShowPassword from "@/components/ui/ShowPassword";
 import ErrorField from "@/components/ui/ErrorField";
 import Link from "next/link";
 
+import ArrowRightIcon from "@/assets/icons/arrow-right.svg";
+import Spinner from "@/components/ui/Spinner";
+
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -22,11 +24,12 @@ const FormLogin = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<loginFormValues>({
     mode: "onChange",
     resolver: zodResolver(loginSchema),
   });
+
   const submitForm = async (data: loginFormValues) => {
     const res = await login(data);
     if (res.success) {
@@ -104,21 +107,23 @@ const FormLogin = () => {
       {/* Login successfully */}
       <div className="w-full flex justify-center items-center">
         <button
-          className="w-full btn-primary-desktop shadow-[0px_1px_2px_0px_#0000000D] "
-          style={{
-            background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-          }}
+          className="btn-primary-desktop btn-primary-mobile"
           type="submit"
         >
-          <p className="hidden md:block text-body-MD font-semibold">Login</p>
-          <div className="flex md:hidden w-full items-center justify-center gap-2">
-            {/* <Image
-              src="/assets/icons/arrow-right.svg"
-              alt="arrow-right"
-              width={10}
-              height={10}
-            /> */}
-            <p className="text-body-MD font-semibold">Sign in</p>
+          {isSubmitting ? (
+            <Spinner content="login" />
+          ) : (
+            <p className="hidden lg:block text-body-MD font-semibold">Login</p>
+          )}
+          <div className="flex lg:hidden w-full items-center justify-center gap-2">
+            {isSubmitting ? (
+              <Spinner content="login" />
+            ) : (
+              <>
+                <ArrowRightIcon />
+                <p className="text-body-MD font-semibold">Sign in</p>
+              </>
+            )}
           </div>
         </button>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import MemberIcon from "@/assets/icons/members.svg";
 import { useState } from "react";
-import InviteMember from "./InviteMember";
+import InviteMemberModal from "./InviteMemberModal";
 
 const BtnInviteMember = ({ projectId }: { projectId: string }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -23,8 +23,11 @@ const BtnInviteMember = ({ projectId }: { projectId: string }) => {
           onClick={() => setOpenModal(false)}
         />
 
-        <div className="w-full p-4 absolute bottom-0 left-1/2 -translate-x-1/2 max-w-md lg:w-2xl lg:max-w-2xl z-200">
-          <InviteMember setOpenModal={setOpenModal} />
+        <div className="w-full absolute bottom-0 left-1/2 -translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:w-md lg:max-w-md z-200">
+          <InviteMemberModal
+            setOpenModal={setOpenModal}
+            projectId={projectId}
+          />
         </div>
       </div>
     </>

@@ -4,6 +4,10 @@ import EpicIcon from "@/assets/icons/epic.svg";
 import TaskIcon from "@/assets/icons/task.svg";
 import MemberIcon from "@/assets/icons/members.svg";
 import DetailsIcon from "@/assets/icons/details.svg";
+
+import BoardViewIcon from "@/assets/icons/board.svg";
+import ListViewIcon from "@/assets/icons/list.svg";
+
 export const navLinks = [
   {
     id: 1,
@@ -125,16 +129,12 @@ export const viewOptions = [
   {
     value: "board",
     label: "Board View",
-    icon: "@/assets/icons/board.svg",
-    width: 13.5,
-    height: 13.5,
+    icon: BoardViewIcon,
   },
   {
     value: "list",
     label: "List View",
-    icon: "@/assets/icons/list.svg",
-    width: 10.5,
-    height: 5.83,
+    icon: ListViewIcon,
   },
 ];
 

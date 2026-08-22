@@ -2,8 +2,6 @@
 
 import { Epic } from "@/constants/constants";
 import { getInitials } from "@/lib/getInitials";
-import { useState } from "react";
-import EpicModal from "./EpicModal";
 import { formatCreatedAt, formateDeadline } from "@/lib/helper";
 
 import HorizontalDots from "@/assets/icons/dots-horizontal.svg";

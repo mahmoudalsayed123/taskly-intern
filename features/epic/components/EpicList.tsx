@@ -1,8 +1,10 @@
 "use client";
 import { Epic } from "@/constants/constants";
 import EpicCard from "./EpicCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EpicModal from "./EpicModal";
+import { useSearchParams } from "next/navigation";
+import { getEpicByTitle } from "../api/getEpicByTitle";
 
 const EpicList = ({
   projectId,
@@ -11,8 +13,35 @@ const EpicList = ({
   projectId: string;
   epics: Epic[];
 }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [filterEpics, setFilterEpics] = useState(epics);
   const [openModal, setOpenModal] = useState(false);
   const [selectedEpic, setSelectedEpic] = useState<Epic | null>(null);
+  const search = useSearchParams();
+
+  const searchEpic = search.get("title");
+
+  useEffect(() => {
+    async function getEpics() {
+      if (searchEpic) {
+        setLoading(true);
+        const { data, success, message } = await getEpicByTitle(
+          projectId,
+          searchEpic,
+        );
+        if (success) {
+          setFilterEpics(data);
+        } else {
+          setError(message || "Failed to search epics");
+        }
+        setLoading(false);
+      } else {
+        setFilterEpics(epics);
+      }
+    }
+    getEpics();
+  }, [searchEpic]);
 
   const handleOpenEpicModal = (epic: Epic) => {
     setSelectedEpic(epic);
@@ -26,13 +55,33 @@ const EpicList = ({
 
   return (
     <section className="mt-6 lg:mt-10 grid gird-cols-1 lg:grid-cols-2  gap-6">
-      {epics.map((epic) => (
-        <EpicCard
-          key={epic.id}
-          epic={epic}
-          openEpicModal={handleOpenEpicModal}
-        />
-      ))}
+      {loading ? (
+        <div className="col-span-2 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
+        </div>
+      ) : (
+        filterEpics.map((epic) => (
+          <EpicCard
+            key={epic.id}
+            epic={epic}
+            openEpicModal={handleOpenEpicModal}
+          />
+        ))
+      )}
+
+      {!filterEpics.length && (
+        <div className="col-span-2 flex items-center justify-center">
+          <p className="text-slate-medium">
+            No epics found matching your search
+          </p>
+        </div>
+      )}
+
+      {error && (
+        <div className="col-span-2 flex items-center justify-center">
+          <p className="text-slate-medium">{error}</p>
+        </div>
+      )}
 
       {openModal && (
         <div className="fixed inset-0 z-100 flex items-center justify-center">

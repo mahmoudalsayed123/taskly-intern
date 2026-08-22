@@ -32,7 +32,12 @@ const TaskDetailsModalDesktop = ({
     fetchTask();
   }, [projectId, taskId]);
 
-  if (!task) return <p>Loading...</p>;
+  if (!task)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
+      </div>
+    );
   return (
     <div className="w-4xl max-w-4xl h-217.5 bg-white rounded-lg max-h-[90vh] overflow-y-auto flex items-center">
       {/* left side */}

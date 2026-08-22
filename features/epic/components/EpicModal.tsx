@@ -405,7 +405,7 @@ const EpicModal = ({
               <div className=" w-full flex items-center justify-center">
                 <Link
                   href={`/project/${projectId}/tasks/new?epic_id=${epicId}`}
-                  className="btn-primary-desktop lg:gap-2"
+                  className="btn-primary-desktop btn-primary-mobile lg:gap-2"
                 >
                   <Plus />
                   <span className="text-label-SM lg:text-body-LG font-bold">

@@ -46,16 +46,15 @@ const TasksColumns = ({
           <p
             className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark ${status.numTasksColor}`}
           >
-            {" "}
-            2
+            {tasks.length}
           </p>
         </div>
-        <button>
+        <Link href={`/project/${projectId}/tasks/new?status=${status.value}`}>
           <PlusSecondaryIcon />
-        </button>
+        </Link>
       </div>
       <Link
-        href={`/project/${projectId}/tasks?status=${status.value}`}
+        href={`/project/${projectId}/tasks/new?status=${status.value}`}
         className="flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-slate-30"
       >
         <PlusWithCircleIcon />

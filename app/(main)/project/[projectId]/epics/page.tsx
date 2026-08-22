@@ -82,7 +82,10 @@ const Epicspage = async ({
 
         <div className="lg:flex lg:gap-8 lg:items-center ">
           <SearchEpic projectId={projectId} />
-          <Link href={`/project/${projectId}/epics/new`}>
+          <Link
+            className="hidden lg:block"
+            href={`/project/${projectId}/epics/new`}
+          >
             <button className="btn-primary-desktop lg:gap-2!">
               <PlusIcon />
               <span className="text-body-MD font-bold text-white">

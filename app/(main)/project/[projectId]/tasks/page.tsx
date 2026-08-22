@@ -60,14 +60,16 @@ const TasksPage = async ({
             <SelectTaskView view={view} projectId={projectId} />
           </div>
           {/* button to create task */}
-          <Link href={`/project/${projectId}/tasks/new`}>
-            <button className="btn-primary-mobile lg:hidden">
-              <PlusIcon />
-              <span className="text-body-MD font-bold text-white">
-                Create Task
-              </span>
-            </button>
-          </Link>
+          {view === "list" && (
+            <Link
+              className="fixed bottom-20 right-10"
+              href={`/project/${projectId}/tasks/new`}
+            >
+              <button className="btn-primary-mobile lg:hidden">
+                <PlusIcon />
+              </button>
+            </Link>
+          )}
         </div>
       </div>
 

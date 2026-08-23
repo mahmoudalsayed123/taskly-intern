@@ -1,6 +1,3 @@
-import UserIcon from "@/assets/icons/user.svg";
-import CloseIcon from "@/assets/icons/close.svg";
-import EmailIcon from "@/assets/icons/email.svg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { inviteMemberSchema } from "@/lib/zodSchema";
@@ -10,7 +7,11 @@ import ErrorField from "@/components/ui/ErrorField";
 import { inviteMember } from "../api/inviteMember";
 import Spinner from "@/components/ui/Spinner";
 
-const InviteMember = ({
+import UserInviteIcon from "@/assets/icons/invite-user.svg";
+import CloseIcon from "@/assets/icons/close.svg";
+import EmailIcon from "@/assets/icons/email.svg";
+
+const InviteMemberModal = ({
   setOpenModal,
   projectId,
 }: {
@@ -33,11 +34,12 @@ const InviteMember = ({
       const invitation = {
         p_email: data.p_email,
         p_project_id: projectId,
-        p_app_url: "http://localhost:3000",
-        p_base_url: "https://onlrxfthsuzjvlkwaddj.supabase.co",
+        p_app_url: process.env.NEXT_PUBLIC_APP_URL!,
+        p_base_url: process.env.NEXT_PUBLIC_BASE_URL!,
       };
-      const member = await inviteMember(invitation);
-      if (member) {
+
+      const { success } = await inviteMember(invitation);
+      if (success) {
         toast.success("Invitation sent successfully");
         reset();
         setOpenModal(false);
@@ -50,13 +52,13 @@ const InviteMember = ({
   };
 
   return (
-    <div className="w-full max-w-md lg:w-md rounded-t-4xl lg:rounded-lg p-8 flex flex-col gap-2.5 bg-white shadow-[0px -4px 24px 0px #041B3C0F] ">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md lg:w-md rounded-t-4xl lg:rounded-lg p-8 flex flex-col gap-2.5 bg-white shadow-[0px -4px 24px 0px #041B3C0F] ">
       <div className="lg:hidden w-12 h-1.5 rounded-xl bg-slate-30 mx-auto"></div>
       {/* user icon + title + close */}
       <div className="flex items-start justify-between">
         <div className="flex flex-col gap-1 lg:gap-2">
           <div className="w-12 h-12 rounded-lg bg-surface-low flex items-center justify-center">
-            <UserIcon className="text-slate-dark" />
+            <UserInviteIcon currentColor="var(--color-primary)" />
           </div>
           <h4 className="text-heading-MD text-slate-dark font-bold">
             Invite Team Member
@@ -113,4 +115,4 @@ const InviteMember = ({
   );
 };
 
-export default InviteMember;
+export default InviteMemberModal;

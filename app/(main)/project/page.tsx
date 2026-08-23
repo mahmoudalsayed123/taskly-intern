@@ -50,7 +50,7 @@ const ProjectPage = async ({
           sizeDesktop="display-MD"
           sizeMobile="heading-MD"
         />
-        <Link href="/project/add" className="hidden md:block">
+        <Link href="/project/add" className="hidden lg:block">
           <button className="btn-primary-desktop lg:gap-2! lg:text-body-LG! lg:font-medium!">
             <Plus className="text-label-XS " />
             <p className="text-body-MD font-medium text-white ">

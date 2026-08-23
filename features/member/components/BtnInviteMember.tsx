@@ -1,7 +1,8 @@
 "use client";
-import MemberIcon from "@/assets/icons/members.svg";
 import { useState } from "react";
 import InviteMemberModal from "./InviteMemberModal";
+
+import UserIcon from "@/assets/icons/user.svg";
 
 const BtnInviteMember = ({ projectId }: { projectId: string }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -10,10 +11,10 @@ const BtnInviteMember = ({ projectId }: { projectId: string }) => {
     <>
       <button
         onClick={() => setOpenModal((e) => !e)}
-        className="hidden! lg:flex! btn-primary-desktop lg:gap-2"
+        className="fixed bottom-20 right-10 lg:static lg:flex! btn-primary-desktop lg:gap-2 w-10! h-10! lg:w-fit! lg:h-fit! flex items-center justify-center rounded-lg py-3 px-6"
       >
-        <MemberIcon />
-        <p>Invite Member</p>
+        <UserIcon />
+        <p className="hidden lg:block text-body-MD font-bold">Invite Member</p>
       </button>
 
       <div className={openModal ? "block" : "hidden"}>
@@ -23,7 +24,7 @@ const BtnInviteMember = ({ projectId }: { projectId: string }) => {
           onClick={() => setOpenModal(false)}
         />
 
-        <div className="w-full absolute bottom-0 left-1/2 -translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:w-md lg:max-w-md z-200">
+        <div className="w-full fixed bottom-0 left-1/2 -translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:w-md lg:max-w-md z-200 bg-red-400">
           <InviteMemberModal
             setOpenModal={setOpenModal}
             projectId={projectId}

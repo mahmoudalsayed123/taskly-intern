@@ -22,3 +22,7 @@ export function formatDateForApi(date: Date) {
 
   return `${year}-${month}-${day}`;
 }
+
+export const buildRedirectUrl = (path: string, redirectTo: string) => {
+  return `${path}?redirect=${encodeURIComponent(redirectTo)}`;
+};

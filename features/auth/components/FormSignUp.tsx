@@ -7,14 +7,18 @@ import { toastFail } from "@/lib/toastFail";
 import { toastSuccess } from "@/lib/toastSuccess";
 import { signUpSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { buildRedirectUrl } from "@/lib/helper";
+import Link from "next/link";
 
 const FormSignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/project";
+
   const router = useRouter();
   type SignUpFormValues = z.infer<typeof signUpSchema>;
 
@@ -51,7 +55,7 @@ const FormSignUp = () => {
     if (result.success) {
       toastSuccess(result.message || "Sign-up successfully");
       reset();
-      router.replace("/login");
+      router.push(buildRedirectUrl("/login", redirectTo));
     }
   };
 
@@ -195,14 +199,24 @@ const FormSignUp = () => {
       {/* create account button */}
       <div className="w-full flex justify-center items-center">
         <button
-          className="w-full btn-primary-desktop shadow-btn "
-          style={{
-            background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-          }}
+          className="btn-primary-desktop btn-primary-mobile"
           type="submit"
         >
           Create Account
         </button>
+      </div>
+      <div className="pt-8 w-full ">
+        <div className="w-full flex items-center justify-center gap-2">
+          <p className="text-body-MD text-muted-body font-normal">
+            Aleardy have an account?
+          </p>
+          <Link
+            href={buildRedirectUrl("/login", redirectTo)}
+            className="cursor-pointer text-primary text-body-MD font-semibold "
+          >
+            log in
+          </Link>
+        </div>
       </div>
     </form>
   );

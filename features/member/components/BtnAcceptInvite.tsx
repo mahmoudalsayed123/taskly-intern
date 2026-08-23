@@ -1,3 +1,4 @@
+"use client";
 import { toastFail } from "@/lib/toastFail";
 import { toastSuccess } from "@/lib/toastSuccess";
 import { acceptInvitation } from "../api/acceptInvitation";

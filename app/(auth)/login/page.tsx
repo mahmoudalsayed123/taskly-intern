@@ -25,29 +25,8 @@ const login = () => {
             />
           </div>
           <FormLogin />
-          <div className="hidden md:block pt-8 w-full ">
-            <div className="w-full flex items-center justify-center gap-2">
-              <p className="text-body-MD text-muted-body font-normal">
-                Aleardy have an account?
-              </p>
-              <Link
-                href="/sign-up"
-                className="text-primary text-body-MD font-semibold"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
-      <div className="md:hidden block pt-[47.5px] pb-8 w-full">
-        <div className="w-full flex items-center justify-center gap-2">
-          <p className="text-body-MD text-muted-body font-normal">
-            Aleardy have an account?
-          </p>
-          <p className="text-primary text-body-MD font-semibold">Sign Up</p>
-        </div>
-      </div>
     </section>
   );
 };

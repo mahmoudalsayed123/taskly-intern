@@ -1,10 +1,5 @@
-"use client";
 import Logo from "@/components/layout/Logo";
 import InviteCardIcon from "@/assets/icons/invite-card.svg";
-import { acceptInvitation } from "@/features/member/api/acceptInvitation";
-import { toastSuccess } from "@/lib/toastSuccess";
-import { redirect } from "next/navigation";
-import { toastFail } from "@/lib/toastFail";
 import BtnAcceptInvite from "@/features/member/components/BtnAcceptInvite";
 
 const AcceptInvitePage = async ({

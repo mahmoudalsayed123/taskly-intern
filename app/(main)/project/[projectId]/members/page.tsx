@@ -5,8 +5,9 @@ import ListMember from "@/features/member/components/ListMember";
 import MembersTable from "@/features/member/components/MembersTable";
 import { getProject } from "@/features/project/api/getProject";
 
-import MemberIcon from "@/assets/icons/members.svg";
 import BtnInviteMember from "@/features/member/components/BtnInviteMember";
+import { getUserInfo } from "@/features/auth/api/getUserInfo";
+import { Member } from "@/constants/constants";
 
 const MembersPage = async ({
   params,
@@ -15,7 +16,12 @@ const MembersPage = async ({
 }) => {
   const { projectId } = await params;
   const { data: projectMember } = await getProjectMember(projectId);
-  console.log("project member", projectMember);
+
+  const { data: user } = await getUserInfo();
+
+  const canInviteMember = projectMember?.find(
+    (member: any) => member.user_id === user?.id,
+  );
 
   const { data: project } = await getProject(projectId);
   return (
@@ -45,7 +51,9 @@ const MembersPage = async ({
             />
           </div>
         </div>
-        <BtnInviteMember projectId={projectId} />
+        {canInviteMember?.role === "owner" && (
+          <BtnInviteMember projectId={projectId} />
+        )}
       </div>
       {/* table for desktop */}
       <section className="flex items-center  justify-center w-full mt-19.75">
@@ -56,11 +64,11 @@ const MembersPage = async ({
       </section>
 
       {/* link add project mobile screen */}
-      <button className="block lg:hidden fixed bottom-6 right-6">
+      {/* <button className="block lg:hidden fixed bottom-6 right-6">
         <button className="btn-primary-mobile">
           <MemberIcon />
         </button>
-      </button>
+      </button> */}
     </section>
   );
 };

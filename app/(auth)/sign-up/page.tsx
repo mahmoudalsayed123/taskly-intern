@@ -27,34 +27,8 @@ and task precision."
             />
           </div>
           <FormSignUp />
-          <div className="hidden md:block pt-8 w-full ">
-            <div className="w-full flex items-center justify-center gap-2">
-              <p className="text-body-MD text-muted-body font-normal">
-                Aleardy have an account?
-              </p>
-              <Link
-                href="/login"
-                className="cursor-pointer text-primary text-body-MD font-semibold "
-              >
-                log in
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
-      <div className="md:hidden block pt-12 pb-8 w-full">
-        <div className="w-full flex items-center justify-center gap-2">
-          <p className="text-body-MD text-muted-body font-normal">
-            Aleardy have an account?
-          </p>
-          <Link
-            href="/login"
-            className="cursor-pointer text-primary text-body-MD font-semibold "
-          >
-            log in
-          </Link>
-        </div>
-      </div>
     </section>
   );
 };

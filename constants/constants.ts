@@ -41,55 +41,6 @@ export const navLinks = [
   },
 ];
 
-export type Projects = {
-  id: string;
-  name: string;
-  description: string;
-  created_at: string;
-};
-
-export interface Member {
-  user_id: string;
-  role: string;
-  email: string;
-  metadata: {
-    name: string;
-    email: string;
-    department: string;
-  };
-}
-export interface Epic {
-  id: string;
-  project_id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  deadline: string;
-  epic_id: string;
-  created_by: {
-    sub: string;
-    name: string;
-    email: string;
-    department: string;
-  };
-  assignee: {
-    sub: string;
-    name: string;
-    email: string;
-    department: string;
-  };
-}
-
-export interface Task {
-  project_id: string;
-  epic_id?: string | null;
-  title: string;
-  description?: string | null;
-  assignee_id?: string | null;
-  due_date?: string;
-  status?: TaskStatus;
-}
-
 export const taskStatus: TaskStatus[] = [
   TaskStatus.TO_DO,
   TaskStatus.IN_PROGRESS,
@@ -100,30 +51,6 @@ export const taskStatus: TaskStatus[] = [
   TaskStatus.READY_FOR_PRODUCTION,
   TaskStatus.DONE,
 ];
-export interface EpicTasks {
-  id: string;
-  title: string;
-  assignee: {
-    name: string;
-  };
-  due_date: string;
-}
-
-export interface Tasks {
-  id: string;
-  task_id?: string;
-  title: string;
-  description?: string;
-  assignee: {
-    name: string;
-  };
-  created_by: {
-    name: string;
-  };
-  due_date: string;
-  status?: TaskStatus;
-  created_at: string;
-}
 
 export const viewOptions = [
   {
@@ -142,49 +69,44 @@ export const status = [
   {
     label: "TO_DO",
     value: "todo",
-    color: "bg-[#2563EB]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "IN_PROGRESS",
     value: "in_progress",
-    color: "bg-[#7E5FEB]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "BLOCKED",
     value: "blocked",
-    color: "bg-[#E11D48]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "IN_REVIEW",
     value: "in_review",
-    color: "bg-[#3B82F6]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "READY_FOR_QA",
     value: "ready_for_qa",
-    color: "bg-[#F97316]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "REOPENED",
     value: "reopened",
-    color: "bg-[#F97316]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "READY_FOR_PRODUCTION",
     value: "ready_for_production",
-    color: "bg-[#F97316]",
-    numTasksColor: "bg-slate-20",
   },
   {
     label: "DONE",
     value: "done",
-    color: "bg-[#10B981]",
-    numTasksColor: "bg-slate-20",
   },
 ];
+
+export const statusBackgroundColors = {
+  TO_DO: "bg-TO_DO",
+  IN_PROGRESS: "bg-IN_PROGRESS",
+  BLOCKED: "bg-BLOCKED",
+  IN_REVIEW: "bg-IN_REVIEW",
+  READY_FOR_QA: "bg-READY_FOR_QA",
+  REOPENED: "bg-REOPENED",
+  READY_FOR_PRODUCTION: "bg-READY_FOR_PRODUCTION",
+  DONE: "bg-DONE",
+};

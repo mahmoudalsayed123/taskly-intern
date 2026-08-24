@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Epic } from "@/constants/constants";
 import EpicList from "./EpicList";
+import { Epic } from "@/types/types";
 
 type Props = {
   initialEpics: Epic[];

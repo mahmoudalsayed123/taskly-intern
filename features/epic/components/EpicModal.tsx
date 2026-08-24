@@ -1,5 +1,4 @@
 "use client";
-import { Epic, EpicTasks, Member } from "@/constants/constants";
 import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import { getEpicDetails } from "../api/getEpicDetails";
@@ -27,6 +26,7 @@ import Close from "@/assets/icons/close.svg";
 import NoUser from "@/assets/icons/noUser.svg";
 import Date from "@/assets/icons/date-primary.svg";
 import ArrowBottom from "@/assets/icons/arrow-bottom.svg";
+import { Epic, EpicTasks, Member } from "@/types/types";
 
 const EpicModal = ({
   projectId,

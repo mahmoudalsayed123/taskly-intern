@@ -7,12 +7,15 @@ import z from "zod";
 import { toastSuccess } from "@/lib/toastSuccess";
 import { toastFail } from "@/lib/toastFail";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { createEpic } from "../api/createEpic";
 import { useEffect, useState } from "react";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
-import { Member } from "@/constants/constants";
 import { formatDateForApi } from "@/lib/helper";
+import { Member } from "@/types/types";
+
+import ExclamationMark from "@/assets/icons/exclamation-mark-error.svg";
+import ArrowBottom from "@/assets/icons/arrow-bottom.svg";
+import Date from "@/assets/icons/date.svg";
 
 const FormNewEpic = ({ projectId }: { projectId: string }) => {
   const [assignee, setAssignee] = useState([]);
@@ -98,12 +101,7 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
           </div>
           {errors.description && (
             <div className="flex items-center gap-1 mt-2">
-              {/* <Image
-                src="/assets/icons/exclamation-mark-error.svg"
-                alt="error"
-                width={13}
-                height={13}
-              /> */}
+              <ExclamationMark />
               <ErrorField message={errors.description?.message} />
             </div>
           )}
@@ -128,13 +126,7 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
                   </option>
                 ))}
               </select>
-              {/* <Image
-                src="/assets/icons/arrow-bottom.svg"
-                alt="arrow"
-                width={24}
-                height={24}
-                className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-              /> */}
+              <ArrowBottom />
             </div>
           </div>
           {/* select date */}
@@ -152,13 +144,7 @@ const FormNewEpic = ({ projectId }: { projectId: string }) => {
                 id="deadline"
                 {...register("deadline")}
               />
-              {/* <Image
-                src="/assets/icons/date.svg"
-                alt="date"
-                width={10.5}
-                height={11.67}
-                className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
-              /> */}
+              <Date />
             </div>
             <ErrorField message={errors.deadline?.message} />
           </div>

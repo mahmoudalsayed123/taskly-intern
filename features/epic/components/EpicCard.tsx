@@ -1,6 +1,5 @@
 "use client";
 
-import { Epic } from "@/constants/constants";
 import { getInitials } from "@/lib/getInitials";
 import { formatCreatedAt, formateDeadline } from "@/lib/helper";
 
@@ -9,6 +8,7 @@ import Dots from "@/assets/icons/dots.svg";
 
 import User from "@/assets/icons/user-dark.svg";
 import Date from "@/assets/icons/date.svg";
+import { Epic } from "@/types/types";
 
 const EpicCard = ({
   epic,

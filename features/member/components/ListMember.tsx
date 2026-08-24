@@ -1,5 +1,5 @@
-import { Member } from "@/constants/constants";
 import MemberCard from "./MemberCard";
+import { Member } from "@/types/types";
 
 const ListMember = ({ members }: { members: Member[] }) => {
   return (

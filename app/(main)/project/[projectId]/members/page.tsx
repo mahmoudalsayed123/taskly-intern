@@ -7,7 +7,6 @@ import { getProject } from "@/features/project/api/getProject";
 
 import BtnInviteMember from "@/features/member/components/BtnInviteMember";
 import { getUserInfo } from "@/features/auth/api/getUserInfo";
-import { Member } from "@/constants/constants";
 
 const MembersPage = async ({
   params,

@@ -1,6 +1,5 @@
-import { Member } from "@/constants/constants";
+import { Member } from "@/types/types";
 import { getInitials } from "@/lib/getInitials";
-import Image from "next/image";
 
 const MemberCard = ({ member }: { member: Member }) => {
   const initials = getInitials(member?.metadata?.name);

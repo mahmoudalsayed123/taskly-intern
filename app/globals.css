@@ -59,6 +59,17 @@
   --color-warning: #ffb300;
   --color-invalid: #ffdad6;
 
+  /* ===== TASK STATUS COLOR ===== */
+  --color-TO_DO: #d7e2ff;
+  --color-IN_PROGRESS: #cdddff;
+  --color-DONE: #82f9be;
+  --color-BLOCKED: #ffdad6;
+  --color-COMPLETE: #82f9be;
+  --color-IN_REVIEW: #cdddff;
+  --color-RE_OPENED: #f97316;
+  --color-READY_FOR_PRODUCTION: #827754;
+  --color-READY_FOR_QA: #f97316;
+
   /* ===== Text ===== */
   --text-no-project: 36px;
   --text-display-LG: 56px;

@@ -1,7 +1,6 @@
 import MainHeading from "@/components/layout/MainHeading";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import NewProjectForm from "@/features/project/add-project/components/NewProjectForm";
-import { getProject } from "@/features/project/api/getProject";
 
 const AddProjectPage = async () => {
   return (

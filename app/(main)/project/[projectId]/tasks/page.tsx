@@ -18,6 +18,8 @@ const TasksPage = async ({
   searchParams: Promise<{ view?: string }>;
 }) => {
   const { projectId } = await params;
+
+  // fetch project id for breadcrumb
   const { data: project } = await getProject(projectId);
   const { view = "board" } = await searchParams;
 
@@ -63,11 +65,13 @@ const TasksPage = async ({
           {/* button to create task */}
           {view === "list" && (
             <Link
-              className="fixed bottom-20 right-11"
+              className="w-14 h-14 fixed bottom-20 right-11"
               href={`/project/${projectId}/tasks/new`}
             >
-              <button className="btn-primary-mobile lg:hidden">
-                <PlusIcon />
+              <button className="w-full! h-full! p-0! rounded-lg! btn-primary-mobile lg:hidden">
+                <div className="flex items-center justify-center w-4 h-4">
+                  <PlusIcon width={15} height={15} />
+                </div>
               </button>
             </Link>
           )}

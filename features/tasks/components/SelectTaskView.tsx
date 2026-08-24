@@ -1,9 +1,7 @@
 "use client";
 import { viewOptions } from "@/constants/constants";
 import { taskViewSelectStyles } from "@/constants/selectStyle";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent } from "react";
 import Select from "react-select";
 
 const SelectTaskView = ({
@@ -29,7 +27,7 @@ const SelectTaskView = ({
         return (
           <div className="flex items-center gap-4">
             {/* <Image
-              src={option.icon || "/assets/icons/board.svg"}
+              src={option.icon || ""}
               alt="icon"
               width={option.width}
               height={option.height}

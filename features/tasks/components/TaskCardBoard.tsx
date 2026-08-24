@@ -1,6 +1,7 @@
-import { Tasks } from "@/constants/constants";
+
 import { getInitials } from "@/lib/getInitials";
 import { formateDeadline } from "@/lib/helper";
+import { Tasks } from "@/types/types";
 import Image from "next/image";
 
 const TaskCardBoard = ({ task, openTaskModal }: {

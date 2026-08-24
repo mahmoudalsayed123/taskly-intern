@@ -1,6 +1,6 @@
 "use client";
 
-import { Tasks } from "@/constants/constants";
+import { Tasks } from "@/types/types";
 import { useEffect, useState } from "react";
 import { getTaskDetails } from "../api/getTaskDetails";
 import Select from "react-select";

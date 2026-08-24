@@ -1,4 +1,4 @@
-import { Tasks } from "@/constants/constants";
+import { Tasks } from "@/types/types";
 import TaskCardBoard from "./TaskCardBoard";
 
 const TasksListBoard = ({

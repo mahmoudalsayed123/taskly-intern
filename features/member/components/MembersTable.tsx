@@ -1,6 +1,5 @@
-import { Member } from "@/constants/constants";
+import { Member } from "@/types/types";
 import MemberRow from "./MemberRow";
-import Image from "next/image";
 
 const MembersTable = ({ members }: { members: Member[] }) => {
   return (

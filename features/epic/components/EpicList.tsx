@@ -1,9 +1,11 @@
 "use client";
-import { Epic } from "@/constants/constants";
-import EpicCard from "./EpicCard";
+
 import { useEffect, useState } from "react";
-import EpicModal from "./EpicModal";
 import { useSearchParams } from "next/navigation";
+
+import { Epic } from "@/types/types";
+import EpicCard from "./EpicCard";
+import EpicModal from "./EpicModal";
 import { getEpicByTitle } from "../api/getEpicByTitle";
 
 const EpicList = ({

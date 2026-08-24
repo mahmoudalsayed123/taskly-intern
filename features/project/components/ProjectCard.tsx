@@ -1,11 +1,13 @@
 "use client";
-import { Projects } from "@/constants/constants";
+import { Project } from "@/types/types";
 import { SquarePen } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const ProjectCard = ({ project }: { project: Projects }) => {
+import DateIcon from "@/assets/icons/date.svg";
+import { formatCreatedAt } from "@/lib/helper";
+
+const ProjectCard = ({ project }: { project: Project }) => {
   const router = useRouter();
   return (
     <Link
@@ -27,29 +29,15 @@ const ProjectCard = ({ project }: { project: Projects }) => {
         {project.description}
       </p>
       <div className="w-full lg:hidden flex items-center gap-1.5 pt-5 lg:pt-6 border-t border-border-slate-10">
-        {/* <Image
-          src="/assets/icons/date.svg"
-          alt="avatar"
-          width={10.5}
-          height={11.67}
-          className="lg:hidden"
-        /> */}
+        <DateIcon />
         <p className="text-label-SM font-normal text-slate-dark">
-          {new Date(project.created_at).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatCreatedAt(project.created_at)}
         </p>
       </div>
       <div className="hidden lg:w-full lg:flex items-center justify-between pt-5 lg:pt-6 border-t border-border-slate-10">
         <p className="text-label-SM font-bold text-slate-medium">Created At</p>
         <p className="text-label-SM font-normal text-slate-medium">
-          {new Date(project.created_at).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatCreatedAt(project.created_at)}
         </p>
       </div>
     </Link>

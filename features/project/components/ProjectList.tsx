@@ -1,11 +1,12 @@
-import { Projects } from "@/constants/constants";
 import ProjectCard from "./ProjectCard";
 import { Suspense } from "react";
 import LoadingProjectCard from "./LoadingProjectCard";
 import Link from "next/link";
-import Image from "next/image";
+import { Project } from "@/types/types";
 
-const ProjectList = ({ projects }: { projects?: Projects[] }) => {
+import PlusIcon from "@/assets/icons/plus-dark.svg";
+
+const ProjectList = ({ projects }: { projects?: Project[] }) => {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between gap-6 mt-10">
       {projects?.map((project) => (
@@ -19,12 +20,7 @@ const ProjectList = ({ projects }: { projects?: Projects[] }) => {
       >
         <div className="flex flex-col items-center justify-center gap-2">
           <div className="w-12 h-12 bg-background-container rounded-xl flex items-center justify-center">
-            {/* <Image
-              src="/assets/icons/plus-dark.svg"
-              alt="add"
-              width={20}
-              height={20}
-            /> */}
+            <PlusIcon />
           </div>
           <p className="text-body-MD font-bold text-slate-medium">
             ADD PROJECT

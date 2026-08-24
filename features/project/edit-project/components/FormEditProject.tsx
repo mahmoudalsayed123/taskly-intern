@@ -7,10 +7,12 @@ import z from "zod";
 import { toastSuccess } from "@/lib/toastSuccess";
 import { toastFail } from "@/lib/toastFail";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { editProject } from "../api/editProject";
 import { useEffect, useState } from "react";
 import { getProject } from "../../api/getProject";
+
+import ErrorIcon from "@/assets/icons/exclamation-mark-error.svg";
+import InitailProject from "@/assets/icons/init-project.svg";
 
 const FormEditProject = ({ projectId }: { projectId: string }) => {
   const [projectData, setProjectData] = useState({ name: "", description: "" });
@@ -73,12 +75,7 @@ const FormEditProject = ({ projectId }: { projectId: string }) => {
       {/* main heading in form container - desktop */}
       <div className="hidden lg:flex items-center gap-4  lg:pt-8 lg:px-8 lg:pb-10 border-b border-b-surface-low">
         <div className="w-11.5 h-11 p-3 flex items-center justify-center rounded-sm bg-primary-10">
-          {/* <Image
-            src="/assets/icons/init-project.svg"
-            alt="back"
-            width={22}
-            height={22}
-          /> */}
+          <InitailProject />
         </div>
         <div className=" flex flex-col">
           <h1 className="lg:text-heading-MD font-semibold text-slate-dark">
@@ -126,12 +123,7 @@ key milestones..."
           </div>
           {errors.description && (
             <div className="flex items-center gap-1 mt-2">
-              {/* <Image
-                src="/assets/icons/exclamation-mark-error.svg"
-                alt="error"
-                width={13}
-                height={13}
-              /> */}
+              <ErrorIcon />
               <ErrorField message={errors.description?.message} />
             </div>
           )}

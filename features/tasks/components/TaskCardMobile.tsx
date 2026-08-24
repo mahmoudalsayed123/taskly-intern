@@ -1,7 +1,7 @@
-import { Tasks } from "@/constants/constants";
 import { formateDeadline } from "@/lib/helper";
 import { getInitials } from "@/lib/getInitials";
 import NoUser from "@/assets/icons/noUser.svg";
+import { Tasks } from "@/types/types";
 
 const TaskCardMobile = ({
   task,
@@ -29,16 +29,25 @@ const TaskCardMobile = ({
           {task.status}
         </p>
       </div>
-      <div className="flex items-start gap-3">
+      <div
+        className={`flex items-start gap-3`}
+      >
         {task.assignee?.name ? (
           <div className="rounded-full w-6 h-6 bg-surface-highest text-userName-epic-modal lg:bg-primary lg:text-white flex items-center justify-center text-label-XS font-bold ">
             {initials}
           </div>
         ) : (
-          <div className="w-6 h-6 flex items-center justify-center">
-            <NoUser className="w-6 h-6" />
+          <div className="rounded-full w-6 h-6 bg-surface-highest text-userName-epic-modal lg:bg-primary lg:text-white flex items-center justify-center text-label-XS font-bold">
+            <div className="w-5 h-5 flex items-center justify-center">
+              <NoUser
+                width={20}
+                height={20}
+                className="flex items-center justify-center"
+              />
+            </div>
           </div>
         )}
+
         <div className="flex flex-col">
           {task.due_date !== null ? (
             <>

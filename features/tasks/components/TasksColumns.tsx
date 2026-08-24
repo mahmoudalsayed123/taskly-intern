@@ -2,17 +2,16 @@
 import Link from "next/link";
 import TasksListBoard from "./TasksListBoard";
 import { getTasksByStatus } from "../api/getTasksByStatus";
-import { Tasks } from "@/constants/constants";
+import { Tasks } from "@/types/types";
 import { useEffect, useState } from "react";
 
 import PlusWithCircleIcon from "@/assets/icons/plus-with-circle.svg";
 import PlusSecondaryIcon from "@/assets/icons/plus-slate.svg";
+import { statusBackgroundColors } from "@/constants/constants";
 
 type Status = {
   label: string;
   value: string;
-  color: string;
-  numTasksColor: string;
 };
 const TasksColumns = ({
   status,
@@ -39,12 +38,14 @@ const TasksColumns = ({
       {/* status title, plus add task */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 ">
-          <div className={`w-2 h-2 rounded-full ${status.color}`}></div>
+          <div
+            className={`w-2 h-2 rounded-full ${statusBackgroundColors[status.label as keyof typeof statusBackgroundColors]}`}
+          ></div>
           <span className="text-label-SM font-bold text-task-label">
             {status.label}
           </span>
           <p
-            className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark ${status.numTasksColor}`}
+            className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark`}
           >
             {tasks.length}
           </p>

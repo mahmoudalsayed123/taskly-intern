@@ -1,9 +1,9 @@
-import { EpicTasks } from "@/constants/constants";
 import { formateDeadline } from "@/lib/helper";
 import { getInitials } from "@/lib/getInitials";
 
 import NoUser from "@/assets/icons/noUser.svg";
 import Date from "@/assets/icons/date.svg";
+import { EpicTasks } from "@/types/types";
 
 const EpicTasksListDesktop = ({ tasks }: { tasks: EpicTasks[] }) => {
   return (

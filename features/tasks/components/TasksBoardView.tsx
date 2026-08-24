@@ -1,8 +1,9 @@
 "use client";
-import { status, Tasks } from "@/constants/constants";
+import { status } from "@/constants/constants";
 import TasksColumns from "./TasksColumns";
 import { useState } from "react";
 import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
+import { Tasks } from "@/types/types";
 
 const TasksBoardView = ({ projectId }: { projectId: string }) => {
   const [openModal, setOpenModal] = useState(false);

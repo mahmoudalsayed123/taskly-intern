@@ -1,10 +1,10 @@
 "use client";
-import { Tasks } from "@/constants/constants";
 
 import { getTasksList } from "../api/getTasksList";
 import TaskCardMobile from "./TaskCardMobile";
 import { useState, useEffect } from "react";
 import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
+import { Tasks } from "@/types/types";
 
 const TaskListMobile = ({ projectId }: { projectId: string }) => {
   const [openModal, setOpenModal] = useState(false);

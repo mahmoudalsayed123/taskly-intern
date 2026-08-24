@@ -58,7 +58,7 @@ const InviteMemberModal = ({
       <div className="flex items-start justify-between">
         <div className="flex flex-col gap-1 lg:gap-2">
           <div className="w-12 h-12 rounded-lg bg-surface-low flex items-center justify-center">
-            <UserInviteIcon currentColor="var(--color-primary)" />
+            <UserInviteIcon currentColor="#ff0000" />
           </div>
           <h4 className="text-heading-MD text-slate-dark font-bold">
             Invite Team Member

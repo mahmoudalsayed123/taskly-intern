@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Projects } from "@/constants/constants";
 import ProjectList from "./ProjectList";
+import { Project } from "@/types/types";
 
 type Props = {
-  initialProjects: Projects[];
+  initialProjects: Project[];
   totalProjects: number;
 };
 

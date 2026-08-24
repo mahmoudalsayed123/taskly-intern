@@ -1,10 +1,10 @@
 import MainHeading from "@/components/layout/MainHeading";
 import BreadCrumb from "@/components/ui/BreadCrumb";
-import { Member } from "@/constants/constants";
 import { getProjectEpics } from "@/features/epic/api/getProjectEpics";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
 import { getProject } from "@/features/project/api/getProject";
 import FormNewTask from "@/features/tasks/components/FormNewTask";
+import { Member } from "@/types/types";
 
 const NewTask = async ({
   params,

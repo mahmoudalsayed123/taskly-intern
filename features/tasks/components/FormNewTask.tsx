@@ -1,5 +1,5 @@
 "use client";
-import { Member, taskStatus } from "@/constants/constants";
+import { taskStatus } from "@/constants/constants";
 import { toastFail } from "@/lib/toastFail";
 import { toastSuccess } from "@/lib/toastSuccess";
 import { createTaskSchema } from "@/lib/zodSchema";
@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import { selectStyles } from "@/constants/selectStyle";
+import { Member } from "@/types/types";
 
 const FormNewTask = ({
   projectId,

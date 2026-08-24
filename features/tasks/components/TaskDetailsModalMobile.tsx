@@ -1,7 +1,8 @@
 import { getInitials } from "@/lib/getInitials";
 import { useEffect, useState } from "react";
 import { getTaskDetails } from "../api/getTaskDetails";
-import { Tasks } from "@/constants/constants";
+import { Tasks } from "@/types/types";
+
 
 const TaskDetailsModalMobile = ({
   projectId,
@@ -12,7 +13,7 @@ const TaskDetailsModalMobile = ({
   taskId: string;
   closeModal: () => void;
 }) => {
-  const [task, setTask] = useState<Tasks | null>(null);
+  const [task, setTask] = useState<Tasks  | null>(null);
   const initialsReporter = getInitials(task?.created_by.name);
   const initialsAssignee = getInitials(task?.assignee.name);
 

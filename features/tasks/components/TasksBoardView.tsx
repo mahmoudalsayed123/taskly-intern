@@ -39,19 +39,12 @@ const TasksBoardView = ({ projectId }: { projectId: string }) => {
             className="absolute inset-0 bg-overlay/40 backdrop-blur-md"
             onClick={handleCloseModal}
           />
-
           {/* Modal */}
           <div
-            className="fixed top-1/2 left-1/2 z-200 h-212.5 max-h-[90vh] w-4xl max-w-[90vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overflow-x-hidden rounded-lg bg-white custom-scrollbar
+            className="fixed top-1/2 left-1/2 z-200 h-212.5 max-h-[90vh] w-4xl max-w-[90vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overflow-x-hidden rounded-lg custom-scrollbar bg-red-400 lg:bg-blue-400
   "
           >
             <TaskDetailsModalDesktop
-              projectId={projectId}
-              taskId={selectedTask!.id}
-              closeModal={handleCloseModal}
-            />
-
-            <TaskDetailsModalMobile
               projectId={projectId}
               taskId={selectedTask!.id}
               closeModal={handleCloseModal}

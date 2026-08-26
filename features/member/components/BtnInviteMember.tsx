@@ -24,7 +24,7 @@ const BtnInviteMember = ({ projectId }: { projectId: string }) => {
           onClick={() => setOpenModal(false)}
         />
 
-        <div className="w-full fixed bottom-0 left-1/2 -translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:w-md lg:max-w-md z-200 bg-red-400">
+        <div className="w-full fixed bottom-0 left-1/2 -translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:w-md lg:max-w-md z-200">
           <InviteMemberModal
             setOpenModal={setOpenModal}
             projectId={projectId}

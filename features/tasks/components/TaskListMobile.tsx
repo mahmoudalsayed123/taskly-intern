@@ -5,6 +5,7 @@ import TaskCardMobile from "./TaskCardMobile";
 import { useState, useEffect } from "react";
 import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
 import { Tasks } from "@/types/types";
+import TaskDetailsModalMobile from "./TaskDetailsModalMobile";
 
 const TaskListMobile = ({ projectId }: { projectId: string }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -72,8 +73,8 @@ const TaskListMobile = ({ projectId }: { projectId: string }) => {
           />
 
           {/* Modal */}
-          <div className="w-full p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md lg:w-2xl lg:max-w-2xl z-200">
-            <TaskDetailsModalDesktop
+          <div className="w-full fixed bottom-0 left-1/2 -translate-x-1/2 z-200">
+            <TaskDetailsModalMobile
               projectId={projectId}
               taskId={selectedTask!.id}
               closeModal={handleCloseModal}

@@ -14,6 +14,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { buildRedirectUrl } from "@/lib/helper";
 import Link from "next/link";
 
+import CheckTrueIcon from "@/assets/icons/check-true.svg";
+import CheckPendingIcon from "@/assets/icons/check-pending.svg";
+
 const FormSignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
@@ -149,48 +152,33 @@ const FormSignUp = () => {
       {/* rules of password */}
       <div className="p-4 rounded-lg flex flex-col gap-2 bg-background-check-password w-full">
         <div className="flex items-center gap-2 w-full">
-          {/* <Image
-            src={
-              passwordChecks.hasMinLength
-                ? "/assets/icons/check-true.svg"
-                : "/assets/icons/check-pending.svg"
-            }
-            alt="check"
-            width={11.67}
-            height={11.67}
-          /> */}
+          {passwordChecks.hasMinLength ? (
+            <CheckTrueIcon width={11.67} height={11.67} />
+          ) : (
+            <CheckPendingIcon width={11.67} height={11.67} />
+          )}
           <p className="text-label-SM text-muted-body font-normal">
             At least 8 characters
           </p>
         </div>
         <div className="flex items-center gap-2 w-full">
-          {/* <Image
-            src={
-              passwordChecks.hasUppercase &&
-              passwordChecks.hasLowercase &&
-              passwordChecks.hasNumber
-                ? "/assets/icons/check-true.svg"
-                : "/assets/icons/check-pending.svg"
-            }
-            alt="check"
-            width={11.67}
-            height={11.67}
-          /> */}
+          {passwordChecks.hasUppercase &&
+          passwordChecks.hasLowercase &&
+          passwordChecks.hasNumber ? (
+            <CheckTrueIcon width={11.67} height={11.67} />
+          ) : (
+            <CheckPendingIcon width={11.67} height={11.67} />
+          )}
           <p className="text-label-SM text-muted-body font-normal">
             One uppercase, lowercase, and digit
           </p>
         </div>
         <div className="flex items-center gap-2 w-full">
-          {/* <Image
-            src={
-              passwordChecks.hasSpecialChar
-                ? "/assets/icons/check-true.svg"
-                : "/assets/icons/check-pending.svg"
-            }
-            alt="check"
-            width={11.67}
-            height={11.67}
-          /> */}
+          {passwordChecks.hasSpecialChar ? (
+            <CheckTrueIcon width={11.67} height={11.67} />
+          ) : (
+            <CheckPendingIcon width={11.67} height={11.67} />
+          )}
           <p className="text-label-SM text-muted-body font-normal">
             One special character
           </p>

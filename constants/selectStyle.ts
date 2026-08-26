@@ -4,6 +4,7 @@ import { StylesConfig } from "react-select";
 type OptionType = {
   value: string;
   label: string;
+
   icon?: ComponentType;
 };
 
@@ -154,28 +155,17 @@ export const taskViewSelectStyles: StylesConfig<OptionType, false> = {
   control: (state) => ({
     width: "fit-content",
     height: "fit-content",
-    paddingLeft: "16px",
-    paddingRight: "16px",
+    padding: "8px",
     display: "flex",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    border: "1px solid #EAECF0",
-    borderRadius: "4px",
-    boxShadow: state.isFocused
-      ? "0px 4px 12px rgba(0,0,0,0.08)"
-      : "0px 1px 2px rgba(0,0,0,0.08)",
-
+    border: "1px solid #D7E2FF",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: 500,
+    color: "#434654",
     cursor: "pointer",
-
-    ":hover": {
-      border: "1px solid #EAECF0",
-    },
   }),
-
-  // valueContainer: (base) => ({
-  //   ...base,
-  //   padding: "0 24px",
-  // }),
 
   singleValue: (base) => ({
     ...base,
@@ -197,34 +187,223 @@ export const taskViewSelectStyles: StylesConfig<OptionType, false> = {
 
   menu: (base) => ({
     ...base,
-    borderRadius: "12px",
     overflow: "hidden",
     border: "1px solid #EAECF0",
     boxShadow: "0px 12px 24px rgba(0,0,0,0.12)",
   }),
 
-  // menuList: (base) => ({
-  //   ...base,
-  //   padding: "8px",
-  // }),
-
-  option: (base, state) => ({
+  menuList: (base) => ({
     ...base,
-    display: "flex",
-    alignItems: "center",
-    // padding: "14px 20px",
+    padding: "8px",
+  }),
+
+  // option: (base, state) => ({
+  //   ...base,
+  //   display: "flex",
+  //   alignItems: "center",
+  //   // padding: "14px 20px",
+  //   borderRadius: "8px",
+  //   cursor: "pointer",
+
+  //   backgroundColor: state.isSelected
+  //     ? "#F2F4F7"
+  //     : state.isFocused
+  //       ? "#F9FAFB"
+  //       : "#FFFFFF",
+
+  //   color: "#101828",
+
+  //   fontSize: "14px",
+  //   fontWeight: 500,
+  // }),
+};
+
+export const epicSelectStyles: StylesConfig<OptionType, false> = {
+  // =========================
+  // SELECT CONTROL
+  // =========================
+  control: (base, state) => ({
+    ...base,
+
+    width: "255px",
+    minHeight: "44px",
+    height: "44px",
+
+    backgroundColor: "#fff",
+
+    border: state.isFocused ? "1px solid #B8C5FF" : "1px solid #C9D3FF",
+
     borderRadius: "8px",
+
+    boxShadow: "none",
+
     cursor: "pointer",
 
-    backgroundColor: state.isSelected
-      ? "#F2F4F7"
-      : state.isFocused
-        ? "#F9FAFB"
-        : "#FFFFFF",
+    ":hover": {
+      border: "1px solid #B8C5FF",
+    },
+  }),
 
-    color: "#101828",
+  // =========================
+  // SELECTED VALUE
+  // =========================
+  valueContainer: (base) => ({
+    ...base,
+
+    padding: "0 8px",
+  }),
+
+  singleValue: (base) => ({
+    ...base,
+
+    margin: 0,
+
+    color: "#344054",
 
     fontSize: "14px",
     fontWeight: 500,
+
+    lineHeight: "20px",
+  }),
+
+  // =========================
+  // PLACEHOLDER
+  // =========================
+  placeholder: (base) => ({
+    ...base,
+
+    color: "#98A2B3",
+
+    fontSize: "14px",
+    fontWeight: 400,
+  }),
+
+  // =========================
+  // REMOVE SEPARATOR
+  // =========================
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+
+  // =========================
+  // ARROW
+  // =========================
+  dropdownIndicator: (base) => ({
+    ...base,
+
+    color: "#667085",
+
+    padding: "0 12px 0 4px",
+
+    ":hover": {
+      color: "#344054",
+    },
+  }),
+
+  // =========================
+  // DROPDOWN MENU
+  // =========================
+  menu: (base) => ({
+    ...base,
+
+    width: "255px",
+
+    marginTop: "4px",
+
+    backgroundColor: "#FFFFFF",
+
+    borderRadius: "8px",
+
+    border: "1px solid #E4E7EC",
+
+    boxShadow: "0px 8px 24px rgba(16, 24, 40, 0.10)",
+
+    overflow: "hidden",
+
+    zIndex: 100,
+  }),
+
+  // =========================
+  // MENU LIST
+  // =========================
+  menuList: (base) => ({
+    ...base,
+
+    padding: "8px 0",
+
+    maxHeight: "220px",
+
+    overflowY: "auto",
+
+    "::-webkit-scrollbar": {
+      width: "4px",
+    },
+
+    "::-webkit-scrollbar-thumb": {
+      backgroundColor: "#D0D5DD",
+      borderRadius: "4px",
+    },
+  }),
+
+  // =========================
+  // SEARCH INPUT
+  // =========================
+  input: (base) => ({
+    ...base,
+
+    color: "#344054",
+
+    fontSize: "14px",
+    fontWeight: 400,
+
+    margin: 0,
+
+    padding: 0,
+
+    caretColor: "#344054",
+  }),
+
+  // =========================
+  // OPTIONS
+  // =========================
+  option: (base, state) => ({
+    ...base,
+
+    position: "relative",
+
+    display: "flex",
+    alignItems: "center",
+
+    minHeight: "32px",
+
+    padding: "7px 24px",
+
+    backgroundColor: state.isFocused ? "#F8FAFC" : "#FFFFFF",
+
+    color: "#344054",
+
+    fontSize: "14px",
+    fontWeight: 400,
+
+    cursor: "pointer",
+
+    borderBottom: state.isSelected ? "none" : "1px solid #E4E7EC",
+
+    ":active": {
+      backgroundColor: "#F2F4F7",
+    },
+  }),
+
+  // =========================
+  // NO OPTIONS
+  // =========================
+  noOptionsMessage: (base) => ({
+    ...base,
+
+    color: "#98A2B3",
+
+    fontSize: "13px",
+
+    padding: "12px",
   }),
 };

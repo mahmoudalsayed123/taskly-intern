@@ -45,7 +45,7 @@ const TasksColumns = ({
             {status.label}
           </span>
           <p
-            className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark`}
+            className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark ${statusBackgroundColors[status.label as keyof typeof statusBackgroundColors]}`}
           >
             {tasks.length}
           </p>

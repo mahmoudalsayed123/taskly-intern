@@ -15,6 +15,8 @@
   --color-surface-highest: #dae2ff;
   --color-surface-low: #f1f3ff;
   --color-surface-low-50: #f1f3ff80;
+  --color-surface-70: #ffffffb2;
+  --color-surface-40: #ffffff66;
   --color-background-container: #f9f9ff;
   --color-background-check-password: #e8edff;
   --color-task-date: #94a3b8;
@@ -217,6 +219,28 @@ select {
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d0d5dd transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d0d5dd;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #98a2b3;
 }
 /* @theme inline {
   --font-heading: var(--font-sans);

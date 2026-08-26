@@ -15,6 +15,10 @@ export function formatCreatedAt(date: string) {
   }).format(new Date(date));
 }
 
+export const formatDateForInput = (date: string) => {
+  return date.slice(0, 10);
+};
+
 export function formatDateForApi(date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;

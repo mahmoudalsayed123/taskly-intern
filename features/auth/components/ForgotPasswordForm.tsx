@@ -9,7 +9,9 @@ import ErrorField from "@/components/ui/ErrorField";
 import { forgotPassword } from "../api/forgot-password";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Loading from "@/components/ui/Loader";
+import Spinner from "@/components/ui/Spinner";
+
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
 
 type ForgotPasswordFormProps = {
   setSuccessMessage: (message: string | null) => void;
@@ -42,7 +44,7 @@ const ForgotPasswordForm = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<forgotPasswordFormValues>({
     mode: "onChange",
     resolver: zodResolver(forgotPasswordSchema),
@@ -107,21 +109,13 @@ const ForgotPasswordForm = ({
       <button
         disabled={loading || timeLeft !== 0}
         className="w-full btn-primary-desktop  mb-4! shadow-btn text-body-MD font-semibold flex items-center justify-center disabled:opacity-50"
-        style={{
-          background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-        }}
         type="submit"
       >
-        {loading ? <Loading /> : "Send Reset Link"}
+        {isSubmitting ? <Spinner content="Sending" /> : "Send Reset Link"}
       </button>
 
       <div className="pt-6 flex items-center gap-2 text-primary mx-auto">
-        {/* <Image
-          src="/assets/icons/arrow-left.svg"
-          alt="arrow-left"
-          width={12}
-          height={12}
-        /> */}
+        <ArrowLeftIcon width={12} height={12} />
         <Link href="/login" className="text-body-MD font-medium">
           Back to log in
         </Link>

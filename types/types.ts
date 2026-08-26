@@ -50,6 +50,7 @@ export interface Task {
 
 export interface EpicTasks {
   id: string;
+  epic_id?: string;
   title: string;
   assignee: {
     name: string;
@@ -63,6 +64,7 @@ export interface Tasks {
   title: string;
   description?: string;
   assignee: {
+    id: string;
     name: string;
   };
   created_by: {
@@ -70,9 +72,12 @@ export interface Tasks {
   };
   due_date: string;
   status?: TaskStatus;
+  epic?: {
+    id: string;
+    title: string;
+  };
   created_at: string;
 }
-
 
 export enum TaskStatus {
   TO_DO = "TO_DO",

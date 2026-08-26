@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,11 +13,12 @@ import ErrorField from "@/components/ui/ErrorField";
 import { checkPassword } from "@/lib/checkPassword";
 import { resetPassword } from "../api/resetPassword";
 import Spinner from "@/components/ui/Spinner";
-import Loading from "@/components/ui/Loader";
+
+import CheckPendingIcon from "@/assets/icons/check-pending.svg";
+import CheckTrueIcon from "@/assets/icons/check-true.svg";
 
 const ResetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const token = searchParams.get("access_token");
   const router = useRouter();
@@ -28,7 +29,7 @@ const ResetPasswordForm = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<resetPasswordFormValues>({
     mode: "onChange",
     resolver: zodResolver(resetPasswordSchema),
@@ -38,10 +39,8 @@ const ResetPasswordForm = () => {
 
   const passwordChecks = checkPassword(password);
   const submitForm = async (data: resetPasswordFormValues) => {
-    setLoading(true);
     const res = await resetPassword(data.password, token as string);
     if (res.success) {
-      setLoading(false);
       toastSuccess("Your password has been updated successfully.");
       localStorage.removeItem("forgetPassword");
       reset();
@@ -49,7 +48,6 @@ const ResetPasswordForm = () => {
         router.push("/login");
       }, 3000);
     } else {
-      setLoading(false);
       toastFail(res.message || "Failed to reset password");
     }
   };
@@ -109,48 +107,33 @@ const ResetPasswordForm = () => {
       {/* rules of password */}
       <div className="p-4 rounded-lg flex flex-col gap-2 bg-background-check-password w-full">
         <div className="flex items-center gap-2 w-full">
-          {/* <Image
-            src={
-              passwordChecks.hasMinLength
-                ? "/assets/icons/check-true.svg"
-                : "/assets/icons/check-pending.svg"
-            }
-            alt="check"
-            width={11.67}
-            height={11.67}
-          /> */}
+          {passwordChecks.hasMinLength ? (
+            <CheckTrueIcon width={11.67} height={11.67} />
+          ) : (
+            <CheckPendingIcon width={11.67} height={11.67} />
+          )}
           <p className="text-label-SM text-muted-body font-normal">
             At least 8 characters
           </p>
         </div>
         <div className="flex items-center gap-2 w-full">
-          {/* <Image
-            src={
-              passwordChecks.hasUppercase &&
-              passwordChecks.hasLowercase &&
-              passwordChecks.hasNumber
-                ? "/assets/icons/check-true.svg"
-                : "/assets/icons/check-pending.svg"
-            }
-            alt="check"
-            width={11.67}
-            height={11.67}
-          /> */}
+          {passwordChecks.hasUppercase &&
+          passwordChecks.hasLowercase &&
+          passwordChecks.hasNumber ? (
+            <CheckTrueIcon width={11.67} height={11.67} />
+          ) : (
+            <CheckPendingIcon width={11.67} height={11.67} />
+          )}
           <p className="text-label-SM text-muted-body font-normal">
             One uppercase, lowercase, and digit
           </p>
         </div>
         <div className="flex items-center gap-2 w-full">
-          {/* <Image
-            src={
-              passwordChecks.hasSpecialChar
-                ? "/assets/icons/check-true.svg"
-                : "/assets/icons/check-pending.svg"
-            }
-            alt="check"
-            width={11.67}
-            height={11.67}
-          /> */}
+          {passwordChecks.hasSpecialChar ? (
+            <CheckTrueIcon width={11.67} height={11.67} />
+          ) : (
+            <CheckPendingIcon width={11.67} height={11.67} />
+          )}
           <p className="text-label-SM text-muted-body font-normal">
             One special character
           </p>
@@ -158,14 +141,11 @@ const ResetPasswordForm = () => {
       </div>
       {/* reset password successfully */}
       <button
-        className=" btn-primary-mobile w-full! lg:w-fit! lg:btn-primary-desktop"
-        style={{
-          background: "linear-gradient(99.3deg, #003D9B 0%, #0052CC 100%)",
-        }}
-        disabled={loading}
+        className="btn-primary-desktop btn-primary-mobile w-full! lg:w-fit! lg:btn-primary-desktop"
+        disabled={isSubmitting}
         type="submit"
       >
-        {loading ? <Loading /> : "Update Password"}
+        {isSubmitting ? <Spinner content="Updating" /> : "Update Password"}
       </button>
 
       {/* back to login */}

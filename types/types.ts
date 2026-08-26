@@ -75,6 +75,7 @@ export interface Tasks {
   epic?: {
     id: string;
     title: string;
+    epic_id: string;
   };
   created_at: string;
 }

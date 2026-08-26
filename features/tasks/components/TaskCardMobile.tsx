@@ -14,7 +14,7 @@ const TaskCardMobile = ({
   return (
     <div
       onClick={() => openTaskModal(task)}
-      className="p-3 rounded-lg bg-white flex flex-col gap-3 shadow-[0px 4px 24px 0px #041B3C0A]"
+      className="p-3 rounded-lg bg-white flex flex-col gap-3 shadow-[0px 4px 24px 0px #041B3C0A] cursor-pointer"
     >
       <div className="flex items-start justify-between">
         <div className="flex flex-col">
@@ -29,9 +29,7 @@ const TaskCardMobile = ({
           {task.status}
         </p>
       </div>
-      <div
-        className={`flex items-start gap-3`}
-      >
+      <div className={`flex items-start gap-3`}>
         {task.assignee?.name ? (
           <div className="rounded-full w-6 h-6 bg-surface-highest text-userName-epic-modal lg:bg-primary lg:text-white flex items-center justify-center text-label-XS font-bold ">
             {initials}

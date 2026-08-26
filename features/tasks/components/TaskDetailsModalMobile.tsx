@@ -1,12 +1,16 @@
 import { getInitials } from "@/lib/getInitials";
 import { useEffect, useState } from "react";
 import { getTaskDetails } from "../api/getTaskDetails";
-import { Tasks } from "@/types/types";
+import { EpicTasks, Tasks } from "@/types/types";
 
 import CloseIcon from "@/assets/icons/close.svg";
 import CorrectIcon from "@/assets/icons/task-correct.svg";
 import EpicIcon from "@/assets/icons/epic-in-task.svg";
 import CalendarIcon from "@/assets/icons/date.svg";
+import NoUserIcon from "@/assets/icons/noUser.svg";
+import { getProjectEpics } from "@/features/epic/api/getProjectEpics";
+import { getProjectMember } from "@/features/member/api/getProjectMember";
+import { formateDeadline } from "@/lib/helper";
 
 const TaskDetailsModalMobile = ({
   projectId,
@@ -18,6 +22,9 @@ const TaskDetailsModalMobile = ({
   closeModal: () => void;
 }) => {
   const [task, setTask] = useState<Tasks | null>(null);
+  const [epics, setEpics] = useState<EpicTasks[]>([]);
+  const [projectMembers, setProjectMembers] = useState([]);
+
   const initialsReporter = getInitials(task?.created_by.name);
   const initialsAssignee = getInitials(task?.assignee.name);
 
@@ -31,12 +38,32 @@ const TaskDetailsModalMobile = ({
     fetchTask();
   }, [projectId, taskId]);
 
-  //   if (!task)
-  //     return (
-  //       <div className="flex items-center justify-center py-10">
-  //         <div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
-  //       </div>
-  //     );
+  useEffect(() => {
+    const fetchEpics = async () => {
+      const { data, success } = await getProjectEpics(projectId);
+      if (success) {
+        setEpics(data);
+      }
+    };
+    fetchEpics();
+  }, [projectId, taskId]);
+
+  useEffect(() => {
+    const fetchProjectMember = async () => {
+      const { data, success } = await getProjectMember(projectId);
+      if (success) {
+      }
+    };
+    fetchProjectMember();
+  }, []);
+
+  if (!task)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
+      </div>
+    );
+
   return (
     <div
       className="flex flex-col gap-8 px-6 pb-30 fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-97.5 max-h-165 border-t border-t-surface-40 rounded-t-3xl bg-surface-70 shadow-[0px 25px 50px -12px #00000040]"
@@ -47,7 +74,9 @@ const TaskDetailsModalMobile = ({
       </div>
 
       <div className="flex items-center justify-between pt-3">
-        <h4 className="text-label-SM text-slate-dark font-bold">TASK-125</h4>
+        <h4 className="text-label-SM text-slate-dark font-bold">
+          {task?.task_id}
+        </h4>
 
         <CloseIcon onClick={closeModal} width={14} height={14} />
       </div>
@@ -55,7 +84,7 @@ const TaskDetailsModalMobile = ({
       <div className="pt-2  flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <p className="text-heading-MD font-bold text-slate-dark">
-            Task Title
+            {task?.title}
           </p>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5 py-2 px-3 rounded-xl bg-success">
@@ -63,13 +92,13 @@ const TaskDetailsModalMobile = ({
                 <CorrectIcon width={12} height={12} />
               </div>
               <p className="text-label-SM font-bold text-slate-dark">
-                Complete
+                {task?.status}
               </p>
             </div>
             <div className="flex items-center gap-1.5 py-2 px-3 rounded-xl bg-surface-highest">
               <EpicIcon width={12} height={12} />
               <p className="text-label-SM font-bold text-slate-medium">
-                EPIC-102
+                {task?.epic?.epic_id}
               </p>
             </div>
           </div>
@@ -86,12 +115,25 @@ const TaskDetailsModalMobile = ({
               ASSINGEE
             </p>
             <div className="flex items-center">
-              <div className="rounded-full w-6 h-6 bg-surface-highest text-userName-epic-modal lg:bg-primary lg:text-white flex items-center justify-center text-label-XS font-bold ">
-                {"MA"}
-              </div>
-              <p className="text-body-MD font-medium text-slate-dark">
-                Mahmoud
-              </p>
+              {initialsAssignee !== null ? (
+                <>
+                  <div className="rounded-full w-6 h-6 bg-surface-highest text-userName-epic-modal lg:bg-primary lg:text-white flex items-center justify-center text-label-XS font-bold ">
+                    {getInitials(task?.assignee?.name) || ""}
+                  </div>
+                  <p className="text-body-MD font-medium text-slate-dark">
+                    {task?.assignee?.name || "Unassigned"}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center">
+                    <NoUserIcon width={24} height={24} />
+                  </div>
+                  <p className="text-body-MD font-medium text-slate-dark">
+                    UNASSIGNED
+                  </p>
+                </>
+              )}
             </div>
           </div>
           {/* due date */}
@@ -103,7 +145,7 @@ const TaskDetailsModalMobile = ({
               <CalendarIcon width={24} height={24} />
 
               <p className="text-body-MD font-medium text-slate-dark">
-                22 Oct 2025
+                {formateDeadline(task?.due_date)}
               </p>
             </div>
           </div>
@@ -118,10 +160,10 @@ const TaskDetailsModalMobile = ({
             </p>
             <div className="flex items-center">
               <div className="rounded-full w-6 h-6 bg-surface-highest text-userName-epic-modal lg:bg-primary lg:text-white flex items-center justify-center text-label-XS font-bold ">
-                {"MA"}
+                {initialsReporter}
               </div>
               <p className="text-body-MD font-medium text-slate-dark">
-                Mahmoud
+                {task?.created_by.name}
               </p>
             </div>
           </div>
@@ -135,7 +177,7 @@ const TaskDetailsModalMobile = ({
               <CalendarIcon width={24} height={24} />
 
               <p className="text-body-MD font-medium text-slate-dark">
-                22 Oct 2025
+                {formateDeadline(task?.created_at)}
               </p>
             </div>
           </div>
@@ -146,14 +188,19 @@ const TaskDetailsModalMobile = ({
       <div className="flex flex-col gap-3">
         <p className="text-resend-timer font-bold text-body-MD">DESCRIPTION</p>
 
-        <div className="w-full p-5 rounded-lg bg-white border border-slate-10 shadow-[0px_1px_2px_0px_#0000000D] ">
-          <p className="text-body-MD font-normal text-resend-timer">
-            Detailed task description goes here. Ensure all layers use the
-            prescribed tonal shifts instead of borders. Focus on high-quality
-            visual polish and editorial spacing for better readability on small
-            screens.
-          </p>
-        </div>
+        {task?.description ? (
+          <div className="w-full p-5 rounded-lg bg-white border border-slate-10 shadow-[0px_1px_2px_0px_#0000000D] ">
+            <p className="text-body-MD font-normal text-resend-timer">
+              {task?.description}
+            </p>
+          </div>
+        ) : (
+          <div className="w-full p-5 rounded-lg bg-white border border-slate-10 shadow-[0px_1px_2px_0px_#0000000D] ">
+            <p className="text-body-MD font-normal text-resend-timer">
+              No description
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

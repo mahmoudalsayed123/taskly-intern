@@ -71,7 +71,7 @@ const EpicList = ({
         ))
       )}
 
-      {!filterEpics.length && (
+      {filterEpics.length === 0 && searchEpic && (
         <div className="col-span-2 flex items-center justify-center">
           <p className="text-slate-medium">
             No epics found matching your search

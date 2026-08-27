@@ -1,10 +1,10 @@
 "use server";
 import { authorizedFetch } from "@/features/auth/api/authorizedFetch";
 
-export async function getTasksList(projectId: string) {
+export async function getTasksList(projectId: string, search: string) {
   try {
     const res = await authorizedFetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_tasks?project_id=eq.${projectId}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_tasks?project_id=eq.${projectId}&title=ilike.%25${search}%25`,
       {
         method: "GET",
       },

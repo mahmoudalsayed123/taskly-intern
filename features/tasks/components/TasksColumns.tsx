@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useDroppable } from "@dnd-kit/react";
 
 import TasksListBoard from "./TasksListBoard";
-import { getTasksByStatus } from "../api/getTasksByStatus";
 import { Tasks } from "@/types/types";
 
 import PlusWithCircleIcon from "@/assets/icons/plus-with-circle.svg";
@@ -32,18 +32,20 @@ const TasksColumns = ({
   openTaskModal: (task: Tasks) => void;
 }) => {
   const [tasks, setTasks] = useState<Tasks[]>([]);
-  const [offset, setOffset] = useState(0);
   const [totalTasks, setTotalTasks] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const isFetching = useRef(false);
 
+  const { ref: dropRef, isDropTarget } = useDroppable({
+    id: `column-${status.label}`,
+  });
+
   const hasMore = tasks.length < totalTasks;
 
-  // fetch tasks
   const fetchTasks = useCallback(
-    async (currentOffset: number, reset = false) => {
+    async (offset: number, reset = false) => {
       if (isFetching.current) return;
 
       isFetching.current = true;
@@ -53,14 +55,12 @@ const TasksColumns = ({
         const result = await getTasksList(
           projectId,
           LIMIT,
-          currentOffset,
+          offset,
           search,
           status.label,
         );
 
-        if (!result.success) {
-          return;
-        }
+        if (!result.success) return;
 
         const newTasks = result.data ?? [];
 
@@ -81,34 +81,24 @@ const TasksColumns = ({
     [projectId, status.label, search],
   );
 
-  // initial fetch & search
-
   useEffect(() => {
     setTasks([]);
-    setOffset(0);
     setTotalTasks(0);
 
     fetchTasks(0, true);
   }, [fetchTasks]);
 
-  // infinite scroll
   useEffect(() => {
     const element = observerRef.current;
 
-    if (!element) return;
-    if (!hasMore) return;
+    if (!element || !hasMore) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-
         if (isFetching.current) return;
 
-        const nextOffset = tasks.length;
-
-        setOffset(nextOffset);
-
-        fetchTasks(nextOffset);
+        fetchTasks(tasks.length);
       },
       {
         threshold: 0,
@@ -118,14 +108,23 @@ const TasksColumns = ({
 
     observer.observe(element);
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [tasks.length, hasMore, fetchTasks]);
 
   return (
-    <div className="w-72 flex flex-col gap-4 shrink-0">
-      {/* STATUS HEADER */}
+    <div
+      ref={dropRef}
+      className={`
+        w-72
+        flex
+        flex-col
+        gap-4
+        shrink-0
+        rounded-lg
+        transition
+        ${isDropTarget ? "bg-surface-low" : ""}
+      `}
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div
@@ -156,7 +155,6 @@ const TasksColumns = ({
         </Link>
       </div>
 
-      {/* ADD NEW TASK */}
       <Link
         href={`/project/${projectId}/tasks/new?status=${status.value}`}
         className="flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-slate-30"
@@ -168,17 +166,18 @@ const TasksColumns = ({
         </p>
       </Link>
 
-      {/* TASKS */}
-      <TasksListBoard tasks={tasks} openTaskModal={openTaskModal} />
+      <TasksListBoard
+        tasks={tasks}
+        status={status.label}
+        openTaskModal={openTaskModal}
+      />
 
-      {/* LOADING */}
       {loading && (
         <div className="flex items-center justify-center py-4">
           <div className="w-6 h-6 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
         </div>
       )}
 
-      {/* INFINITE SCROLL TARGET */}
       {!loading && hasMore && <div ref={observerRef} className="h-10 w-full" />}
     </div>
   );

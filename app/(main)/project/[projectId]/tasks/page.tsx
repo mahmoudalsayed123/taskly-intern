@@ -83,7 +83,6 @@ const TasksPage = async ({
       <div className="lg:hidden">
         <InfiniteTaskList projectId={projectId} search={search} />
       </div>
-      {/* <TaskListMobile projectId={projectId} /> */}
     </section>
   );
 };

@@ -7,7 +7,13 @@ import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
 import { Tasks } from "@/types/types";
 import TaskDetailsModalMobile from "./TaskDetailsModalMobile";
 
-const TaskListMobile = ({ projectId, tasks }: { projectId: string,tasks: Tasks[] }) => {
+const TaskListMobile = ({
+  projectId,
+  tasks,
+}: {
+  projectId: string;
+  tasks: Tasks[];
+}) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Tasks | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +31,6 @@ const TaskListMobile = ({ projectId, tasks }: { projectId: string,tasks: Tasks[]
   useEffect(() => {
     async function getTasks() {
       const { data, success } = await getTasksList(projectId);
-      console.log("tasks",data);
       if (success) {
         setLoading(false);
         setSuccessFetch(true);

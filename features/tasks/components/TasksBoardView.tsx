@@ -1,9 +1,13 @@
 "use client";
+
+import { DragDropProvider } from "@dnd-kit/react";
 import { status } from "@/constants/constants";
 import TasksColumns from "./TasksColumns";
 import { useState } from "react";
 import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
 import { Tasks } from "@/types/types";
+
+import { updateTaskStatus } from "../api/updateTaskStatus";
 
 const TasksBoardView = ({
   projectId,
@@ -24,19 +28,53 @@ const TasksBoardView = ({
     setSelectedTask(null);
     setOpenModal(false);
   };
+
+  const handleDragEnd = async (event: any) => {
+    if (event.canceled) return;
+
+    const { source, target } = event.operation;
+
+    if (!source || !target) return;
+
+    const taskId = String(source.id);
+    const targetId = String(target.id);
+
+    let newStatus = "";
+
+    if (targetId.startsWith("column-")) {
+      newStatus = targetId.replace("column-", "");
+    } else {
+      newStatus = target.group;
+    }
+    console.log("NEW STATUS:", newStatus);
+    if (!newStatus) return;
+
+    console.log("TASK:", taskId);
+    console.log("NEW STATUS:", newStatus);
+
+    const result = await updateTaskStatus(taskId, newStatus);
+
+    console.log("UPDATE RESULT:", result);
+
+    if (!result.success) {
+      console.error(result.message);
+    }
+  };
   return (
     <section className="hidden mt-15 px-8 pb-8 pt-0 lg:flex items-center gap-6 overflow-x-scroll board-scroll ">
-      <div className="flex items-start gap-6 min-w-max">
-        {status.map((status) => (
-          <TasksColumns
-            key={status.value}
-            status={status}
-            projectId={projectId}
-            openTaskModal={handleOpenTaskModal}
-            search={search}
-          />
-        ))}
-      </div>
+      <DragDropProvider onDragEnd={handleDragEnd}>
+        <div className="flex items-start gap-6 min-w-max">
+          {status.map((item) => (
+            <TasksColumns
+              key={item.value}
+              status={item}
+              projectId={projectId}
+              search={search}
+              openTaskModal={handleOpenTaskModal}
+            />
+          ))}
+        </div>
+      </DragDropProvider>
 
       {openModal && (
         <div className="fixed inset-0 z-100 flex items-center justify-center">

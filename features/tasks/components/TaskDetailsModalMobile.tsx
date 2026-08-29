@@ -1,14 +1,13 @@
 import { getInitials } from "@/lib/getInitials";
 import { useEffect, useState } from "react";
 import { getTaskDetails } from "../api/getTaskDetails";
-import { EpicTasks, Tasks } from "@/types/types";
+import {  Tasks } from "@/types/types";
 
 import CloseIcon from "@/assets/icons/close.svg";
 import CorrectIcon from "@/assets/icons/task-correct.svg";
 import EpicIcon from "@/assets/icons/epic-in-task.svg";
 import CalendarIcon from "@/assets/icons/date.svg";
 import NoUserIcon from "@/assets/icons/noUser.svg";
-import { getProjectEpics } from "@/features/epic/api/getProjectEpics";
 import { getProjectMember } from "@/features/member/api/getProjectMember";
 import { formateDeadline } from "@/lib/helper";
 
@@ -22,8 +21,6 @@ const TaskDetailsModalMobile = ({
   closeModal: () => void;
 }) => {
   const [task, setTask] = useState<Tasks | null>(null);
-  const [epics, setEpics] = useState<EpicTasks[]>([]);
-  const [projectMembers, setProjectMembers] = useState([]);
 
   const initialsReporter = getInitials(task?.created_by.name);
   const initialsAssignee = getInitials(task?.assignee.name);
@@ -38,15 +35,6 @@ const TaskDetailsModalMobile = ({
     fetchTask();
   }, [projectId, taskId]);
 
-  useEffect(() => {
-    const fetchEpics = async () => {
-      const { data, success } = await getProjectEpics(projectId);
-      if (success) {
-        setEpics(data);
-      }
-    };
-    fetchEpics();
-  }, [projectId, taskId]);
 
   useEffect(() => {
     const fetchProjectMember = async () => {

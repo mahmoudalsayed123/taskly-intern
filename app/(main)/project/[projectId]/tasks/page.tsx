@@ -9,19 +9,20 @@ import TasksListTable from "@/features/tasks/components/TasksListTable";
 import PlusIcon from "@/assets/icons/plus.svg";
 import TaskListMobile from "@/features/tasks/components/TaskListMobile";
 import SearchTask from "@/features/tasks/components/SearchTask";
+import InfiniteTaskList from "@/features/tasks/components/infiniteTaskList";
 
 const TasksPage = async ({
   params,
   searchParams,
 }: {
   params: Promise<{ projectId: string }>;
-  searchParams: Promise<{ view?: string; search?: string }>;
+  searchParams: Promise<{ view?: string; search?: string; page?: string }>;
 }) => {
   const { projectId } = await params;
 
   // fetch project id for breadcrumb
   const { data: project } = await getProject(projectId);
-  const { view = "board" } = await searchParams;
+  const { view = "board", page, search } = await searchParams;
 
   return (
     <section className="pt-4 px-6 pb-32 lg:p-0">
@@ -70,12 +71,19 @@ const TasksPage = async ({
       </div>
 
       {view === "board" ? (
-        <TasksBoardView projectId={projectId} />
+        <TasksBoardView projectId={projectId} search={search || ""} />
       ) : (
-        <TasksListTable projectId={projectId} />
+        <TasksListTable
+          projectId={projectId}
+          searchForTask={search}
+          page={page}
+        />
       )}
 
-      <TaskListMobile projectId={projectId} />
+      <div className="lg:hidden">
+        <InfiniteTaskList projectId={projectId} search={search} />
+      </div>
+      {/* <TaskListMobile projectId={projectId} /> */}
     </section>
   );
 };

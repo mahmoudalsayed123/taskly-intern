@@ -4,7 +4,11 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const SearchTask = ({ projectId }: { projectId: string }) => {
+const SearchTask = ({
+  projectId,
+}: {
+  projectId: string;
+}) => {
   const searchParams = useSearchParams();
 
   const [search, setSearch] = useState("");

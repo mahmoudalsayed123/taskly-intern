@@ -1,7 +1,9 @@
 "use client";
 import { getPagination } from "@/lib/pagination";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+
+import ArrowLeftIcon from "@/assets/icons/pag-left.svg";
+import ArrowRightIcon from "@/assets/icons/pag-right.svg";
 
 const Pagination = ({
   currentPage,
@@ -31,13 +33,7 @@ const Pagination = ({
             router.push(`/project?page=${currentPage - 1}`);
           }}
         >
-          {" "}
-          {/* <Image
-            src="/assets/icons/pag-left.svg"
-            alt="right"
-            width={5}
-            height={7}
-          /> */}
+          <ArrowLeftIcon />
         </button>
         {pages.map((page, index) =>
           page === "..." ? (
@@ -69,12 +65,7 @@ const Pagination = ({
             router.push(`/project?page=${currentPage + 1}`);
           }}
         >
-          {/* <Image
-            src="/assets/icons/pag-right.svg"
-            alt="right"
-            width={5}
-            height={7}
-          /> */}
+          <ArrowRightIcon />
         </button>
       </div>
     </div>

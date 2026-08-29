@@ -38,10 +38,7 @@ const Epicspage = async ({
 
   const totalEpics = Number(totalCount?.split("/")[1]);
 
-  const epicsShowing = totalCount
-    ?.split("/")[0]
-    ?.split("-")
-    ?.reduce((cur, acc) => Number(acc) - Number(cur), 0);
+  const epicsShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
 
   const totalPages = Math.ceil(totalEpics / limit);
 

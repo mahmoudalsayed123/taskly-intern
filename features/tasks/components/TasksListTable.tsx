@@ -5,52 +5,62 @@ import { getTasksList } from "../api/getTasksList";
 import TasksListRow from "./TasksListRow";
 import { Tasks } from "@/types/types";
 import { useSearchParams } from "next/navigation";
+import PaginationTasks from "./PaginationTasks";
+import { getTaskByTitle } from "../api/getTaskByTitle";
 
-const TasksListTable = ({ projectId }: { projectId: string }) => {
+const TasksListTable = ({
+  projectId,
+  searchForTask,
+  page,
+}: {
+  projectId: string;
+  searchForTask?: string;
+  page?: string;
+}) => {
   const [tasks, setTasks] = useState<Tasks[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [totalTasks, setTotalTasks] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [showing, setShowing] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const searchParams = useSearchParams();
   const searchTask = searchParams.get("search");
-  console.log("searchTask", searchTask);
 
   useEffect(() => {
     async function getTasks() {
       setLoading(true);
-      if (searchTask) {
-        const {
-          success,
-          data: tasks,
-          message,
-        } = await getTasksList(projectId, searchTask);
-        if (success) {
-          setTasks(tasks);
-          console.log("filterd tasks", tasks);
-          setLoading(false);
-          setError("");
+      const currentPage = searchForTask ? 1 : Number(page ?? "1");
+      setCurrentPage(currentPage);
+      const limit = 10;
+
+      const offset = (currentPage - 1) * limit;
+      const {
+        success,
+        data: tasks,
+        totalCount,
+        message,
+      } = await getTasksList(projectId, limit, offset, searchTask || "");
+      if (success) {
+        setTasks(tasks);
+        setTotalTasks(Number(totalCount?.split("/")[1]));
+        const taskShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
+        setShowing(taskShowing || 0);
+        if (searchTask) {
+          setTotalPages(Math.floor(Number(totalCount?.split("/")[1]) / limit));
         } else {
-          setError(message || "Failed to search tasks");
-          setLoading(false);
+          setTotalPages(Math.ceil(Number(totalCount?.split("/")[1]) / limit));
         }
+        setLoading(false);
+        setError("");
       } else {
-        const {
-          data: tasks,
-          success,
-          message,
-        } = await getTasksList(projectId, "");
-        if (success) {
-          setTasks(tasks);
-          console.log("all tasks", tasks);
-          setLoading(false);
-          setError("");
-        } else {
-          setError(message || "Failed to fetch tasks");
-          setLoading(false);
-        }
+        setError(message || "Failed to fetch tasks");
+        setLoading(false);
       }
     }
     getTasks();
-  }, [searchTask]);
+  }, [searchTask, page]);
 
   return (
     <section>
@@ -93,6 +103,16 @@ const TasksListTable = ({ projectId }: { projectId: string }) => {
             {tasks?.map((task: Tasks) => (
               <TasksListRow key={task.id} task={task} />
             ))}
+            {totalPages > 1 && (
+              <PaginationTasks
+                projectId={projectId}
+                totalPages={totalPages}
+                currentPage={currentPage}
+                showing={showing}
+                totalTasks={totalTasks}
+                search={searchTask || ""}
+              />
+            )}
           </tbody>
         </table>
       )}

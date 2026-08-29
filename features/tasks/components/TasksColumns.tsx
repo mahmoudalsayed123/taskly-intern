@@ -1,70 +1,185 @@
 "use client";
+
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import TasksListBoard from "./TasksListBoard";
 import { getTasksByStatus } from "../api/getTasksByStatus";
 import { Tasks } from "@/types/types";
-import { useEffect, useState } from "react";
 
 import PlusWithCircleIcon from "@/assets/icons/plus-with-circle.svg";
 import PlusSecondaryIcon from "@/assets/icons/plus-slate.svg";
+
 import { statusBackgroundColors } from "@/constants/constants";
+import { getTasksList } from "../api/getTasksList";
 
 type Status = {
   label: string;
   value: string;
 };
+
+const LIMIT = 10;
+
 const TasksColumns = ({
   status,
   projectId,
+  search = "",
   openTaskModal,
 }: {
   status: Status;
   projectId: string;
+  search?: string;
   openTaskModal: (task: Tasks) => void;
 }) => {
   const [tasks, setTasks] = useState<Tasks[]>([]);
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const { data, success } = await getTasksByStatus(projectId, status.label);
-      if (success && data) {
-        setTasks(data);
+  const [offset, setOffset] = useState(0);
+  const [totalTasks, setTotalTasks] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+  const isFetching = useRef(false);
+
+  const hasMore = tasks.length < totalTasks;
+
+  // fetch tasks
+  const fetchTasks = useCallback(
+    async (currentOffset: number, reset = false) => {
+      if (isFetching.current) return;
+
+      isFetching.current = true;
+      setLoading(true);
+
+      try {
+        const result = await getTasksList(
+          projectId,
+          LIMIT,
+          currentOffset,
+          search,
+          status.label,
+        );
+
+        if (!result.success) {
+          return;
+        }
+
+        const newTasks = result.data ?? [];
+
+        const total = Number(result.totalCount?.split("/")[1] ?? 0);
+
+        setTotalTasks(total);
+
+        if (reset) {
+          setTasks(newTasks);
+        } else {
+          setTasks((prev) => [...prev, ...newTasks]);
+        }
+      } finally {
+        setLoading(false);
+        isFetching.current = false;
       }
+    },
+    [projectId, status.label, search],
+  );
+
+  // initial fetch & search
+
+  useEffect(() => {
+    setTasks([]);
+    setOffset(0);
+    setTotalTasks(0);
+
+    fetchTasks(0, true);
+  }, [fetchTasks]);
+
+  // infinite scroll
+  useEffect(() => {
+    const element = observerRef.current;
+
+    if (!element) return;
+    if (!hasMore) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        if (isFetching.current) return;
+
+        const nextOffset = tasks.length;
+
+        setOffset(nextOffset);
+
+        fetchTasks(nextOffset);
+      },
+      {
+        threshold: 0,
+        rootMargin: "150px",
+      },
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
     };
-    fetchTasks();
-  }, [projectId, status.label]);
+  }, [tasks.length, hasMore, fetchTasks]);
 
   return (
     <div className="w-72 flex flex-col gap-4 shrink-0">
-      {/* status title, plus add task */}
+      {/* STATUS HEADER */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2">
           <div
-            className={`w-2 h-2 rounded-full ${statusBackgroundColors[status.label as keyof typeof statusBackgroundColors]}`}
-          ></div>
+            className={`w-2 h-2 rounded-full ${
+              statusBackgroundColors[
+                status.label as keyof typeof statusBackgroundColors
+              ]
+            }`}
+          />
+
           <span className="text-label-SM font-bold text-task-label">
             {status.label}
           </span>
+
           <p
-            className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark ${statusBackgroundColors[status.label as keyof typeof statusBackgroundColors]}`}
+            className={`py-0.5 px-1.5 rounded-xs text-label-SM font-normal text-slate-dark ${
+              statusBackgroundColors[
+                status.label as keyof typeof statusBackgroundColors
+              ]
+            }`}
           >
-            {tasks.length}
+            {totalTasks}
           </p>
         </div>
+
         <Link href={`/project/${projectId}/tasks/new?status=${status.value}`}>
           <PlusSecondaryIcon />
         </Link>
       </div>
+
+      {/* ADD NEW TASK */}
       <Link
         href={`/project/${projectId}/tasks/new?status=${status.value}`}
         className="flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-slate-30"
       >
         <PlusWithCircleIcon />
+
         <p className="text-label-SM font-bold text-muted-body-60 uppercase">
           ADD NEW TASK
         </p>
       </Link>
-      {/* tasks list */}
+
+      {/* TASKS */}
       <TasksListBoard tasks={tasks} openTaskModal={openTaskModal} />
+
+      {/* LOADING */}
+      {loading && (
+        <div className="flex items-center justify-center py-4">
+          <div className="w-6 h-6 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
+        </div>
+      )}
+
+      {/* INFINITE SCROLL TARGET */}
+      {!loading && hasMore && <div ref={observerRef} className="h-10 w-full" />}
     </div>
   );
 };

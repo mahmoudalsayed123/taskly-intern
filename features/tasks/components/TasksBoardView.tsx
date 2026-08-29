@@ -4,9 +4,14 @@ import TasksColumns from "./TasksColumns";
 import { useState } from "react";
 import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
 import { Tasks } from "@/types/types";
-import TaskDetailsModalMobile from "./TaskDetailsModalMobile";
 
-const TasksBoardView = ({ projectId }: { projectId: string }) => {
+const TasksBoardView = ({
+  projectId,
+  search,
+}: {
+  projectId: string;
+  search: string;
+}) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Tasks | null>(null);
 
@@ -28,6 +33,7 @@ const TasksBoardView = ({ projectId }: { projectId: string }) => {
             status={status}
             projectId={projectId}
             openTaskModal={handleOpenTaskModal}
+            search={search}
           />
         ))}
       </div>

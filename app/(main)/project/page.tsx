@@ -27,10 +27,7 @@ const ProjectPage = async ({
 
   const totalProjects = Number(totalCount?.split("/")[1]);
 
-  const projectsShowing = totalCount
-    ?.split("/")[0]
-    ?.split("-")
-    ?.reduce((cur, acc) => Number(acc) - Number(cur), 0);
+  const projectsShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
 
   const totalPages = Math.ceil(totalProjects / limit);
   if (!data) {

@@ -3,7 +3,6 @@
 import { getTasksList } from "../api/getTasksList";
 import TaskCardMobile from "./TaskCardMobile";
 import { useState, useEffect } from "react";
-import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
 import { Tasks } from "@/types/types";
 import TaskDetailsModalMobile from "./TaskDetailsModalMobile";
 

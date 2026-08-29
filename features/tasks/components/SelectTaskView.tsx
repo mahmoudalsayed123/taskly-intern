@@ -1,14 +1,13 @@
 "use client";
 import { viewOptions } from "@/constants/constants";
-import { taskViewSelectStyles } from "@/constants/selectStyle";
+import { selectStyles } from "@/constants/selectStyle";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import Select from "react-select";
 
 const SelectTaskView = ({
-  view,
   projectId,
 }: {
-  view: string;
   projectId: string;
 }) => {
   const router = useRouter();
@@ -26,18 +25,13 @@ const SelectTaskView = ({
       formatOptionLabel={(option) => {
         return (
           <div className="flex items-center gap-4">
-            {/* <Image
-              src={option.icon || ""}
-              alt="icon"
-              width={option.width}
-              height={option.height}
-            /> */}
+            <Image src={option.icon || ""} alt="icon" width={15} height={15} />
 
             <span>{option.label}</span>
           </div>
         );
       }}
-      styles={taskViewSelectStyles}
+      styles={selectStyles}
     />
   );
 };

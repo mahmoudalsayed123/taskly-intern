@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDroppable } from "@dnd-kit/react";
 
-import TasksListBoard from "./TasksListBoard";
+import { getTasksByStatus } from "../api/getTasksByStatus";
 import { Tasks } from "@/types/types";
 
 import PlusWithCircleIcon from "@/assets/icons/plus-with-circle.svg";
 import PlusSecondaryIcon from "@/assets/icons/plus-slate.svg";
 
 import { statusBackgroundColors } from "@/constants/constants";
-import { getTasksList } from "../api/getTasksList";
+import TasksListBoard from "./TasksListBoard";
 
 type Status = {
   label: string;
@@ -25,11 +25,15 @@ const TasksColumns = ({
   projectId,
   search = "",
   openTaskModal,
+  isDrop,
+  setIsDrop,
 }: {
   status: Status;
   projectId: string;
   search?: string;
   openTaskModal: (task: Tasks) => void;
+  isDrop: boolean;
+  setIsDrop: (value: boolean) => void;
 }) => {
   const [tasks, setTasks] = useState<Tasks[]>([]);
   const [totalTasks, setTotalTasks] = useState(0);
@@ -39,7 +43,8 @@ const TasksColumns = ({
   const isFetching = useRef(false);
 
   const { ref: dropRef, isDropTarget } = useDroppable({
-    id: `column-${status.label}`,
+    id: `column-${status.value}`,
+    collisionPriority: 1,
   });
 
   const hasMore = tasks.length < totalTasks;
@@ -52,7 +57,7 @@ const TasksColumns = ({
       setLoading(true);
 
       try {
-        const result = await getTasksList(
+        const result = await getTasksByStatus(
           projectId,
           LIMIT,
           offset,
@@ -87,6 +92,7 @@ const TasksColumns = ({
 
     fetchTasks(0, true);
   }, [fetchTasks]);
+
 
   useEffect(() => {
     const element = observerRef.current;

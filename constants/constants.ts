@@ -56,12 +56,16 @@ export const viewOptions = [
   {
     value: "board",
     label: "Board View",
-    icon: BoardViewIcon,
+    icon: "/assets/icons/taskBoard.svg",
+    width: 15,
+    height: 15,
   },
   {
     value: "list",
     label: "List View",
-    icon: ListViewIcon,
+    icon: "/assets/icons/taskList.svg",
+    width: 15,
+    height: 15,
   },
 ];
 

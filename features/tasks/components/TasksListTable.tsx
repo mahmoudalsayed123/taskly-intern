@@ -6,7 +6,6 @@ import TasksListRow from "./TasksListRow";
 import { Tasks } from "@/types/types";
 import { useSearchParams } from "next/navigation";
 import PaginationTasks from "./PaginationTasks";
-import { getTaskByTitle } from "../api/getTaskByTitle";
 
 const TasksListTable = ({
   projectId,
@@ -44,6 +43,7 @@ const TasksListTable = ({
       } = await getTasksList(projectId, limit, offset, searchTask || "");
       if (success) {
         setTasks(tasks);
+        console.log(tasks);
         setTotalTasks(Number(totalCount?.split("/")[1]));
         const taskShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
         setShowing(taskShowing || 0);

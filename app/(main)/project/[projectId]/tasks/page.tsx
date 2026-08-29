@@ -1,13 +1,12 @@
 import MainHeading from "@/components/layout/MainHeading";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import { getProject } from "@/features/project/api/getProject";
-import SelectTaskView from "@/features/tasks/components/SelectTaskView";
+import SelectTaskView from "@/components/ui/ClientTaskSelectView";
 import TasksBoardView from "@/features/tasks/components/TasksBoardView";
 import Link from "next/link";
 
 import TasksListTable from "@/features/tasks/components/TasksListTable";
 import PlusIcon from "@/assets/icons/plus.svg";
-import TaskListMobile from "@/features/tasks/components/TaskListMobile";
 import SearchTask from "@/features/tasks/components/SearchTask";
 import InfiniteTaskList from "@/features/tasks/components/infiniteTaskList";
 
@@ -52,7 +51,7 @@ const TasksPage = async ({
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-8 lg:items-center">
           <SearchTask projectId={projectId} />
           <div className="w-full hidden lg:block">
-            <SelectTaskView view={view} projectId={projectId} />
+            <SelectTaskView projectId={projectId} />
           </div>
           {/* button to create task */}
           {view === "list" && (

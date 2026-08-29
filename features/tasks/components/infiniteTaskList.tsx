@@ -17,11 +17,10 @@ export default function InfiniteTaskList({ projectId, search = "" }: Props) {
   const [tasks, setTasks] = useState<Tasks[]>([]);
   const [totalTasks, setTotalTasks] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const isFetching = useRef(false);
-
-  const hasMore = tasks.length < totalTasks;
 
   // fetch tasks
   const fetchTasks = useCallback(
@@ -35,11 +34,10 @@ export default function InfiniteTaskList({ projectId, search = "" }: Props) {
         const result = await getTasksList(projectId, LIMIT, offset, search);
 
         if (!result.success) {
-          console.error("Failed to fetch tasks");
           return;
         }
 
-        const newTasks = result.data;
+        const newTasks = result.data ?? [];
 
         const total = Number(result.totalCount?.split("/")[1] ?? 0);
 
@@ -50,6 +48,11 @@ export default function InfiniteTaskList({ projectId, search = "" }: Props) {
         } else {
           setTasks((prev) => [...prev, ...newTasks]);
         }
+
+        // هل لسه فيه tasks؟
+        const loadedTasks = reset ? newTasks.length : offset + newTasks.length;
+
+        setHasMore(loadedTasks < total);
       } finally {
         setLoading(false);
         isFetching.current = false;
@@ -62,6 +65,7 @@ export default function InfiniteTaskList({ projectId, search = "" }: Props) {
   useEffect(() => {
     setTasks([]);
     setTotalTasks(0);
+    setHasMore(true);
 
     fetchTasks(0, true);
   }, [fetchTasks]);
@@ -70,19 +74,14 @@ export default function InfiniteTaskList({ projectId, search = "" }: Props) {
   useEffect(() => {
     const element = observerRef.current;
 
-    if (!element) return;
-
-    if (!hasMore) return;
+    if (!element || !hasMore) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-
         if (isFetching.current) return;
 
-        const nextOffset = tasks.length;
-
-        fetchTasks(nextOffset);
+        fetchTasks(tasks.length);
       },
       {
         threshold: 0,

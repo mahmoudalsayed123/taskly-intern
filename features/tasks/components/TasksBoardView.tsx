@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
+
 import { status } from "@/constants/constants";
 import TasksColumns from "./TasksColumns";
-import { useState } from "react";
 import TaskDetailsModalDesktop from "./TaskDetailsModalDesktop";
 import { Tasks } from "@/types/types";
-
 import { updateTaskStatus } from "../api/updateTaskStatus";
 
 const TasksBoardView = ({
@@ -14,10 +14,11 @@ const TasksBoardView = ({
   search,
 }: {
   projectId: string;
-  search: string;
+  search?: string;
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Tasks | null>(null);
+  const [isDrop,setIsDrop] = useState(false);
 
   const handleOpenTaskModal = (task: Tasks) => {
     setSelectedTask(task);
@@ -46,22 +47,19 @@ const TasksBoardView = ({
     } else {
       newStatus = target.group;
     }
-    console.log("NEW STATUS:", newStatus);
-    if (!newStatus) return;
 
-    console.log("TASK:", taskId);
-    console.log("NEW STATUS:", newStatus);
+    if (!newStatus) return;
+    setIsDrop(true)
 
     const result = await updateTaskStatus(taskId, newStatus);
 
-    console.log("UPDATE RESULT:", result);
-
     if (!result.success) {
       console.error(result.message);
+      setIsDrop(false)
     }
   };
   return (
-    <section className="hidden mt-15 px-8 pb-8 pt-0 lg:flex items-center gap-6 overflow-x-scroll board-scroll ">
+    <section className="hidden mt-15 px-8 pb-8 pt-0 lg:flex items-start gap-6 overflow-x-auto board-scroll">
       <DragDropProvider onDragEnd={handleDragEnd}>
         <div className="flex items-start gap-6 min-w-max">
           {status.map((item) => (
@@ -71,6 +69,8 @@ const TasksBoardView = ({
               projectId={projectId}
               search={search}
               openTaskModal={handleOpenTaskModal}
+              isDrop={isDrop}
+              setIsDrop={setIsDrop}
             />
           ))}
         </div>
@@ -78,16 +78,12 @@ const TasksBoardView = ({
 
       {openModal && (
         <div className="fixed inset-0 z-100 flex items-center justify-center">
-          {/* Overlay */}
           <div
             className="absolute inset-0 bg-overlay/40 backdrop-blur-md"
             onClick={handleCloseModal}
           />
-          {/* Modal */}
-          <div
-            className="fixed top-1/2 left-1/2 z-200 h-212.5 max-h-[90vh] w-4xl max-w-[90vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overflow-x-hidden rounded-lg custom-scrollbar bg-red-400 lg:bg-blue-400
-  "
-          >
+
+          <div className="fixed top-1/2 left-1/2 z-200 h-212.5 max-h-[90vh] w-4xl max-w-[90vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overflow-x-hidden rounded-lg custom-scrollbar">
             <TaskDetailsModalDesktop
               projectId={projectId}
               taskId={selectedTask!.id}

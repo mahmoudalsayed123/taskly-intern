@@ -14,7 +14,7 @@ const EditProjectPage = async ({
   return (
     <section className="pt-8 px-6 pb-13 lg:p-0">
       {/* main heading for desktop */}
-      <div className=" hidden lg:flex lg:flex-col gap-4 lg:h-16 lg:mb-10">
+      <div className=" hidden lg:flex lg:flex-col gap-4 lg:mb-10">
         <BreadCrumb
           items={[
             { label: "Project", href: "/project" },

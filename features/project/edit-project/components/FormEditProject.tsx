@@ -13,6 +13,7 @@ import { getProject } from "../../api/getProject";
 
 import ErrorIcon from "@/assets/icons/exclamation-mark-error.svg";
 import InitailProject from "@/assets/icons/init-project.svg";
+import Spinner from "@/components/ui/Spinner";
 
 const FormEditProject = ({ projectId }: { projectId: string }) => {
   const [projectData, setProjectData] = useState({ name: "", description: "" });
@@ -43,7 +44,7 @@ const FormEditProject = ({ projectId }: { projectId: string }) => {
     reset,
     watch,
 
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<editProjectFormValues>({
     mode: "onChange",
     resolver: zodResolver(createProjectSchema),
@@ -131,12 +132,14 @@ key milestones..."
         {/* creat project and back buttons */}
         <div className="pt-4 md:px-4 lg:px-0 lg:pt-0 flex flex-col gap-4 lg:gap-0 justify-center items-center  lg:flex-row-reverse lg:justify-between">
           <button
+            disabled={isSubmitting}
             className="btn-primary-mobile w-full! lg:w-fit! lg:btn-primary-desktop"
             type="submit"
           >
-            Save Changes
+            {isSubmitting ? <Spinner content={"Saving"} /> : "Save Changes"}
           </button>
           <button
+            disabled={isSubmitting}
             onClick={() => router.back()}
             className="btn-secondary-mobile w-full! lg:w-fit! lg:btn-secondary-desktop"
           >

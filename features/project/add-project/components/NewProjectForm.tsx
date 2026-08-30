@@ -11,6 +11,7 @@ import { createProject } from "../api/createProject";
 
 import ErrorIcon from "@/assets/icons/exclamation-mark-error.svg";
 import InitailProject from "@/assets/icons/init-project.svg";
+import Spinner from "@/components/ui/Spinner";
 
 const NewProjectForm = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const NewProjectForm = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<createProjectFormValues>({
     mode: "onChange",
     resolver: zodResolver(createProjectSchema),
@@ -101,12 +102,14 @@ key milestones..."
         {/* creat project and back buttons */}
         <div className="w-full pt-4 lg:pt-0 flex flex-col gap-4 lg:gap-0 justify-center items-center  lg:flex-row-reverse lg:justify-between">
           <button
+            disabled={isSubmitting}
             className="btn-primary-mobile w-full! lg:w-fit! lg:btn-primary-desktop"
             type="submit"
           >
-            Create Project
+            {isSubmitting ? <Spinner content={"Creating"} /> : "Create Project"}
           </button>
           <button
+            disabled={isSubmitting}
             onClick={() => router.back()}
             className="btn-secondary-mobile w-full! lg:w-fit! ;
  lg:btn-secondary-desktop"

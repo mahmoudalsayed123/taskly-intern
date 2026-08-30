@@ -242,6 +242,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #98a2b3;
 }
+
+svg path {
+  @apply flex items-center justify-center;
+}
+
+svg path {
+  @apply block;
+}
 /* @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);

@@ -1,0 +1,19 @@
+1. if user not authenticated redirect to  login page not  
+======== not redirect to project then login =======
+
+2. refactor design in all page in deferent screen
+
+3. refactor design of project card => project page
+
+
+======= project page ==========
+
+1. make loading for project list
+
+2. refactor design for project list and create project page and edit project page
+
+======= epic page ==========
+
+1. make loading for epic list, epic list mobile
+
+2.

@@ -15,7 +15,7 @@ export default function DashboardLayout({
   const [openMobile, setOpenMobile] = useState(false);
 
   return (
-    <>
+    <section className="w-full">
       <SidebarLg collapse={collapse} setCollapse={setCollapse} />
       <SidebarMobile openMobile={openMobile} />
 
@@ -34,9 +34,7 @@ export default function DashboardLayout({
         />
         <Topbar openMobile={openMobile} setOpenMobile={setOpenMobile} />
 
-        <main
-          className={`flex-1 p-4 pb-10 lg:p-8 overflow-y-auto  ${collapse ? "w-full lg:p-10" : "max-w-7xl"}`}
-        >
+        <main className={`flex-1 p-4 pb-10 lg:p-8 overflow-y-auto w-full`}>
           {children}
         </main>
       </div>
@@ -44,6 +42,6 @@ export default function DashboardLayout({
       {/* <div className=" lg:hidden">
         <NavigationMenuMobile />
       </div> */}
-    </>
+    </section>
   );
 }

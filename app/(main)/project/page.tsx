@@ -1,14 +1,11 @@
 import MainHeading from "@/components/layout/MainHeading";
-import { getProjects } from "@/features/project/api/getProjects";
 import EmptyProjectPage from "@/features/project/components/EmptyProjectPage";
-import ProjectList from "@/features/project/components/ProjectList";
 import Link from "next/link";
-import Pagination from "@/components/ui/Pagination";
-import BtnAdd from "@/components/ui/BtnAdd";
-import InfiniteProjectList from "@/features/project/components/infiniteProjectList";
 import ErrorPage from "@/components/layout/ErrorPage";
 
 import Plus from "@/assets/icons/plus.svg";
+import ProjectsPageContainer from "@/features/project/components/ProjectsPageContainer";
+import { getProjects } from "@/features/project/api/getProjects";
 
 const ProjectPage = async ({
   searchParams,
@@ -23,13 +20,8 @@ const ProjectPage = async ({
 
   const offset = (currentPage - 1) * limit;
 
-  const { success, data, totalCount } = await getProjects(limit, offset);
+  const { success, data } = await getProjects(limit, offset);
 
-  const totalProjects = Number(totalCount?.split("/")[1]);
-
-  const projectsShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
-
-  const totalPages = Math.ceil(totalProjects / limit);
   if (!data) {
     return <EmptyProjectPage />;
   }
@@ -39,8 +31,8 @@ const ProjectPage = async ({
   }
 
   return (
-    <section className="lg:relative p-6 pb-20 lg:p-0">
-      <div className="flex items-center justify-between">
+    <section className="lg:relative pb-41.5">
+      <div className="w-full flex items-center justify-between mb-6 lg:mb-10">
         <MainHeading
           heading="Projects"
           title="Manage and curate your projects"
@@ -56,28 +48,12 @@ const ProjectPage = async ({
           </button>
         </Link>
       </div>
-      <div className="hidden lg:block">
-        <ProjectList projects={data} />
-      </div>
-      {/* infinite project list for mobile */}
-      <div className="lg:hidden">
-        <InfiniteProjectList
-          initialProjects={data}
-          totalProjects={totalProjects}
-        />
-      </div>
-      {/* link add project mobile screen */}
-      <BtnAdd path="/project/add" />
 
-      {/* pagination */}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalProjects={totalProjects}
-          projectsShowing={projectsShowing || 0}
-        />
-      )}
+      <ProjectsPageContainer
+        limit={limit}
+        offset={offset}
+        currentPage={currentPage}
+      />
     </section>
   );
 };

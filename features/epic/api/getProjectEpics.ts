@@ -5,8 +5,9 @@ import { cookies } from "next/headers";
 
 export async function getProjectEpics(
   projectId: string,
-  limit?: number,
-  offset?: number,
+  limit: number = 10,
+  offset: number = 0,
+  search: string = "",
 ) {
   try {
     const cookieStore = await cookies();
@@ -16,25 +17,15 @@ export async function getProjectEpics(
       await refreshToken();
     }
 
-    let res;
-    if (limit && offset) {
-      res = await authorizedFetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}&limit=${limit}&offset=${offset}`,
-        {
-          method: "GET",
-          headers: {
-            Prefer: "count=exact",
-          },
+    const res = await authorizedFetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}&limit=${limit}&offset=${offset}&title=ilike.%25${search}%25`,
+      {
+        method: "GET",
+        headers: {
+          Prefer: "count=exact",
         },
-      );
-    } else {
-      res = await authorizedFetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/rest/v1/project_epics?project_id=eq.${projectId}`,
-        {
-          method: "GET",
-        },
-      );
-    }
+      },
+    );
 
     if (!res.ok) {
       const errorData = await res.json();

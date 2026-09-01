@@ -25,7 +25,7 @@ const TasksListTable = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const searchParams = useSearchParams();
-  const searchTask = searchParams.get("search");
+  const searchTasks = searchParams.get("search");
 
   useEffect(() => {
     async function getTasks() {
@@ -40,14 +40,13 @@ const TasksListTable = ({
         data: tasks,
         totalCount,
         message,
-      } = await getTasksList(projectId, limit, offset, searchTask || "");
+      } = await getTasksList(projectId, limit, offset, searchTasks || "");
       if (success) {
         setTasks(tasks);
-        console.log(tasks);
         setTotalTasks(Number(totalCount?.split("/")[1]));
         const taskShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
         setShowing(taskShowing || 0);
-        if (searchTask) {
+        if (searchTasks) {
           setTotalPages(Math.floor(Number(totalCount?.split("/")[1]) / limit));
         } else {
           setTotalPages(Math.ceil(Number(totalCount?.split("/")[1]) / limit));
@@ -60,7 +59,7 @@ const TasksListTable = ({
       }
     }
     getTasks();
-  }, [searchTask, page]);
+  }, [searchTasks, page]);
 
   return (
     <section>
@@ -110,14 +109,14 @@ const TasksListTable = ({
                 currentPage={currentPage}
                 showing={showing}
                 totalTasks={totalTasks}
-                search={searchTask || ""}
+                search={searchTasks   || ""}
               />
             )}
           </tbody>
         </table>
       )}
 
-      {tasks.length === 0 && searchTask && (
+      {tasks.length === 0 && searchTasks && (
         <div className="col-span-2 flex items-center justify-center">
           <p className="text-slate-medium">
             No tasks found matching your search

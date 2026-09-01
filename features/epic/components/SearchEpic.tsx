@@ -16,6 +16,7 @@ const SearchEpic = ({ projectId }: { projectId: string }) => {
 
       if (search) {
         params.set("title", search.replace(" ", ""));
+        params.set("page", "1");
       } else {
         params.delete("title");
       }

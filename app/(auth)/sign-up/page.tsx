@@ -5,7 +5,7 @@ import Link from "next/link";
 const signUp = () => {
   return (
     <section className="flex flex-col px-6 pb-18.5 h-[calc(100vh-24px)] md:min-h-[calc(100vh-70px)]">
-      <div className="pt-8 mb-10 md:hidden">
+      <div className="pt-8 mb-10 lg:hidden">
         <MainHeading
           heading="Create Account"
           title="Join the editorial approach to task management."

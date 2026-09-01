@@ -20,7 +20,7 @@ export default function DashboardLayout({
       <SidebarMobile openMobile={openMobile} />
 
       <div
-        className={`transition-all duration-300 min-h-screen flex flex-col ${
+        className={`transition-all duration-300 min-h-screen flex flex-col lg:pb-41.5 ${
           collapse ? "lg:ml-20" : "lg:ml-64"
         }`}
       >

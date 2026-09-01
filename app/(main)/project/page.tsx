@@ -31,7 +31,7 @@ const ProjectPage = async ({
   }
 
   return (
-    <section className="lg:relative pb-41.5">
+    <section className="lg:relative">
       <div className="w-full flex items-center justify-between mb-6 lg:mb-10">
         <MainHeading
           heading="Projects"

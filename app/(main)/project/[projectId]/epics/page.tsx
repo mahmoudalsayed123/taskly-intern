@@ -12,6 +12,8 @@ import EmptyEpicPage from "@/features/epic/components/EmptyEpicsPage";
 
 import PlusIcon from "@/assets/icons/plus.svg";
 import SearchEpic from "@/features/epic/components/SearchEpic";
+import EpicPageContainer from "@/features/epic/components/EpicsPageContainer";
+import EpicsPageContainer from "@/features/epic/components/EpicsPageContainer";
 
 const Epicspage = async ({
   params,
@@ -23,34 +25,23 @@ const Epicspage = async ({
   const { projectId } = await params;
 
   const { page, title } = await searchParams;
+  console.log("page form server", page);
 
-  const currentPage = title ? 1 : Number(page ?? "1");
-
-  const limit = 10;
-
-  const offset = title ? 0 : (currentPage - 1) * limit;
-
-  const { success, data, totalCount } = await getProjectEpics(
-    projectId,
-    limit,
-    offset,
-  );
-
-  const totalEpics = Number(totalCount?.split("/")[1]);
-
-  const epicsShowing = Number(totalCount?.split("/")[0]?.split("-")[1]);
-
-  const totalPages = Math.ceil(totalEpics / limit);
+  // const { success, data, totalCount } = await getProjectEpics(
+  //   projectId,
+  //   limit,
+  //   offset,
+  // );
 
   const { data: project } = await getProject(projectId);
 
-  if (!data) {
-    return <EmptyEpicPage />;
-  }
+  // if (!data) {
+  //   return <EmptyEpicPage />;
+  // }
 
-  if (success === false) {
-    return <ErrorPage />;
-  }
+  // if (success === false) {
+  //   return <ErrorPage />;
+  // }
 
   return (
     <section className="pt-4 px-6 pb-32 lg:p-0">
@@ -93,29 +84,7 @@ const Epicspage = async ({
         </div>
       </div>
 
-      {/* epics list  */}
-      <div className="hidden lg:block">
-        <EpicList projectId={projectId} epics={data} />
-      </div>
-      <div className="lg:hidden">
-        <InfiniteEpicList
-          initialEpics={data}
-          totalEpics={totalEpics}
-          projectId={projectId}
-        />
-      </div>
-
-      <BtnAdd path={`/project/${projectId}/epics/new`} />
-
-      {/* pagination */}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalProjects={totalEpics}
-          projectsShowing={epicsShowing || 0}
-        />
-      )}
+      <EpicsPageContainer projectId={projectId} page={page || ""} />
     </section>
   );
 };

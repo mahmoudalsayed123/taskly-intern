@@ -8,14 +8,18 @@ import ArrowRightIcon from "@/assets/icons/pag-right.svg";
 const Pagination = ({
   currentPage,
   totalPages,
-  projectsShowing,
-  totalProjects,
+  numberOfShowing,
+  totalItems,
+  route,
+  searchEpics,
   loading,
 }: {
   currentPage: number;
   totalPages: number;
-  projectsShowing: number;
-  totalProjects: number;
+  numberOfShowing: number;
+  totalItems: number;
+  route?: string;
+  searchEpics?: string;
   loading: boolean;
 }) => {
   const pages = getPagination(currentPage, totalPages);
@@ -24,7 +28,7 @@ const Pagination = ({
 
   if (loading)
     return (
-      <div className="w-full hidden md:flex items-center justify-end mt-12 gap-2">
+      <div className="w-full hidden md:flex items-center justify-end pt-12 px-8 pb-8 gap-2">
         {Array.from({ length: totalPages }).map((_, index) => (
           <div
             key={index}
@@ -34,9 +38,9 @@ const Pagination = ({
       </div>
     );
   return (
-    <div className="hidden md:flex items-center justify-between w-full mt-12">
+    <div className="hidden md:flex items-center justify-between w-full pt-12 px-8 pb-8">
       <p className="text-label-SM font-medium text-muted-body">
-        Showing {projectsShowing + 1} of {totalProjects} active projects
+        Showing {numberOfShowing + 1} of {totalItems} active items
       </p>
 
       {/* previous page button */}
@@ -45,7 +49,15 @@ const Pagination = ({
           className={`w-8 h-8 flex items-center justify-center bg-white border border-slate-light text-slate-dark cursor-pointer disabled:cursor-not-allowed rounded-xs `}
           disabled={currentPage === 1}
           onClick={() => {
-            router.replace(`/project?page=${currentPage - 1}`);
+            if (route) {
+              router.replace(
+                searchEpics
+                  ? `${route}?page=${currentPage - 1}&title=${searchEpics}`
+                  : `${route}?page=${currentPage - 1}`,
+              );
+            } else {
+              router.replace(`/project?page=${currentPage - 1}`);
+            }
           }}
         >
           <ArrowLeftIcon />
@@ -67,7 +79,20 @@ const Pagination = ({
                   ? "bg-primary text-white rounded-xs"
                   : "border border-slate-light bg-white text-slate-dark rounded-xs "
               }`}
-              onClick={() => router.replace(`/project?page=${page}`)}
+              onClick={() => {
+                console.log("route", route);
+                console.log("searchEpics", searchEpics);
+                console.log("page", currentPage);
+                if (route) {
+                  router.replace(
+                    searchEpics
+                      ? `${route}?page=${page}&title=${searchEpics}`
+                      : `${route}?page=${page}`,
+                  );
+                } else {
+                  router.replace(`/project?page=${page}`);
+                }
+              }}
             >
               {page}
             </button>
@@ -78,7 +103,18 @@ const Pagination = ({
           className={`w-8 h-8 flex items-center justify-center bg-white border border-slate-light cursor-pointer disabled:cursor-not-allowed rounded-xs `}
           disabled={currentPage === totalPages}
           onClick={() => {
-            router.replace(`/project?page=${currentPage + 1}`);
+            console.log("route", route);
+            console.log("searchEpics", searchEpics);
+            console.log("next page", currentPage);
+            if (route) {
+              router.replace(
+                searchEpics
+                  ? `${route}?page=${currentPage + 1}&title=${searchEpics}`
+                  : `${route}?page=${currentPage + 1}`,
+              );
+            } else {
+              router.replace(`/project?page=${currentPage + 1}`);
+            }
           }}
         >
           <ArrowRightIcon />

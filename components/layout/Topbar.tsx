@@ -13,8 +13,10 @@ const Topbar = ({
   setOpenMobile: (openMobile: boolean) => void;
 }) => {
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchUser() {
+      setLoading(true);
       const res = await getUserInfo();
 
       if (res?.data) {
@@ -24,12 +26,13 @@ const Topbar = ({
         };
         setUser(userInfo);
       }
+      setLoading(false);
     }
     fetchUser();
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 h-16 bg-background-container border-b px-4 py-3 flex items-center justify-between border-b-[#0000001A]">
+    <header className="sticky top-0 z-20 bg-background-container-20 border-b px-6 py-3 flex items-center justify-between border-b-border-topbar ">
       <div className="flex items-center gap-4 ">
         <BurgerIcon
           onClick={() => setOpenMobile(!openMobile)}
@@ -39,7 +42,10 @@ const Topbar = ({
           TASKLY
         </p>
       </div>
-      <UserInfo user={user as { name: string; department: string }} />
+      <UserInfo
+        user={user as { name: string; department: string }}
+        loading={loading}
+      />
     </header>
   );
 };

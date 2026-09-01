@@ -1,49 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 import { Epic } from "@/types/types";
 import EpicCard from "./EpicCard";
 import EpicModal from "./EpicModal";
-import { getEpicByTitle } from "../api/getEpicByTitle";
 
 const EpicList = ({
   projectId,
   epics,
+  epicsError,
+  searchEpics,
+  loading,
 }: {
   projectId: string;
   epics: Epic[];
+  epicsError: string;
+  searchEpics: string | null;
+  loading: boolean;
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [filterEpics, setFilterEpics] = useState(epics);
   const [openModal, setOpenModal] = useState(false);
   const [selectedEpic, setSelectedEpic] = useState<Epic | null>(null);
-  const search = useSearchParams();
-
-  const searchEpic = search.get("title");
-
-  useEffect(() => {
-    async function getEpics() {
-      if (searchEpic) {
-        setLoading(true);
-        const { data, success, message } = await getEpicByTitle(
-          projectId,
-          searchEpic,
-        );
-        if (success) {
-          setFilterEpics(data);
-        } else {
-          setError(message || "Failed to search epics");
-        }
-        setLoading(false);
-      } else {
-        setFilterEpics(epics);
-      }
-    }
-    getEpics();
-  }, [searchEpic]);
 
   const handleOpenEpicModal = (epic: Epic) => {
     setSelectedEpic(epic);
@@ -56,22 +33,45 @@ const EpicList = ({
   };
 
   return (
-    <section className="mt-6 lg:mt-10 grid gird-cols-1 lg:grid-cols-2  gap-6">
-      {loading ? (
-        <div className="col-span-2 flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full border-4 border-slate-200 border-t-primary animate-spin" />
-        </div>
-      ) : (
-        filterEpics.map((epic) => (
-          <EpicCard
-            key={epic.id}
-            epic={epic}
-            openEpicModal={handleOpenEpicModal}
-          />
-        ))
-      )}
+    <section className="mt-6 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 justify-between gap-6 lg:mt-10">
+      {loading
+        ? Array.from({ length: 10 }).map((_, index) => (
+            <div
+              key={index}
+              className="col-span-1 p-5 gap-3 lg:gap-4 lg:p-4 rounded-lg flex flex-col bg-white lg:border-s-4 lg:border-border-epic shadow-btn cursor-pointer"
+            >
+              {/* epic_id, dots */}
+              <div className="flex items-center justify-between">
+                <div className="w-20 h-5 rounded-xs bg-background-check-password animate-pulse"></div>
+                <div className="w-8 h-8 rounded-xl animate-pulse bg-background-check-password"></div>
+              </div>
+              {/* title */}
+              <div className="w-full h-6 animate-pulse rounded-xs bg-background-check-password"></div>
 
-      {filterEpics.length === 0 && searchEpic && (
+              {/* assignee */}
+              <div className="w-full pt-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl animate-pulse bg-background-check-password"></div>
+                <div className="w-32 h-5 rounded-xs animate-pulse bg-background-check-password"></div>
+              </div>
+              {/* border + created by + date  */}
+              <div className="flex flex-col pt-2 gap-2">
+                <div className="w-full h-1.5 rounded-xs animate-pulse bg-background-check-password"></div>
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-3 rounded-xs animate-pulse bg-background-check-password"></div>
+                  <div className="w-12 h-3 rounded-xs animate-pulse bg-background-check-password"></div>
+                </div>
+              </div>
+            </div>
+          ))
+        : epics.map((epic) => (
+            <EpicCard
+              key={epic.id}
+              epic={epic}
+              openEpicModal={handleOpenEpicModal}
+            />
+          ))}
+
+      {epics.length === 0 && searchEpics && (
         <div className="col-span-2 flex items-center justify-center">
           <p className="text-slate-medium">
             No epics found matching your search
@@ -79,9 +79,9 @@ const EpicList = ({
         </div>
       )}
 
-      {error && (
+      {epicsError && (
         <div className="col-span-2 flex items-center justify-center">
-          <p className="text-slate-medium">{error}</p>
+          <p className="text-slate-medium">{epicsError}</p>
         </div>
       )}
 

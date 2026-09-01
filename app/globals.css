@@ -18,6 +18,7 @@
   --color-surface-70: #ffffffb2;
   --color-surface-40: #ffffff66;
   --color-background-container: #f9f9ff;
+  --color-background-container-20: #f9f9ff33;
   --color-background-check-password: #e8edff;
   --color-task-date: #94a3b8;
   --color-task-label: #64748b;
@@ -26,6 +27,8 @@
   --color-slate-dark: #041b3c;
   --color-userName-epic-modal: #001848;
   --color-overlay: #041b3c66;
+  --color-border-topbar: #0000001a;
+  --color-assignee-epic-card: #002113;
   --color-slate-dark-70: #041b3cb2;
   --color-slate-dark-60: #041b3c99;
   --color-slate-dark-40: #041b3c66;

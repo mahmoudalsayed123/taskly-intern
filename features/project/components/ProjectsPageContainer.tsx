@@ -39,7 +39,7 @@ const ProjectsPageContainer = ({
   }, [offset, currentPage]);
 
   return (
-    <section>
+    <section className="w-full h-full">
       <div className="hidden lg:block w-full">
         <ProjectList projects={projects} loading={loading} />
       </div>
@@ -54,13 +54,15 @@ const ProjectsPageContainer = ({
       <BtnAdd path="/project/add" />
 
       {/* pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        projectsShowing={projectsShowing || 0}
-        totalProjects={totalProjects}
-        loading={loading}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          numberOfShowing={projectsShowing || 0}
+          totalItems={totalProjects}
+          loading={loading}
+        />
+      )}
     </section>
   );
 };

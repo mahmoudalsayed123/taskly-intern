@@ -183,6 +183,38 @@ export const createTaskSchema = z.object({
     ),
 });
 
+export const updateTaskSchema = z.object({
+  title: z.string().trim().min(3, "Title must be at least 3 characters"),
+
+  description: z.string().nullable(),
+
+  assignee_id: z.string().nullable(),
+
+  epic_id: z.string().nullable(),
+
+  status: z.string().nullable(),
+
+  due_date: z
+    .string()
+    .nullable()
+    .refine(
+      (value) => {
+        if (!value) return true;
+
+        const selectedDate = new Date(value);
+
+        const today = new Date();
+
+        today.setHours(0, 0, 0, 0);
+
+        return selectedDate >= today;
+      },
+      {
+        message: "Deadline must be today or a day after today",
+      },
+    ),
+});
+
 export const inviteMemberSchema = z.object({
   p_email: z.string().trim().email("Please enter a valid email address"),
 });

@@ -281,7 +281,7 @@ const EpicModal = ({
                   </div>
                 )
               }
-              styles={assigneeSelectStylesEpicModal}
+              // styles={assigneeSelectStylesEpicModal}
             />
             <ErrorField message={errors.assignee_id?.message} />
           </div>
@@ -316,7 +316,6 @@ const EpicModal = ({
                         setDataUpdated({ deadline: e.target.value });
                       }}
                       onBlur={(e) => {
-                        console.log("blurring", e.target.value);
                         if (!e.target.value) {
                           setUpdateDeadline(false);
                           return;

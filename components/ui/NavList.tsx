@@ -16,9 +16,9 @@ const NavList = ({ collapse }: { collapse?: boolean }) => {
       {navLinks.map((item) => {
         return (
           <Link
-            href={`${item.path === "/project" ? "/project" : `/project/${projectId}${item.path}`} `}
+            href={`${item.path === "/project" || item.path === "/my-statistics" ? item.path : `/project/${projectId}${item.path}`} `}
             key={item.id}
-            className={`${item.path === "/project" || routesName.includes(lastPathSegment || "") ? "flex " : "hidden"} ${
+            className={`${item.path === "/project" || item.path === "/my-statistics" || routesName.includes(lastPathSegment || "") ? "flex " : "hidden"} ${
               item.name === lastPathSegment ||
               (lastPathSegment === "edit" && item.name === "details") ||
               (lastPathSegment === "project" && item.name === "projects")
@@ -38,8 +38,8 @@ const NavList = ({ collapse }: { collapse?: boolean }) => {
             <span
               className={`${collapse ? "hidden" : "text-body-MD font-medium"} capitalize`}
             >
-              {item.name === "projects"
-                ? "Projects"
+              {item.name === "projects" || item.name === "My Statistics"
+                ? item.name
                 : `Project ${
                     item.name.charAt(0).toUpperCase() + item.name.slice(1)
                   }`}

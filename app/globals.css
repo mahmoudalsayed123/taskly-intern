@@ -8,11 +8,13 @@
 
   --color-primary: #003d9b;
   --color-primary-container: #0052cc;
+  --color-primary-container-20: #0052cc33;
   --color-primary-10: #0052cc1a;
   --color-primary-20: #003d9b33;
 
   /* ===== Surface ===== */
   --color-surface-highest: #dae2ff;
+  --color-week-day-picker: #94a3b8;
   --color-surface-low: #f1f3ff;
   --color-surface-low-50: #f1f3ff80;
   --color-surface-70: #ffffffb2;
@@ -55,12 +57,14 @@
   /* ===== Semantic ===== */
   --color-success-border: #0052351a;
   --color-success-20: #82f9be33;
+  --color-success-10: #0068441A;
   --color-success-message: #005235;
   --color-success: #82f9be;
   --color-do-not-recive: #00523599;
   --color-border-epic: #004e32;
   --color-assignee-container: #65dca4;
   --color-error: #ba1a1a;
+  --color-error-10: #FFDAD633;
   --color-warning: #ffb300;
   --color-invalid: #ffdad6;
 
@@ -246,125 +250,106 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: #98a2b3;
 }
 
-svg path {
-  @apply flex items-center justify-center;
+/* ======= Date Picker Classes ========== */
+
+.rdp-range-picker {
+  @apply w-80 bg-surface-70 p-5 rounded-lg flex flex-col gap-4 border border-surface-40 backdrop-blur-[20px];
 }
 
-svg path {
-  @apply block;
-}
-/* @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+.rdp-range-picker .rdp-month_caption {
+  @apply text-body-LG font-bold text-slate-dark;
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+.rdp-range-picker .rdp-weekday {
+  @apply text-label-SM font-bold text-week-day-picker;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+.rdp-range-picker .rdp-day_button {
+  @apply rounded-lg text-label-LG font-normal p-2 flex items-center justify-center;
+}
+
+/* .rdp-range-picker .rdp-outside .rdp-day_button {
+  color: green;
 } */
 
+/* today */
+
+/* .rdp-range-picker .rdp-today .rdp-day_button {
+  font-weight: 700;
+  color: red;
+} */
+
+.rdp-range-picker .rdp-week .rdp-day {
+  @apply bg-red-400;
+}
+
+.rdp-range-picker .rdp-week .rdp-selected .rdp-day_button {
+  @apply me-1;
+}
+
+.rdp-range-picker .rdp-selected .rdp-day_button {
+  @apply bg-primary-container-20 text-primary font-bold text-label-LG;
+}
+
+.rdp-range-picker .rdp-range_start .rdp-day_button {
+  @apply rounded-l-xl rounded-r-none border-none;
+}
+.rdp-range-picker .rdp-range_end .rdp-day_button {
+  @apply rounded-l-none rounded-r-xl border-none;
+}
+
+.rdp-range-picker .rdp-range_middle {
+  background: #d7e2ff;
+}
+/* 
+.rdp-range-picker .rdp-range_start .rdp-day_button,
+.rdp-range-picker .rdp-range_end .rdp-day_button {
+  background: #d7e2ff;
+  color: #003d9b;
+} */
+
+.date-range-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 12px;
+  padding-top: 12px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.date-range-actions button:first-child {
+  border: none;
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.date-range-actions button:last-child {
+  border: none;
+  background: #003d9b;
+
+  color: white;
+
+  padding: 9px 18px;
+
+  border-radius: 2px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.date-range-actions button:last-child:hover {
+  background: #0052cc;
+}
 @layer base {
   body {
     @apply bg-background-container;

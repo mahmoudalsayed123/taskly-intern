@@ -4,9 +4,7 @@ import EpicIcon from "@/assets/icons/epic.svg";
 import TaskIcon from "@/assets/icons/task.svg";
 import MemberIcon from "@/assets/icons/members.svg";
 import DetailsIcon from "@/assets/icons/details.svg";
-
-import BoardViewIcon from "@/assets/icons/board.svg";
-import ListViewIcon from "@/assets/icons/list.svg";
+import StatisticsIcon from "@/assets/icons/my-static.svg";
 
 export const navLinks = [
   {
@@ -14,6 +12,12 @@ export const navLinks = [
     path: "/project",
     name: "projects",
     icon: ProjectIcon,
+  },
+  {
+    id: 2,
+    path: "/my-statistics",
+    name: "My Statistics",
+    icon: StatisticsIcon,
   },
   {
     id: 2,
